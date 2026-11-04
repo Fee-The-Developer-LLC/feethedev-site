@@ -19,7 +19,7 @@
 
 ## What the studio does (`/dashboard/admin`)
 
-Access needs a verified Clerk email in `PORTAL_ADMIN_EMAILS` (comma-separated). It defaults to `ceo@feethedeveloper.com`. Anyone else gets a 404.
+Access needs a verified Clerk email in `PORTAL_ADMIN_EMAILS` (comma-separated). It defaults to `ceo@feethedeveloper.com` and `feebeatz215@gmail.com`. Anyone else gets a 404.
 
 From this page the studio can:
 

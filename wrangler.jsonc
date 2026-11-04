@@ -30,10 +30,10 @@
     "NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY": "pk_live_Y2xlcmsuZmVldGhlZGV2ZWxvcGVyLmNvbSQ",
     "NEXT_PUBLIC_CLERK_SIGN_IN_URL": "/sign-in",
     "NEXT_PUBLIC_CLERK_SIGN_UP_URL": "/sign-up",
-    "NEXT_PUBLIC_SUPABASE_URL": "https://gbsqtusozqvfxaojfflt.supabase.co",
+    "NEXT_PUBLIC_SUPABASE_URL": "https://ezkrzfvdrvfzwpoufwal.supabase.co",
     "NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY": "sb_publishable_Ipmg5gr4zsRrNcXPzqzjTQ_XzMsRnCi",
-    "SUPABASE_URL": "https://gbsqtusozqvfxaojfflt.supabase.co",
+    "SUPABASE_URL": "https://ezkrzfvdrvfzwpoufwal.supabase.co",
     "SUPABASE_PUBLISHABLE_KEY": "sb_publishable_Ipmg5gr4zsRrNcXPzqzjTQ_XzMsRnCi",
-    "SUPABASE_JWKS_URL": "https://gbsqtusozqvfxaojfflt.supabase.co/auth/v1/.well-known/jwks.json",
+    "SUPABASE_JWKS_URL": "https://ezkrzfvdrvfzwpoufwal.supabase.co/auth/v1/.well-known/jwks.json",
   },
 }

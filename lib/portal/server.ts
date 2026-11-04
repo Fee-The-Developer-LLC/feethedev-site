@@ -18,7 +18,10 @@ import { ALLOWED_UPLOADS, PORTAL_BUCKET, PORTAL_LIMITS } from './shared';
  * comma-separated list to override. Only verified Clerk emails count.
  */
 const adminEmails = new Set(
-  (process.env.PORTAL_ADMIN_EMAILS ?? 'ceo@feethedeveloper.com')
+  (
+    process.env.PORTAL_ADMIN_EMAILS ??
+    'ceo@feethedeveloper.com,feebeatz215@gmail.com'
+  )
     .split(',')
     .map((email) => email.trim().toLowerCase())
     .filter(Boolean),
