@@ -1,9 +1,13 @@
-import { auth } from '@clerk/nextjs/server';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound, redirect } from 'next/navigation';
 import { BookingModal } from '@/components/BookingModal';
+import {
+  ArrowIcon,
+  ClientWorkspaceView,
+} from '@/components/portal/ClientWorkspaceView';
 import { Card } from '@/components/ui';
+import { getPortalViewer, loadClientWorkspace } from '@/lib/portal/server';
 import { siteConfig } from '@/lib/site-config';
 
 export const metadata: Metadata = {
@@ -11,28 +15,33 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
+export const dynamic = 'force-dynamic';
+
 const hasClerkKeys = Boolean(
   process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY && process.env.CLERK_SECRET_KEY,
 );
 
-function ArrowIcon() {
-  return (
-    <svg
-      aria-hidden="true"
-      viewBox="0 0 24 24"
-      className="h-4 w-4 fill-none stroke-current"
-      strokeWidth="1.8"
-    >
-      <path d="M5 12h14M13 6l6 6-6 6" />
-    </svg>
-  );
-}
-
 export default async function DashboardPage() {
   if (!hasClerkKeys) notFound();
 
-  const { isAuthenticated } = await auth();
-  if (!isAuthenticated) redirect('/sign-in?redirect_url=/dashboard');
+  const viewer = await getPortalViewer();
+  if (!viewer) redirect('/sign-in?redirect_url=/dashboard');
+
+  if (viewer.client) {
+    const workspace = await loadClientWorkspace(viewer.client.id);
+    if (workspace) {
+      return (
+        <ClientWorkspaceView
+          client={viewer.client}
+          firstName={viewer.firstName}
+          workspace={workspace}
+          isAdmin={viewer.isAdmin}
+        />
+      );
+    }
+  }
+
+  const signedInEmail = viewer.verifiedEmails[0] ?? null;
 
   return (
     <main id="main-content" className="min-h-screen bg-[#05070b]">
@@ -55,12 +64,22 @@ export default async function DashboardPage() {
                 step, and stay connected to the Fee The Developer community.
               </p>
             </div>
-            <Link
-              href="/start"
-              className="inline-flex w-fit items-center gap-2 rounded-full border border-electric/40 bg-electric/15 px-5 py-3 text-sm font-semibold text-white hover:bg-electric/25 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-greenglow/50"
-            >
-              Start another project <ArrowIcon />
-            </Link>
+            <div className="flex flex-wrap gap-3">
+              {viewer.isAdmin && (
+                <Link
+                  href="/dashboard/admin"
+                  className="inline-flex w-fit items-center gap-2 rounded-full border border-redglow/40 px-5 py-3 text-sm font-semibold text-redglow hover:bg-redglow/10"
+                >
+                  Studio admin
+                </Link>
+              )}
+              <Link
+                href="/start"
+                className="inline-flex w-fit items-center gap-2 rounded-full border border-electric/40 bg-electric/15 px-5 py-3 text-sm font-semibold text-white hover:bg-electric/25 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-greenglow/50"
+              >
+                Start another project <ArrowIcon />
+              </Link>
+            </div>
           </div>
         </div>
       </section>
@@ -82,27 +101,42 @@ export default async function DashboardPage() {
               </span>
             </div>
             <p className="mt-4 max-w-2xl text-sm leading-7 text-slate-300">
-              Your account is active. Project milestones, files, messages, and
-              approvals will appear here after a project workspace is connected
-              to your client account.
+              Your account is active. Project milestones, files, change
+              requests, and updates appear here once Fee The Developer attaches
+              your project to the email you signed in with.
             </p>
-            <div className="mt-7 grid gap-3 sm:grid-cols-3">
-              {[
-                'Project milestones',
-                'Shared files',
-                'Approvals + decisions',
-              ].map((item) => (
-                <div
-                  key={item}
-                  className="rounded-2xl border border-white/10 bg-black/25 p-4 text-sm text-slate-300"
+            {signedInEmail && (
+              <p className="mt-3 text-sm text-slate-400">
+                Signed in as{' '}
+                <span className="font-semibold text-white">
+                  {signedInEmail}
+                </span>
+                . If you&apos;re an existing client and don&apos;t see your
+                project, email{' '}
+                <a
+                  className="text-cyan hover:text-white"
+                  href={`mailto:${siteConfig.email}`}
                 >
-                  <span
-                    aria-hidden="true"
-                    className="mb-3 block h-1 w-8 rounded-full bg-electric/70"
-                  />
-                  {item}
-                </div>
-              ))}
+                  {siteConfig.email}
+                </a>{' '}
+                from this address.
+              </p>
+            )}
+            <div className="mt-7 grid gap-3 sm:grid-cols-3">
+              {['Project milestones', 'Shared files', 'Change requests'].map(
+                (item) => (
+                  <div
+                    key={item}
+                    className="rounded-2xl border border-white/10 bg-black/25 p-4 text-sm text-slate-300"
+                  >
+                    <span
+                      aria-hidden="true"
+                      className="mb-3 block h-1 w-8 rounded-full bg-electric/70"
+                    />
+                    {item}
+                  </div>
+                ),
+              )}
             </div>
           </Card>
 
