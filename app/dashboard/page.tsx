@@ -74,36 +74,40 @@ export default async function DashboardPage() {
                   Project center
                 </p>
                 <h2 className="mt-3 text-2xl font-semibold text-white">
-                  No project workspace connected yet
+                  Your client portal
                 </h2>
               </div>
-              <span className="rounded-full border border-white/10 bg-white/[0.05] px-3 py-1.5 text-xs font-medium text-slate-300">
-                Ready for setup
+              <span className="rounded-full border border-greenglow/30 bg-greenglow/10 px-3 py-1.5 text-xs font-medium text-greenglow">
+                Open
               </span>
             </div>
             <p className="mt-4 max-w-2xl text-sm leading-7 text-slate-300">
-              Your account is active. Project milestones, files, messages, and
-              approvals will appear here after a project workspace is connected
-              to your client account.
+              Upload photos and videos, request changes to your site, send
+              suggestions or links, and open your shared folder for large files
+              and downloads. Track every request&apos;s status in one place.
             </p>
             <div className="mt-7 grid gap-3 sm:grid-cols-3">
-              {[
-                'Project milestones',
-                'Shared files',
-                'Approvals + decisions',
-              ].map((item) => (
-                <div
-                  key={item}
-                  className="rounded-2xl border border-white/10 bg-black/25 p-4 text-sm text-slate-300"
-                >
-                  <span
-                    aria-hidden="true"
-                    className="mb-3 block h-1 w-8 rounded-full bg-electric/70"
-                  />
-                  {item}
-                </div>
-              ))}
+              {['Photos + videos', 'Change requests', 'Shared folder'].map(
+                (item) => (
+                  <div
+                    key={item}
+                    className="rounded-2xl border border-white/10 bg-black/25 p-4 text-sm text-slate-300"
+                  >
+                    <span
+                      aria-hidden="true"
+                      className="mb-3 block h-1 w-8 rounded-full bg-electric/70"
+                    />
+                    {item}
+                  </div>
+                ),
+              )}
             </div>
+            <Link
+              href="/portal"
+              className="mt-7 inline-flex items-center gap-2 rounded-full bg-white px-5 py-3 text-sm font-semibold text-black transition hover:bg-slate-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-greenglow/60"
+            >
+              Open client portal <ArrowIcon />
+            </Link>
           </Card>
 
           <section aria-labelledby="community-heading">

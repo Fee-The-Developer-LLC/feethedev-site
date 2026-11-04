@@ -4,7 +4,7 @@ import { NextResponse } from 'next/server';
 const hasClerkKeys = Boolean(
   process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY && process.env.CLERK_SECRET_KEY,
 );
-const isProtectedRoute = createRouteMatcher(['/dashboard(.*)']);
+const isProtectedRoute = createRouteMatcher(['/dashboard(.*)', '/portal(.*)']);
 const withClerk = hasClerkKeys
   ? clerkMiddleware(async (auth, request) => {
       if (isProtectedRoute(request)) {

@@ -22,9 +22,79 @@ export type ServiceCatalogRow = {
   updated_at: string;
 };
 
+/** Mirrors `supabase/migrations/20261103120000_create_client_portal.sql`. */
+export type ClientRequestRow = {
+  id: string;
+  tenant_id: 'fee-the-developer';
+  clerk_user_id: string;
+  client_email: string | null;
+  client_name: string | null;
+  site_slug: string | null;
+  kind: 'change' | 'suggestion' | 'website' | 'assets';
+  priority: 'normal' | 'urgent';
+  title: string;
+  details: string | null;
+  website_url: string | null;
+  status: 'new' | 'in_review' | 'in_progress' | 'done' | 'declined';
+  admin_note: string | null;
+  created_at: string;
+  updated_at: string;
+};
+
+export type ClientFileRow = {
+  id: string;
+  request_id: string;
+  clerk_user_id: string;
+  storage_path: string;
+  file_name: string;
+  mime_type: string;
+  size_bytes: number;
+  status: 'pending' | 'uploaded';
+  created_at: string;
+  uploaded_at: string | null;
+};
+
+export type ClientSpaceRow = {
+  clerk_user_id: string;
+  tenant_id: 'fee-the-developer';
+  client_email: string | null;
+  share_folder_url: string | null;
+  share_provider: 'dropbox' | 'google_drive' | 'onedrive' | 'other' | null;
+  share_label: string | null;
+  updated_at: string;
+};
+
 export type Database = {
   public: {
     Tables: {
+      client_spaces: {
+        Row: ClientSpaceRow;
+        Insert: Pick<ClientSpaceRow, 'clerk_user_id'> & Partial<ClientSpaceRow>;
+        Update: Partial<ClientSpaceRow>;
+        Relationships: [];
+      };
+      client_requests: {
+        Row: ClientRequestRow;
+        Insert: Pick<ClientRequestRow, 'clerk_user_id' | 'kind' | 'title'> &
+          Partial<Omit<ClientRequestRow, 'clerk_user_id' | 'kind' | 'title'>>;
+        Update: Partial<ClientRequestRow>;
+        Relationships: [];
+      };
+      client_files: {
+        Row: ClientFileRow;
+        Insert: Pick<
+          ClientFileRow,
+          | 'request_id'
+          | 'clerk_user_id'
+          | 'storage_path'
+          | 'file_name'
+          | 'mime_type'
+          | 'size_bytes'
+        > &
+          Partial<ClientFileRow>;
+        Update: Partial<ClientFileRow>;
+        Relationships: [];
+      };
       service_catalog: {
         Row: ServiceCatalogRow;
         Insert: Omit<

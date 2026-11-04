@@ -1,31 +1,9 @@
-import { NextResponse } from 'next/server';
 import { INTAKE_LIMITS, validateIntake } from '@/lib/intake';
-import { siteConfig } from '@/lib/site-config';
+import { isSameOrigin, noStoreJson as json } from '@/lib/request-guards';
 
 // Persists /start project intakes to Supabase `public.project_intakes`.
 // The service key stays server-side; the table denies anon/authenticated access.
 // Any failure returns a non-2xx status so the form falls back to email.
-
-function json(body: Record<string, unknown>, status: number) {
-  return NextResponse.json(body, {
-    status,
-    headers: { 'Cache-Control': 'no-store' },
-  });
-}
-
-function isSameOrigin(request: Request): boolean {
-  const origin = request.headers.get('origin');
-  if (!origin) return false;
-  try {
-    const originHost = new URL(origin).host;
-    return (
-      originHost === request.headers.get('host') ||
-      originHost === new URL(siteConfig.siteUrl).host
-    );
-  } catch {
-    return false;
-  }
-}
 
 export async function POST(request: Request) {
   if (!isSameOrigin(request)) return json({ error: 'forbidden' }, 403);
