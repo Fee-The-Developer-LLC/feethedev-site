@@ -209,38 +209,6 @@ export default async function DashboardPage() {
 
           <div className="rounded-3xl border border-white/10 bg-white/[0.04] p-6">
             <p className="text-xs uppercase tracking-[0.22em] text-slate-400">
-              Secure payment
-            </p>
-            <h2 className="mt-3 text-xl font-semibold text-white">
-              Booking deposit
-            </h2>
-            <p className="mt-2 text-3xl font-semibold tabular-nums text-white">
-              $100
-            </p>
-            <p className="mt-3 text-sm leading-6 text-slate-300">
-              Use the live Stripe-hosted payment page only when Fee The
-              Developer has asked you to submit the consultation deposit.
-            </p>
-            <a
-              href={siteConfig.depositUrl}
-              target={
-                siteConfig.depositUrl.startsWith('https://')
-                  ? '_blank'
-                  : undefined
-              }
-              rel={
-                siteConfig.depositUrl.startsWith('https://')
-                  ? 'noreferrer'
-                  : undefined
-              }
-              className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-cyan hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-greenglow/50"
-            >
-              Pay securely with Stripe <ArrowIcon />
-            </a>
-          </div>
-
-          <div className="rounded-3xl border border-white/10 bg-white/[0.04] p-6">
-            <p className="text-xs uppercase tracking-[0.22em] text-slate-400">
               Need help?
             </p>
             <h2 className="mt-3 text-xl font-semibold text-white">

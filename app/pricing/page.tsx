@@ -1,8 +1,13 @@
 import type { Metadata } from 'next';
+import { BookingModal } from '@/components/BookingModal';
 import { PageIntro } from '@/components/PageIntro';
 import { SeasonOffer } from '@/components/SeasonOffer';
 import { Button as CtaLink, Card, Section } from '@/components/ui';
-import { addOnPricing, pricingOptions } from '@/lib/catalog';
+import {
+  addOnPricing,
+  pricingOptions,
+  serviceCheckoutLinks,
+} from '@/lib/catalog';
 import { siteConfig } from '@/lib/site-config';
 
 export const metadata: Metadata = {
@@ -23,16 +28,20 @@ export default function PricingPage() {
             <span className="ftd-gradient-text">scope the build.</span>
           </>
         }
-        description="These prices reflect the current Fee The Developer service catalog. A written scope confirms the final deliverables, schedule, and price before work begins."
+        description="These starting prices reflect the current Fee The Developer service catalog. A written scope confirms the final deliverables, schedule, and price before work begins."
         aside={
           <div className="rounded-3xl border border-greenglow/25 bg-greenglow/[0.07] p-6">
             <p className="text-sm font-semibold text-white">
-              How payment works
+              Free 15-minute consultation
             </p>
             <p className="mt-2 text-sm leading-6 text-slate-300">
-              Start with a consultation. After scope is agreed, use the secure
-              Stripe payment link provided for your project.
+              Talk it through first at no cost, or buy any service below through
+              secure Stripe checkout.
             </p>
+            <BookingModal
+              className="mt-4 rounded-full border border-greenglow/40 px-4 py-2 text-xs font-semibold uppercase tracking-[0.12em] text-white transition hover:bg-greenglow/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-greenglow"
+              label="Book free consultation"
+            />
           </div>
         }
       />
@@ -80,6 +89,14 @@ export default function PricingPage() {
                   </li>
                 ))}
               </ul>
+              <CtaLink
+                href={serviceCheckoutLinks[option.slug]}
+                glow="green"
+                className="mt-7"
+                aria-label={`Buy ${option.name}, ${option.price}`}
+              >
+                Buy now
+              </CtaLink>
             </Card>
           ))}
         </div>
@@ -93,22 +110,31 @@ export default function PricingPage() {
               Add only what moves the system forward.
             </h2>
             <p className="mt-4 leading-7 text-slate-300">
-              Each add-on covers one defined implementation scope. Larger or
+              Each service covers one defined implementation scope. Larger or
               multi-system work is quoted after discovery.
             </p>
           </div>
           <div className="overflow-hidden rounded-3xl border border-white/10 bg-white/[0.04]">
             <ul className="divide-y divide-white/10">
-              {addOnPricing.map(([name, price]) => (
+              {addOnPricing.map(({ name, slug, price }) => (
                 <li
-                  key={name}
-                  className="flex flex-col gap-1 px-5 py-4 sm:flex-row sm:items-center sm:justify-between sm:gap-6"
+                  key={slug}
+                  className="flex flex-col gap-2 px-5 py-4 sm:flex-row sm:items-center sm:justify-between sm:gap-6"
                 >
                   <span className="text-sm font-medium text-slate-200">
                     {name}
                   </span>
-                  <span className="shrink-0 text-sm font-semibold tabular-nums text-greenglow">
-                    {price}
+                  <span className="flex shrink-0 items-center justify-between gap-4">
+                    <span className="text-sm font-semibold tabular-nums text-greenglow">
+                      {price}
+                    </span>
+                    <a
+                      href={serviceCheckoutLinks[slug]}
+                      aria-label={`Buy ${name}, ${price}`}
+                      className="rounded-full border border-greenglow/40 px-4 py-2 text-xs font-semibold uppercase tracking-[0.12em] text-white transition hover:bg-greenglow/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-greenglow"
+                    >
+                      Buy
+                    </a>
                   </span>
                 </li>
               ))}
@@ -120,10 +146,13 @@ export default function PricingPage() {
       <Section>
         <div className="mx-auto max-w-3xl text-center">
           <p className="text-sm leading-7 text-slate-400">
-            Prices are in USD and represent the current catalog. Third-party
-            fees, taxes, domains, hosting, paid software, content production,
-            and work outside the agreed scope may be separate. Platform
-            approvals are controlled by each platform and are not guaranteed.
+            Prices are in USD and represent the current catalog. Buying a
+            service pays its starting price. We confirm your written scope
+            before work begins, and anything beyond the starting scope is quoted
+            for your approval first. Third-party fees, taxes, domains, hosting,
+            paid software, content production, and work outside the agreed scope
+            may be separate. Platform approvals are controlled by each platform
+            and are not guaranteed.
           </p>
           <div className="mt-7 flex justify-center">
             <CtaLink href="/start">Plan my project</CtaLink>

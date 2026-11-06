@@ -69,14 +69,14 @@ export function BookingModal({
             id={`${dialogId}-title`}
             className="mt-4 max-w-sm pr-8 text-3xl font-semibold text-white"
           >
-            Book a conversation.
+            Book your free 15-minute consultation.
           </h2>
           <p
             id={`${dialogId}-description`}
             className="mt-3 max-w-md text-sm leading-6 text-slate-300"
           >
-            Choose an available time for a focused conversation about your
-            website, software, automation, or online presence.
+            Choose an available time to talk through your website, software,
+            automation, or online presence. There is no cost and no deposit.
           </p>
           <a
             href={siteConfig.bookingUrl}

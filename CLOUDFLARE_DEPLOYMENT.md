@@ -123,10 +123,6 @@ Post-cutover checks:
   secret key, project reference, and JWKS URL are present; this optional catalog
   migration remains follow-up work.
 
-Before cutover, set a real `NEXT_PUBLIC_DEPOSIT_URL`. `.env.local` holds a
-placeholder, and `lib/site-config.ts` only accepts a `buy.stripe.com` host, so
-the deposit button currently falls back to `/start#next-step`.
-
 ## Recovery
 
 The Vercel project has been removed, so restoring the two old CNAMEs is not a

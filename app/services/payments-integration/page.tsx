@@ -3,6 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { PageIntro } from '@/components/PageIntro';
 import { Button as CtaLink, Card, Section } from '@/components/ui';
+import { serviceCheckoutLinks } from '@/lib/catalog';
 import {
   hairlineMattersCaseStudy as caseStudy,
   paymentsCapabilities,
@@ -100,6 +101,14 @@ export default function PaymentsIntegrationPage() {
             <p className="mt-3 text-xs leading-5 text-slate-400">
               {paymentsService.feeNote}
             </p>
+            <CtaLink
+              href={serviceCheckoutLinks[paymentsService.checkoutSlug]}
+              glow="green"
+              className="mt-5"
+              aria-label={`Buy ${paymentsService.name}, ${paymentsService.price}`}
+            >
+              Buy now
+            </CtaLink>
           </div>
         </div>
         <ul className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
@@ -282,7 +291,16 @@ export default function PaymentsIntegrationPage() {
             </p>
           </div>
           <div className="flex flex-wrap gap-3">
-            <CtaLink href="/start">Start a project</CtaLink>
+            <CtaLink
+              href={serviceCheckoutLinks[paymentsService.checkoutSlug]}
+              glow="green"
+              aria-label={`Buy ${paymentsService.name}, ${paymentsService.price}`}
+            >
+              Buy now
+            </CtaLink>
+            <CtaLink href="/start" variant="outline">
+              Start a project
+            </CtaLink>
             <Link
               href="/services"
               className="inline-flex items-center rounded-full border border-white/15 px-5 py-3 text-sm font-semibold uppercase tracking-[0.16em] text-white hover:bg-white/[0.07] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-greenglow/50"

@@ -4,7 +4,6 @@ const approvedBookingHosts = new Set([
   'calendar.app.google',
   'calendar.google.com',
 ]);
-const approvedDepositHosts = new Set(['buy.stripe.com']);
 
 function getSiteUrl(value: string | undefined): string {
   if (!value?.trim()) return defaultSiteUrl;
@@ -36,21 +35,6 @@ function getBookingUrl(value: string | undefined): string {
   return defaultBookingUrl;
 }
 
-function getDepositUrl(value: string | undefined): string {
-  if (!value?.trim()) return '/start#next-step';
-
-  try {
-    const url = new URL(value.trim());
-    if (url.protocol === 'https:' && approvedDepositHosts.has(url.hostname)) {
-      return url.toString();
-    }
-  } catch {
-    // Fall back to the internal next step when the payment URL is malformed.
-  }
-
-  return '/start#next-step';
-}
-
 function getCommunityUrl(
   value: string | undefined,
   approvedHosts: ReadonlySet<string>,
@@ -79,7 +63,6 @@ export const siteConfig = {
   phone: '+12144400022',
   phoneDisplay: '(214) 440-0022',
   bookingUrl: getBookingUrl(process.env.NEXT_PUBLIC_BOOKING_URL),
-  depositUrl: getDepositUrl(process.env.NEXT_PUBLIC_DEPOSIT_URL),
   location: 'Texas, United States',
   services: [
     'Website design and development',
