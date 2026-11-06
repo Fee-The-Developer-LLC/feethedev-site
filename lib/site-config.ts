@@ -90,6 +90,7 @@ export const siteConfig = {
     'Custom software development',
     'Business presence systems',
     'API integrations',
+    'Payments and back-end integration',
   ],
   stack: ['Next.js', 'TypeScript', 'React', 'Tailwind CSS', 'AI integrations'],
   googleProducts: [
