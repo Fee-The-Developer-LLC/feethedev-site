@@ -41,6 +41,7 @@ export const pricingOptions = [
       'Launch-ready website implementation',
       'Mobile-first customer experience',
       'Clear service and inquiry path',
+      'Payments & Back-End Integration included',
     ],
   },
   {
@@ -52,6 +53,7 @@ export const pricingOptions = [
       'Website Launch foundation',
       'Google, Apple, and Yelp presence setup',
       'Consistent public business information',
+      'Payments & Back-End Integration included',
     ],
   },
   {
@@ -74,6 +76,7 @@ export const pricingOptions = [
       'Website and business-presence delivery',
       'Workflow automation and integrations',
       'Coordinated implementation plan',
+      'Payments & Back-End Integration included',
     ],
   },
 ] as const;
@@ -81,6 +84,7 @@ export const pricingOptions = [
 export const addOnPricing = [
   ['Yelp Business Profile Setup', '$149'],
   ['Apple Business Connect Setup', '$199'],
+  ['Payments & Back-End Integration (free with any website package)', '$250'],
   ['Google Business Profile Setup & Verification Support', '$299'],
   ['Google Workspace & Business Email Setup', '$299'],
   ['Lead Capture & CRM Automation', '$449'],

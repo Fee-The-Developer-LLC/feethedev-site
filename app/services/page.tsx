@@ -107,6 +107,12 @@ export default function ServicesPage() {
               {hairlineMattersCaseStudy.client} from PayPal to a custom Stripe
               build.
             </p>
+            <p className="mt-4 text-sm font-semibold text-white">
+              <span className="tabular-nums text-greenglow">
+                {paymentsService.price}
+              </span>{' '}
+              on its own · {paymentsService.priceNote.toLowerCase()}
+            </p>
           </div>
           <CtaLink href={`/services/${paymentsService.slug}`} glow="green">
             See the service
