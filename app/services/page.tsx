@@ -4,6 +4,10 @@ import { PageIntro } from '@/components/PageIntro';
 import { SeasonOffer } from '@/components/SeasonOffer';
 import { Button as CtaLink, Card, Section } from '@/components/ui';
 import { serviceGroups } from '@/lib/catalog';
+import {
+  hairlineMattersCaseStudy,
+  paymentsService,
+} from '@/lib/payments-integration';
 import { siteConfig } from '@/lib/site-config';
 
 export const metadata: Metadata = {
@@ -83,6 +87,30 @@ export default function ServicesPage() {
               </ul>
             </Card>
           ))}
+        </div>
+      </Section>
+
+      <Section className="pt-0" aria-labelledby="payments-service-heading">
+        <div className="signal-rail grid gap-8 rounded-3xl border border-greenglow/25 bg-greenglow/[0.06] p-7 sm:p-10 lg:grid-cols-[1fr_auto] lg:items-center">
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-[0.22em] text-greenglow">
+              New service / Payments + back end
+            </p>
+            <h2
+              id="payments-service-heading"
+              className="mt-3 text-3xl font-semibold text-white"
+            >
+              {paymentsService.name}
+            </h2>
+            <p className="mt-3 max-w-2xl leading-7 text-slate-300">
+              {paymentsService.summary} See how we moved{' '}
+              {hairlineMattersCaseStudy.client} from PayPal to a custom Stripe
+              build.
+            </p>
+          </div>
+          <CtaLink href={`/services/${paymentsService.slug}`} glow="green">
+            See the service
+          </CtaLink>
         </div>
       </Section>
 
