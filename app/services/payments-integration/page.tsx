@@ -3,6 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { PageIntro } from '@/components/PageIntro';
 import { Button as CtaLink, Card, Section } from '@/components/ui';
+import { serviceCheckoutLinks } from '@/lib/catalog';
 import {
   hairlineMattersCaseStudy as caseStudy,
   paymentsCapabilities,
@@ -68,13 +69,47 @@ export default function PaymentsIntegrationPage() {
       />
 
       <Section>
-        <div className="max-w-3xl">
-          <p className="text-xs font-semibold uppercase tracking-[0.22em] text-cyan">
-            What is included
-          </p>
-          <h2 className="mt-3 text-3xl font-semibold text-white sm:text-4xl">
-            From the pay button to the order that follows it.
-          </h2>
+        <div className="grid gap-8 lg:grid-cols-[1fr_auto] lg:items-end">
+          <div className="max-w-3xl">
+            <p className="text-xs font-semibold uppercase tracking-[0.22em] text-cyan">
+              What is included
+            </p>
+            <h2 className="mt-3 text-3xl font-semibold text-white sm:text-4xl">
+              From the pay button to the order that follows it.
+            </h2>
+          </div>
+          <div
+            className="rounded-3xl border border-greenglow/30 bg-greenglow/[0.07] p-6 sm:min-w-[18rem]"
+            aria-labelledby="payments-price-heading"
+            role="group"
+          >
+            <p
+              id="payments-price-heading"
+              className="text-xs font-semibold uppercase tracking-[0.22em] text-greenglow"
+            >
+              Pricing
+            </p>
+            <p className="mt-3 text-4xl font-semibold tabular-nums text-white">
+              {paymentsService.price}
+              <span className="ml-2 text-sm font-medium text-slate-300">
+                on its own
+              </span>
+            </p>
+            <p className="mt-2 text-sm font-semibold text-greenglow">
+              {paymentsService.priceNote}
+            </p>
+            <p className="mt-3 text-xs leading-5 text-slate-400">
+              {paymentsService.feeNote}
+            </p>
+            <CtaLink
+              href={serviceCheckoutLinks[paymentsService.checkoutSlug]}
+              glow="green"
+              className="mt-5"
+              aria-label={`Buy ${paymentsService.name}, ${paymentsService.price}`}
+            >
+              Buy now
+            </CtaLink>
+          </div>
         </div>
         <ul className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {paymentsCapabilities.map((item, index) => (
@@ -250,12 +285,22 @@ export default function PaymentsIntegrationPage() {
               Still taking payments through a builder or a button?
             </h2>
             <p className="mt-3 max-w-2xl leading-7 text-slate-300">
-              Tell us how money moves through your business today. We will map
-              the migration and quote it after a short discovery call.
+              {paymentsService.price} on its own, or free with any website
+              package. Tell us how money moves through your business today and
+              we will map the switch.
             </p>
           </div>
           <div className="flex flex-wrap gap-3">
-            <CtaLink href="/start">Start a project</CtaLink>
+            <CtaLink
+              href={serviceCheckoutLinks[paymentsService.checkoutSlug]}
+              glow="green"
+              aria-label={`Buy ${paymentsService.name}, ${paymentsService.price}`}
+            >
+              Buy now
+            </CtaLink>
+            <CtaLink href="/start" variant="outline">
+              Start a project
+            </CtaLink>
             <Link
               href="/services"
               className="inline-flex items-center rounded-full border border-white/15 px-5 py-3 text-sm font-semibold uppercase tracking-[0.16em] text-white hover:bg-white/[0.07] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-greenglow/50"

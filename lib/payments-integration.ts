@@ -17,6 +17,11 @@ export const paymentsService = {
   shortName: 'Payments integration',
   summary:
     'Replace a borrowed checkout with payments that run on your own Stripe account and connect to the systems behind your business.',
+  // Pricing set by King Fee 2026-11-06.
+  price: '$250',
+  checkoutSlug: 'payments-and-back-end-integration',
+  priceNote: 'Free with any website package',
+  feeNote: 'Stripe’s own processing fees are separate and paid to Stripe.',
 } as const;
 
 export const paymentsCapabilities = [

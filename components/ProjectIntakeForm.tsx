@@ -98,7 +98,7 @@ export function ProjectIntakeForm({
         <div className="flex flex-wrap gap-3">
           <BookingModal
             className="rounded-full bg-white px-5 py-3 font-semibold text-black transition hover:bg-cyan focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-greenglow"
-            label="Book a strategy call"
+            label="Book a free consultation"
           />
           <a
             className="rounded-full border border-white/20 px-5 py-3 font-semibold text-white"
@@ -253,8 +253,8 @@ export function ProjectIntakeForm({
           id="promotion-code-help"
           className="block text-xs leading-5 text-slate-400"
         >
-          Enter YOBUL if you are a Philadelphia 76ers fan. The code is
-          attached to your quote request.
+          Enter YOBUL if you are a Philadelphia 76ers fan. The code is attached
+          to your quote request.
         </span>
         <span
           id="promotion-code-error"

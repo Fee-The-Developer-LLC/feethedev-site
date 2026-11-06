@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { PageIntro } from '@/components/PageIntro';
 import { SeasonOffer } from '@/components/SeasonOffer';
 import { Button as CtaLink, Card, Section } from '@/components/ui';
-import { serviceGroups } from '@/lib/catalog';
+import { serviceCheckoutLinks, serviceGroups } from '@/lib/catalog';
 import {
   hairlineMattersCaseStudy,
   paymentsService,
@@ -107,10 +107,28 @@ export default function ServicesPage() {
               {hairlineMattersCaseStudy.client} from PayPal to a custom Stripe
               build.
             </p>
+            <p className="mt-4 text-sm font-semibold text-white">
+              <span className="tabular-nums text-greenglow">
+                {paymentsService.price}
+              </span>{' '}
+              on its own · {paymentsService.priceNote.toLowerCase()}
+            </p>
           </div>
-          <CtaLink href={`/services/${paymentsService.slug}`} glow="green">
-            See the service
-          </CtaLink>
+          <div className="flex flex-wrap gap-3">
+            <CtaLink
+              href={serviceCheckoutLinks[paymentsService.checkoutSlug]}
+              glow="green"
+              aria-label={`Buy ${paymentsService.name}, ${paymentsService.price}`}
+            >
+              Buy now
+            </CtaLink>
+            <CtaLink
+              href={`/services/${paymentsService.slug}`}
+              variant="outline"
+            >
+              See the service
+            </CtaLink>
+          </div>
         </div>
       </Section>
 

@@ -97,4 +97,3 @@ export const watchCapsule = [
   'Gold day-date watch with a presidential-style bracelet',
   'Steel and gold nautical sports watch with a regatta-ready profile',
 ] as const;
-

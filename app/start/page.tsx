@@ -55,7 +55,7 @@ export default async function StartPage({
                 This form opens your email app with the details prepared. Send
                 the email there to complete your inquiry.
               </p>
-              <p>Prefer to book a call?</p>
+              <p>Prefer to talk first? The 15-minute consultation is free.</p>
               <div className="flex flex-wrap items-center gap-4">
                 <BookingModal className="rounded-full border border-greenglow/40 px-4 py-2 text-xs font-semibold uppercase tracking-[0.12em] text-white transition hover:bg-greenglow/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-greenglow" />
                 <a
