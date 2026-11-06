@@ -49,7 +49,11 @@ export default function DemosPage() {
       <section className="shell py-20">
         <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
           {characterProfiles.map((profile) => (
-            <Tilt3D key={profile.name} className="h-full rounded-[1.75rem]" max={4}>
+            <Tilt3D
+              key={profile.name}
+              className="h-full rounded-[1.75rem]"
+              max={4}
+            >
               <article className="group flex h-full flex-col overflow-hidden rounded-[1.75rem] border border-white/10 bg-white/[0.045] shadow-2xl shadow-black/20">
                 <div className="relative aspect-[4/5] overflow-hidden bg-panel">
                   <Image
@@ -76,7 +80,10 @@ export default function DemosPage() {
                   <p className="mt-4 text-sm leading-6 text-slate-300">
                     {profile.description}
                   </p>
-                  <ul className="mt-5 flex flex-wrap gap-2" aria-label="Planned uses">
+                  <ul
+                    className="mt-5 flex flex-wrap gap-2"
+                    aria-label="Planned uses"
+                  >
                     {profile.useCases.map((useCase) => (
                       <li
                         key={useCase}
@@ -210,4 +217,3 @@ export default function DemosPage() {
     </main>
   );
 }
-

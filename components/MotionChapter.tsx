@@ -139,7 +139,8 @@ export function MotionChapter() {
                   Design that guides visitors
                 </h3>
                 <p className="mt-3 max-w-sm leading-7 text-slate-300">
-                  Clear layouts and thoughtful movement help visitors find what they need.
+                  Clear layouts and thoughtful movement help visitors find what
+                  they need.
                 </p>
               </div>
             </div>

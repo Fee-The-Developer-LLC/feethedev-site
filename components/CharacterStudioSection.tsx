@@ -19,9 +19,9 @@ export function CharacterStudioSection() {
             <span className="ftd-gradient-text">visual cast.</span>
           </h2>
           <p className="mt-6 text-lg leading-8 text-slate-300">
-            Fee The Developer now has a structured character and wardrobe
-            system for product demos, campaign concepts, website scenes, and
-            future video work—anchored to approved founder and apparel assets.
+            Fee The Developer now has a structured character and wardrobe system
+            for product demos, campaign concepts, website scenes, and future
+            video work—anchored to approved founder and apparel assets.
           </p>
           <div className="mt-7 flex flex-wrap gap-2">
             {roles.map((role) => (
@@ -102,4 +102,3 @@ export function CharacterStudioSection() {
     </section>
   );
 }
-
