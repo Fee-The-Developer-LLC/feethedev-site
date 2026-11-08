@@ -80,7 +80,7 @@ Primary actions use solid or luminous treatments; secondary actions use quiet ou
 
 ### Navigation and data display
 
-Public navigation exposes Services, Credentials, Pricing, Merch, program information, and the Client portal. Product navigation marks the current destination. Lists favor semantic markup and explicit statuses over decorative charts.
+Public navigation is kept short: Services, Pricing, Work, a free-consultation button, and Start a project. Each service has its own page at `/services/<slug>` with a Stripe checkout call to action. Credentials, program pages, and the Client portal are linked from the footer. Product navigation marks the current destination. Lists favor semantic markup and explicit statuses over decorative charts.
 
 ### Forms and overlays
 

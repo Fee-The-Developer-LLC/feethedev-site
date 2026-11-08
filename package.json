@@ -13,30 +13,22 @@
     "deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",
     "upload": "opennextjs-cloudflare build && opennextjs-cloudflare upload",
     "cf-typegen": "wrangler types --env-interface CloudflareEnv cloudflare-env.d.ts",
-    "merch:links": "node scripts/create-merch-payment-links.mjs",
     "services:links": "node scripts/create-service-payment-links.mjs",
     "cf:secrets": "node scripts/set-cloudflare-secrets.mjs"
   },
   "dependencies": {
     "@clerk/nextjs": "^7.9.4",
-    "@gsap/react": "^2.1.2",
-    "@react-three/drei": "^9.121.4",
-    "@react-three/fiber": "^8.0.0",
     "@supabase/supabase-js": "^2.86.0",
-    "framer-motion": "^11.0.0",
-    "gsap": "^3.15.0",
     "next": "^15.5.25",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "stripe": "^22.6.2",
-    "three": "^0.160.0"
+    "stripe": "^22.6.2"
   },
   "devDependencies": {
     "@opennextjs/cloudflare": "1.15.1",
     "@types/node": "^20.0.0",
     "@types/react": "^18.2.0",
     "@types/react-dom": "^18.2.0",
-    "@types/three": "^0.160.0",
     "autoprefixer": "^10.4.0",
     "eslint": "^8.0.0",
     "eslint-config-next": "^15.5.25",

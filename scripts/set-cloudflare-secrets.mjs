@@ -18,10 +18,6 @@ const SECRETS = [
   'CLERK_SECRET_KEY',
   'SUPABASE_SECRET_KEY',
   'STRIPE_SECRET_KEY',
-  'MERCH_HOODIE_STRIPE_LINK',
-  'MERCH_JOGGERS_STRIPE_LINK',
-  'MERCH_TSHIRT_STRIPE_LINK',
-  'MERCH_HAT_STRIPE_LINK',
 ];
 
 const apply = process.argv.includes('--apply');
@@ -33,7 +29,7 @@ function fail(message) {
 
 /**
  * Minimal `.env` reader. Strips one matching pair of surrounding quotes and
- * keeps everything inside, so JSON values such as the merch link maps survive.
+ * keeps everything inside, so JSON values survive.
  */
 function parseEnvFile(path) {
   let text;

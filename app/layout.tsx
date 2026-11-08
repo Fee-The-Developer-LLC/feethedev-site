@@ -149,34 +149,16 @@ function SiteContent({ children }: Readonly<{ children: React.ReactNode }>) {
           </Link>
           <nav
             aria-label="Main navigation"
-            className="order-3 flex w-full items-center gap-5 overflow-x-auto text-sm text-slate-300 sm:order-none sm:w-auto"
+            className="order-3 flex w-full items-center gap-6 overflow-x-auto text-sm text-slate-300 sm:order-none sm:w-auto"
           >
-            <Link href="/#build" className="shrink-0 hover:text-white">
-              Approach
-            </Link>
             <Link href="/services" className="shrink-0 hover:text-white">
               Services
-            </Link>
-            <Link href="/work" className="shrink-0 hover:text-white">
-              Showroom
-            </Link>
-            <Link href="/credentials" className="shrink-0 hover:text-white">
-              Credentials
-            </Link>
-            <Link href="/demos" className="shrink-0 hover:text-white">
-              Demos
             </Link>
             <Link href="/pricing" className="shrink-0 hover:text-white">
               Pricing
             </Link>
-            <Link
-              href="/devil-to-developer"
-              className="shrink-0 hover:text-white"
-            >
-              Initiative
-            </Link>
-            <Link href="/apprenticeship" className="shrink-0 hover:text-white">
-              Learning path
+            <Link href="/work" className="shrink-0 hover:text-white">
+              Work
             </Link>
             {hasClerkKeys && (
               <Show when="signed-out">
@@ -190,13 +172,10 @@ function SiteContent({ children }: Readonly<{ children: React.ReactNode }>) {
             )}
           </nav>
           <div className="flex items-center gap-3">
-            <BookingModal className="rounded-full border border-greenglow/40 px-4 py-2 text-xs font-semibold uppercase tracking-[0.12em] text-white transition hover:bg-greenglow/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-greenglow" />
-            <Link
-              href="/merch"
-              className="shrink-0 rounded-full border border-electric/40 bg-electric/15 px-4 py-2 text-xs font-semibold uppercase tracking-[0.12em] text-white transition hover:bg-electric/25 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-electric"
-            >
-              Merch
-            </Link>
+            <BookingModal
+              label="Free consultation"
+              className="hidden rounded-full border border-greenglow/40 px-4 py-2 text-xs font-semibold uppercase tracking-[0.12em] text-white transition hover:bg-greenglow/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-greenglow md:inline-flex"
+            />
             {hasClerkKeys && (
               <Show when="signed-out">
                 <span className="hidden items-center gap-3 text-sm lg:flex">
@@ -266,12 +245,6 @@ function SiteContent({ children }: Readonly<{ children: React.ReactNode }>) {
             </Link>
             <Link href="/pricing" className="hover:text-white">
               Pricing
-            </Link>
-            <Link href="/merch" className="hover:text-white">
-              Merch
-            </Link>
-            <Link href="/demos" className="hover:text-white">
-              Demos
             </Link>
             {hasClerkKeys && (
               <Link href="/dashboard" className="hover:text-white">
