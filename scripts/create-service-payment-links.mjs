@@ -55,6 +55,8 @@ const SERVICES = [
   ['public-data-monitoring-and-alerts', 'prod_VGpAHXYYJ8Wz4j', 35000, 'month'],
   ['developer-change-block', 'prod_VMYXxVFmEBJeGG', 52500, 'month'],
   ['fee-developer-protection', 'prod_VMYXp4kwWjCU4c', 85000, 'month'],
+  // Own Your .com Starter, created 2026-11-08 (promotion codes off on its link).
+  ['own-your-dotcom-starter', 'prod_VaqAhRsodpGstv', 20000],
 ];
 
 const OUTPUT = path.join('lib', 'service-checkout-links.json');
