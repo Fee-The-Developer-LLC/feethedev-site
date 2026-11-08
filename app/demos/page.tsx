@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
+import { notFound, redirect } from 'next/navigation';
 import { PageIntro } from '@/components/PageIntro';
 import { Tilt3D } from '@/components/Tilt3D';
 import {
@@ -8,13 +9,21 @@ import {
   wardrobeCapsules,
   watchCapsule,
 } from '@/lib/character-studio';
+import { getPortalViewer } from '@/lib/portal/server';
 
 export const metadata: Metadata = {
   title: 'Character Studio Demos',
   description:
     'Fee The Developer character, wardrobe, staff-concept, ad-model, and spokesperson demonstrations.',
-  alternates: { canonical: '/demos' },
+  robots: { index: false, follow: false },
 };
+
+// Internal studio tooling: visible only to PORTAL_ADMIN_EMAILS accounts.
+export const dynamic = 'force-dynamic';
+
+const hasClerkKeys = Boolean(
+  process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY && process.env.CLERK_SECRET_KEY,
+);
 
 const statusStyles = {
   'identity locked': 'border-greenglow/35 bg-greenglow/10 text-greenglow',
@@ -22,7 +31,12 @@ const statusStyles = {
   casting: 'border-redglow/35 bg-redglow/10 text-orange-200',
 } as const;
 
-export default function DemosPage() {
+export default async function DemosPage() {
+  if (!hasClerkKeys) notFound();
+  const viewer = await getPortalViewer();
+  if (!viewer) redirect('/sign-in?redirect_url=/demos');
+  if (!viewer.isAdmin) notFound();
+
   return (
     <main id="main-content" className="min-h-screen pb-24">
       <PageIntro

@@ -5,6 +5,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "postbuild": "node scripts/check-public-copy.mjs",
+    "check:copy": "node scripts/check-public-copy.mjs",
     "start": "next start",
     "lint": "next lint",
     "format": "prettier --write .",
