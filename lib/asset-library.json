@@ -1,0 +1,821 @@
+[
+  {
+    "id": "abstract-digital-landscape-with-38cc65cf",
+    "category": "graphics",
+    "src": "/library/graphics/abstract-digital-landscape-with-38cc65cf.webp",
+    "label": "Abstract digital landscape with",
+    "width": 1376,
+    "height": 768,
+    "orientation": "landscape"
+  },
+  {
+    "id": "adult-auto-detailer-professional-ee1d3322",
+    "category": "people",
+    "src": "/library/people/adult-auto-detailer-professional-ee1d3322.webp",
+    "label": "Adult auto detailer professional",
+    "width": 896,
+    "height": 1200,
+    "orientation": "portrait"
+  },
+  {
+    "id": "adult-male-restaurant-owner-posing-24efb2ea",
+    "category": "people",
+    "src": "/library/people/adult-male-restaurant-owner-posing-24efb2ea.webp",
+    "label": "Adult male restaurant owner posing",
+    "width": 896,
+    "height": 1200,
+    "orientation": "portrait"
+  },
+  {
+    "id": "attorney-posing-for-headshot-439566c6",
+    "category": "people",
+    "src": "/library/people/attorney-posing-for-headshot-439566c6.webp",
+    "label": "Attorney posing for headshot",
+    "width": 896,
+    "height": 1200,
+    "orientation": "portrait"
+  },
+  {
+    "id": "bakery-owner-posing-for-headshot-208fd3ad",
+    "category": "people",
+    "src": "/library/people/bakery-owner-posing-for-headshot-208fd3ad.webp",
+    "label": "Bakery owner posing for headshot",
+    "width": 896,
+    "height": 1200,
+    "orientation": "portrait"
+  },
+  {
+    "id": "business-owner-holding-delivery-bag-9863ea6e",
+    "category": "people",
+    "src": "/library/people/business-owner-holding-delivery-bag-9863ea6e.webp",
+    "label": "Business owner holding delivery bag",
+    "width": 896,
+    "height": 1200,
+    "orientation": "portrait"
+  },
+  {
+    "id": "business-owner-posing-for-headshot-189c612a",
+    "category": "people",
+    "src": "/library/people/business-owner-posing-for-headshot-189c612a.webp",
+    "label": "Business owner posing for headshot",
+    "width": 896,
+    "height": 1200,
+    "orientation": "portrait"
+  },
+  {
+    "id": "businesswoman-posing-for-corpora-e859fd0a",
+    "category": "people",
+    "src": "/library/people/businesswoman-posing-for-corpora-e859fd0a.webp",
+    "label": "Businesswoman posing for corpora",
+    "width": 896,
+    "height": 1200,
+    "orientation": "portrait"
+  },
+  {
+    "id": "businesswoman-posing-for-corpora-ee55169b",
+    "category": "people",
+    "src": "/library/people/businesswoman-posing-for-corpora-ee55169b.webp",
+    "label": "Businesswoman posing for corpora",
+    "width": 896,
+    "height": 1200,
+    "orientation": "portrait"
+  },
+  {
+    "id": "businesswoman-posing-in-studio-b-e77793f2",
+    "category": "people",
+    "src": "/library/people/businesswoman-posing-in-studio-b-e77793f2.webp",
+    "label": "Businesswoman posing in studio b",
+    "width": 896,
+    "height": 1200,
+    "orientation": "portrait"
+  },
+  {
+    "id": "chrome-map-pin-above-storefront-ef4ca26c",
+    "category": "graphics",
+    "src": "/library/graphics/chrome-map-pin-above-storefront-ef4ca26c.webp",
+    "label": "Chrome map pin above storefront",
+    "width": 1024,
+    "height": 1024,
+    "orientation": "square"
+  },
+  {
+    "id": "client-consultation-lounge-inter-92dc18e8",
+    "category": "spaces",
+    "src": "/library/spaces/client-consultation-lounge-inter-92dc18e8.webp",
+    "label": "Client consultation lounge inter",
+    "width": 1376,
+    "height": 768,
+    "orientation": "landscape"
+  },
+  {
+    "id": "colorful-developer-logo-on-black-f7a70767",
+    "category": "brand",
+    "src": "/library/brand/colorful-developer-logo-on-black-f7a70767.webp",
+    "label": "Colorful developer logo on black",
+    "width": 1209,
+    "height": 1300,
+    "orientation": "portrait"
+  },
+  {
+    "id": "conference-room-with-dashboard-d-30583f8c",
+    "category": "spaces",
+    "src": "/library/spaces/conference-room-with-dashboard-d-30583f8c.webp",
+    "label": "Conference room with dashboard d",
+    "width": 1376,
+    "height": 768,
+    "orientation": "landscape"
+  },
+  {
+    "id": "contractor-holding-blueprints-po-627c4c69",
+    "category": "people",
+    "src": "/library/people/contractor-holding-blueprints-po-627c4c69.webp",
+    "label": "Contractor holding blueprints po",
+    "width": 896,
+    "height": 1200,
+    "orientation": "portrait"
+  },
+  {
+    "id": "creator-holding-phone-on-gimbal-811a7115",
+    "category": "people",
+    "src": "/library/people/creator-holding-phone-on-gimbal-811a7115.webp",
+    "label": "Creator holding phone on gimbal",
+    "width": 896,
+    "height": 1200,
+    "orientation": "portrait"
+  },
+  {
+    "id": "data-analyst-holding-laptop-e99f1e05",
+    "category": "people",
+    "src": "/library/people/data-analyst-holding-laptop-e99f1e05.webp",
+    "label": "Data analyst holding laptop",
+    "width": 896,
+    "height": 1200,
+    "orientation": "portrait"
+  },
+  {
+    "id": "delivery-driver-posing-for-headshot-01935f33",
+    "category": "people",
+    "src": "/library/people/delivery-driver-posing-for-headshot-01935f33.webp",
+    "label": "Delivery driver posing for headshot",
+    "width": 896,
+    "height": 1200,
+    "orientation": "portrait"
+  },
+  {
+    "id": "developer-office-interior-design-a0ccf1b9",
+    "category": "spaces",
+    "src": "/library/spaces/developer-office-interior-design-a0ccf1b9.webp",
+    "label": "Developer office interior design",
+    "width": 1376,
+    "height": 768,
+    "orientation": "landscape"
+  },
+  {
+    "id": "digital-earth-globe-graphic-bdf47ea1",
+    "category": "brand",
+    "src": "/library/brand/digital-earth-globe-graphic-bdf47ea1.webp",
+    "label": "Digital earth globe graphic",
+    "width": 1024,
+    "height": 1024,
+    "orientation": "square"
+  },
+  {
+    "id": "empty-modern-coworking-loft-at-55f5fe09",
+    "category": "spaces",
+    "src": "/library/spaces/empty-modern-coworking-loft-at-55f5fe09.webp",
+    "label": "Empty modern coworking loft at",
+    "width": 1376,
+    "height": 768,
+    "orientation": "landscape"
+  },
+  {
+    "id": "empty-studio-with-colorful-lights-ef6bccf3",
+    "category": "spaces",
+    "src": "/library/spaces/empty-studio-with-colorful-lights-ef6bccf3.webp",
+    "label": "Empty studio with colorful lights",
+    "width": 1376,
+    "height": 768,
+    "orientation": "landscape"
+  },
+  {
+    "id": "fitness-coach-posing-for-headshot-2d5a7cda",
+    "category": "people",
+    "src": "/library/people/fitness-coach-posing-for-headshot-2d5a7cda.webp",
+    "label": "Fitness coach posing for headshot",
+    "width": 896,
+    "height": 1200,
+    "orientation": "portrait"
+  },
+  {
+    "id": "floating-browser-window-glowing-960a9dfc",
+    "category": "graphics",
+    "src": "/library/graphics/floating-browser-window-glowing-960a9dfc.webp",
+    "label": "Floating browser window glowing",
+    "width": 1024,
+    "height": 1024,
+    "orientation": "square"
+  },
+  {
+    "id": "floating-dashboard-with-bar-charts-b3d74149",
+    "category": "graphics",
+    "src": "/library/graphics/floating-dashboard-with-bar-charts-b3d74149.webp",
+    "label": "Floating dashboard with bar charts",
+    "width": 1024,
+    "height": 1024,
+    "orientation": "square"
+  },
+  {
+    "id": "founder-posing-for-headshot-64ad2549",
+    "category": "people",
+    "src": "/library/people/founder-posing-for-headshot-64ad2549.webp",
+    "label": "Founder posing for headshot",
+    "width": 896,
+    "height": 1200,
+    "orientation": "portrait"
+  },
+  {
+    "id": "freight-dispatcher-wearing-headset-626a6dde",
+    "category": "people",
+    "src": "/library/people/freight-dispatcher-wearing-headset-626a6dde.webp",
+    "label": "Freight dispatcher wearing headset",
+    "width": 896,
+    "height": 1200,
+    "orientation": "portrait"
+  },
+  {
+    "id": "futuristic-server-room-corridor-036287e5",
+    "category": "spaces",
+    "src": "/library/spaces/futuristic-server-room-corridor-036287e5.webp",
+    "label": "Futuristic server room corridor",
+    "width": 1376,
+    "height": 768,
+    "orientation": "landscape"
+  },
+  {
+    "id": "gears-surrounding-glowing-neural-55c25d43",
+    "category": "graphics",
+    "src": "/library/graphics/gears-surrounding-glowing-neural-55c25d43.webp",
+    "label": "Gears surrounding glowing neural",
+    "width": 1024,
+    "height": 1024,
+    "orientation": "square"
+  },
+  {
+    "id": "glass-cloud-linked-to-documents-b0d493d9",
+    "category": "graphics",
+    "src": "/library/graphics/glass-cloud-linked-to-documents-b0d493d9.webp",
+    "label": "Glass cloud linked to documents",
+    "width": 1024,
+    "height": 1024,
+    "orientation": "square"
+  },
+  {
+    "id": "glass-ribbons-flowing-on-background-baa444e6",
+    "category": "graphics",
+    "src": "/library/graphics/glass-ribbons-flowing-on-background-baa444e6.webp",
+    "label": "Glass ribbons flowing on background",
+    "width": 1376,
+    "height": 768,
+    "orientation": "landscape"
+  },
+  {
+    "id": "glass-server-room-with-racks-aa80aea5",
+    "category": "graphics",
+    "src": "/library/graphics/glass-server-room-with-racks-aa80aea5.webp",
+    "label": "Glass server room with racks",
+    "width": 1376,
+    "height": 768,
+    "orientation": "landscape"
+  },
+  {
+    "id": "globe-rotating-with-streaming-co-cb0452b8",
+    "category": "video",
+    "src": "/library/video/globe-rotating-with-streaming-co-cb0452b8.mp4",
+    "label": "Globe rotating with streaming co",
+    "width": null,
+    "height": null,
+    "orientation": null
+  },
+  {
+    "id": "glowing-code-brackets-on-cube-6b7f15f4",
+    "category": "graphics",
+    "src": "/library/graphics/glowing-code-brackets-on-cube-6b7f15f4.webp",
+    "label": "Glowing code brackets on cube",
+    "width": 1024,
+    "height": 1024,
+    "orientation": "square"
+  },
+  {
+    "id": "hallway-with-brand-mural-04a73c0d",
+    "category": "spaces",
+    "src": "/library/spaces/hallway-with-brand-mural-04a73c0d.webp",
+    "label": "Hallway with brand mural",
+    "width": 1376,
+    "height": 768,
+    "orientation": "landscape"
+  },
+  {
+    "id": "holographic-data-tunnel-streamin-7b1f2363",
+    "category": "graphics",
+    "src": "/library/graphics/holographic-data-tunnel-streamin-7b1f2363.webp",
+    "label": "Holographic data tunnel streamin",
+    "width": 1376,
+    "height": 768,
+    "orientation": "landscape"
+  },
+  {
+    "id": "holographic-globe-with-orbit-rings-31c85b13",
+    "category": "graphics",
+    "src": "/library/graphics/holographic-globe-with-orbit-rings-31c85b13.webp",
+    "label": "Holographic globe with orbit rings",
+    "width": 1376,
+    "height": 768,
+    "orientation": "landscape"
+  },
+  {
+    "id": "isometric-3d-miniature-street-bu-5cd330fa",
+    "category": "graphics",
+    "src": "/library/graphics/isometric-3d-miniature-street-bu-5cd330fa.webp",
+    "label": "Isometric 3d miniature street bu",
+    "width": 1376,
+    "height": 768,
+    "orientation": "landscape"
+  },
+  {
+    "id": "logo-zooming-out-with-changing-aa880ec4",
+    "category": "brand",
+    "src": "/library/brand/logo-zooming-out-with-changing-aa880ec4.webp",
+    "label": "Logo zooming out with changing",
+    "width": 768,
+    "height": 1376,
+    "orientation": "portrait"
+  },
+  {
+    "id": "man-holding-clippers-9ca7f859",
+    "category": "people",
+    "src": "/library/people/man-holding-clippers-9ca7f859.webp",
+    "label": "Man holding clippers",
+    "width": 896,
+    "height": 1200,
+    "orientation": "portrait"
+  },
+  {
+    "id": "man-holding-laptop-in-studio-993ec0a6",
+    "category": "people",
+    "src": "/library/people/man-holding-laptop-in-studio-993ec0a6.webp",
+    "label": "Man holding laptop in studio",
+    "width": 896,
+    "height": 1200,
+    "orientation": "portrait"
+  },
+  {
+    "id": "man-holding-tablet-in-studio-b16ca8a5",
+    "category": "people",
+    "src": "/library/people/man-holding-tablet-in-studio-b16ca8a5.webp",
+    "label": "Man holding tablet in studio",
+    "width": 896,
+    "height": 1200,
+    "orientation": "portrait"
+  },
+  {
+    "id": "man-in-suit-posing-d4a2e32f",
+    "category": "people",
+    "src": "/library/people/man-in-suit-posing-d4a2e32f.webp",
+    "label": "Man in suit posing",
+    "width": 896,
+    "height": 1200,
+    "orientation": "portrait"
+  },
+  {
+    "id": "man-posing-for-corporate-headshot-4dcbc404",
+    "category": "people",
+    "src": "/library/people/man-posing-for-corporate-headshot-4dcbc404.webp",
+    "label": "Man posing for corporate headshot",
+    "width": 896,
+    "height": 1200,
+    "orientation": "portrait"
+  },
+  {
+    "id": "man-posing-for-corporate-headshot-98381789",
+    "category": "people",
+    "src": "/library/people/man-posing-for-corporate-headshot-98381789.webp",
+    "label": "Man posing for corporate headshot",
+    "width": 896,
+    "height": 1200,
+    "orientation": "portrait"
+  },
+  {
+    "id": "man-posing-for-corporate-headshot-fc923166",
+    "category": "people",
+    "src": "/library/people/man-posing-for-corporate-headshot-fc923166.webp",
+    "label": "Man posing for corporate headshot",
+    "width": 896,
+    "height": 1200,
+    "orientation": "portrait"
+  },
+  {
+    "id": "man-posing-for-headshot-cc409442",
+    "category": "people",
+    "src": "/library/people/man-posing-for-headshot-cc409442.webp",
+    "label": "Man posing for headshot",
+    "width": 896,
+    "height": 1200,
+    "orientation": "portrait"
+  },
+  {
+    "id": "man-posing-for-portrait-157ff103",
+    "category": "people",
+    "src": "/library/people/man-posing-for-portrait-157ff103.webp",
+    "label": "Man posing for portrait",
+    "width": 896,
+    "height": 1200,
+    "orientation": "portrait"
+  },
+  {
+    "id": "man-posing-for-professional-head-5f384559",
+    "category": "people",
+    "src": "/library/people/man-posing-for-professional-head-5f384559.webp",
+    "label": "Man posing for professional head",
+    "width": 896,
+    "height": 1200,
+    "orientation": "portrait"
+  },
+  {
+    "id": "man-posing-in-red-hoodie-19ab035e",
+    "category": "people",
+    "src": "/library/people/man-posing-in-red-hoodie-19ab035e.webp",
+    "label": "Man posing in red hoodie",
+    "width": 896,
+    "height": 1200,
+    "orientation": "portrait"
+  },
+  {
+    "id": "man-posing-in-studio-e74cf7cc",
+    "category": "people",
+    "src": "/library/people/man-posing-in-studio-e74cf7cc.webp",
+    "label": "Man posing in studio",
+    "width": 896,
+    "height": 1200,
+    "orientation": "portrait"
+  },
+  {
+    "id": "man-posing-in-studio-portrait-0098bda4",
+    "category": "people",
+    "src": "/library/people/man-posing-in-studio-portrait-0098bda4.webp",
+    "label": "Man posing in studio portrait",
+    "width": 896,
+    "height": 1200,
+    "orientation": "portrait"
+  },
+  {
+    "id": "man-posing-in-studio-portrait-d3fd8680",
+    "category": "people",
+    "src": "/library/people/man-posing-in-studio-portrait-d3fd8680.webp",
+    "label": "Man posing in studio portrait",
+    "width": 896,
+    "height": 1200,
+    "orientation": "portrait"
+  },
+  {
+    "id": "man-wearing-bomber-jacket-portrait-c2906478",
+    "category": "people",
+    "src": "/library/people/man-wearing-bomber-jacket-portrait-c2906478.webp",
+    "label": "Man wearing bomber jacket portrait",
+    "width": 896,
+    "height": 1200,
+    "orientation": "portrait"
+  },
+  {
+    "id": "man-wearing-studio-headphones-3834a5bb",
+    "category": "people",
+    "src": "/library/people/man-wearing-studio-headphones-3834a5bb.webp",
+    "label": "Man wearing studio headphones",
+    "width": 896,
+    "height": 1200,
+    "orientation": "portrait"
+  },
+  {
+    "id": "mechanic-holding-wrench-portrait-c27c72bd",
+    "category": "people",
+    "src": "/library/people/mechanic-holding-wrench-portrait-c27c72bd.webp",
+    "label": "Mechanic holding wrench portrait",
+    "width": 896,
+    "height": 1200,
+    "orientation": "portrait"
+  },
+  {
+    "id": "merch-showroom-wall-with-apparel-841a0bdd",
+    "category": "spaces",
+    "src": "/library/spaces/merch-showroom-wall-with-apparel-841a0bdd.webp",
+    "label": "Merch showroom wall with apparel",
+    "width": 1376,
+    "height": 768,
+    "orientation": "landscape"
+  },
+  {
+    "id": "modern-office-entrance-at-night-e0bd650d",
+    "category": "spaces",
+    "src": "/library/spaces/modern-office-entrance-at-night-e0bd650d.webp",
+    "label": "Modern office entrance at night",
+    "width": 1376,
+    "height": 768,
+    "orientation": "landscape"
+  },
+  {
+    "id": "motion-designer-posing-for-headshot-9118ca26",
+    "category": "people",
+    "src": "/library/people/motion-designer-posing-for-headshot-9118ca26.webp",
+    "label": "Motion designer posing for headshot",
+    "width": 896,
+    "height": 1200,
+    "orientation": "portrait"
+  },
+  {
+    "id": "nebula-with-glowing-orbit-trails-7f144a9e",
+    "category": "graphics",
+    "src": "/library/graphics/nebula-with-glowing-orbit-trails-7f144a9e.webp",
+    "label": "Nebula with glowing orbit trails",
+    "width": 1376,
+    "height": 768,
+    "orientation": "landscape"
+  },
+  {
+    "id": "neon-lights-reflect-on-rooftop-ba58814c",
+    "category": "spaces",
+    "src": "/library/spaces/neon-lights-reflect-on-rooftop-ba58814c.webp",
+    "label": "Neon lights reflect on rooftop",
+    "width": 1376,
+    "height": 768,
+    "orientation": "landscape"
+  },
+  {
+    "id": "office-with-desk-and-monitors-58009d3e",
+    "category": "spaces",
+    "src": "/library/spaces/office-with-desk-and-monitors-58009d3e.webp",
+    "label": "Office with desk and monitors",
+    "width": 1376,
+    "height": 768,
+    "orientation": "landscape"
+  },
+  {
+    "id": "open-plan-office-at-night-cf273fef",
+    "category": "spaces",
+    "src": "/library/spaces/open-plan-office-at-night-cf273fef.webp",
+    "label": "Open plan office at night",
+    "width": 1376,
+    "height": 768,
+    "orientation": "landscape"
+  },
+  {
+    "id": "open-laptop-with-floating-panels-cca7f476",
+    "category": "graphics",
+    "src": "/library/graphics/open-laptop-with-floating-panels-cca7f476.webp",
+    "label": "Open laptop with floating panels",
+    "width": 1376,
+    "height": 768,
+    "orientation": "landscape"
+  },
+  {
+    "id": "payment-card-with-check-mark-31acfea4",
+    "category": "graphics",
+    "src": "/library/graphics/payment-card-with-check-mark-31acfea4.webp",
+    "label": "Payment card with check mark",
+    "width": 1024,
+    "height": 1024,
+    "orientation": "square"
+  },
+  {
+    "id": "podcast-studio-interior-design-3a91ba4f",
+    "category": "spaces",
+    "src": "/library/spaces/podcast-studio-interior-design-3a91ba4f.webp",
+    "label": "Podcast studio interior design",
+    "width": 1376,
+    "height": 768,
+    "orientation": "landscape"
+  },
+  {
+    "id": "professional-corporate-headshot-fe45d9b7",
+    "category": "people",
+    "src": "/library/people/professional-corporate-headshot-fe45d9b7.webp",
+    "label": "Professional corporate headshot",
+    "width": 896,
+    "height": 1200,
+    "orientation": "portrait"
+  },
+  {
+    "id": "professional-headshot-of-qa-engi-4ec7722b",
+    "category": "people",
+    "src": "/library/people/professional-headshot-of-qa-engi-4ec7722b.webp",
+    "label": "Professional headshot of qa engi",
+    "width": 896,
+    "height": 1200,
+    "orientation": "portrait"
+  },
+  {
+    "id": "professional-headshot-of-woman-73cdde93",
+    "category": "people",
+    "src": "/library/people/professional-headshot-of-woman-73cdde93.webp",
+    "label": "Professional headshot of woman",
+    "width": 896,
+    "height": 1200,
+    "orientation": "portrait"
+  },
+  {
+    "id": "professional-headshot-of-woman-9cd65fb6",
+    "category": "people",
+    "src": "/library/people/professional-headshot-of-woman-9cd65fb6.webp",
+    "label": "Professional headshot of woman",
+    "width": 896,
+    "height": 1200,
+    "orientation": "portrait"
+  },
+  {
+    "id": "professional-headshot-of-woman-cd563a38",
+    "category": "people",
+    "src": "/library/people/professional-headshot-of-woman-cd563a38.webp",
+    "label": "Professional headshot of woman",
+    "width": 896,
+    "height": 1200,
+    "orientation": "portrait"
+  },
+  {
+    "id": "professional-in-scrubs-smiling-e985fe9f",
+    "category": "people",
+    "src": "/library/people/professional-in-scrubs-smiling-e985fe9f.webp",
+    "label": "Professional in scrubs smiling",
+    "width": 896,
+    "height": 1200,
+    "orientation": "portrait"
+  },
+  {
+    "id": "professional-posing-for-corporat-b268bf75",
+    "category": "people",
+    "src": "/library/people/professional-posing-for-corporat-b268bf75.webp",
+    "label": "Professional posing for corporat",
+    "width": 896,
+    "height": 1200,
+    "orientation": "portrait"
+  },
+  {
+    "id": "professional-woman-smiling-for-h-dec220e3",
+    "category": "people",
+    "src": "/library/people/professional-woman-smiling-for-h-dec220e3.webp",
+    "label": "Professional woman smiling for h",
+    "width": 896,
+    "height": 1200,
+    "orientation": "portrait"
+  },
+  {
+    "id": "rain-wet-street-with-storefronts-cf1bfd80",
+    "category": "spaces",
+    "src": "/library/spaces/rain-wet-street-with-storefronts-cf1bfd80.webp",
+    "label": "Rain wet street with storefronts",
+    "width": 1376,
+    "height": 768,
+    "orientation": "landscape"
+  },
+  {
+    "id": "real-estate-agent-posing-fb5cb344",
+    "category": "people",
+    "src": "/library/people/real-estate-agent-posing-fb5cb344.webp",
+    "label": "Real estate agent posing",
+    "width": 896,
+    "height": 1200,
+    "orientation": "portrait"
+  },
+  {
+    "id": "reception-lobby-with-backlit-sign-01dc45b8",
+    "category": "spaces",
+    "src": "/library/spaces/reception-lobby-with-backlit-sign-01dc45b8.webp",
+    "label": "Reception lobby with backlit sign",
+    "width": 1376,
+    "height": 768,
+    "orientation": "landscape"
+  },
+  {
+    "id": "rocket-lifting-off-launch-pad-6d679c6e",
+    "category": "graphics",
+    "src": "/library/graphics/rocket-lifting-off-launch-pad-6d679c6e.webp",
+    "label": "Rocket lifting off launch pad",
+    "width": 1376,
+    "height": 768,
+    "orientation": "landscape"
+  },
+  {
+    "id": "sunrise-over-empty-highway-skyline-ed9ef673",
+    "category": "spaces",
+    "src": "/library/spaces/sunrise-over-empty-highway-skyline-ed9ef673.webp",
+    "label": "Sunrise over empty highway skyline",
+    "width": 1376,
+    "height": 768,
+    "orientation": "landscape"
+  },
+  {
+    "id": "teacher-posing-for-headshot-4ee7fc6c",
+    "category": "people",
+    "src": "/library/people/teacher-posing-for-headshot-4ee7fc6c.webp",
+    "label": "Teacher posing for headshot",
+    "width": 896,
+    "height": 1200,
+    "orientation": "portrait"
+  },
+  {
+    "id": "texas-city-skyline-traffic-trails-13326a03",
+    "category": "spaces",
+    "src": "/library/spaces/texas-city-skyline-traffic-trails-13326a03.webp",
+    "label": "Texas city skyline traffic trails",
+    "width": 1376,
+    "height": 768,
+    "orientation": "landscape"
+  },
+  {
+    "id": "video-call-backdrop-with-plant-e8939efa",
+    "category": "spaces",
+    "src": "/library/spaces/video-call-backdrop-with-plant-e8939efa.webp",
+    "label": "Video call backdrop with plant",
+    "width": 1376,
+    "height": 768,
+    "orientation": "landscape"
+  },
+  {
+    "id": "woman-holding-tablet-80adf458",
+    "category": "people",
+    "src": "/library/people/woman-holding-tablet-80adf458.webp",
+    "label": "Woman holding tablet",
+    "width": 896,
+    "height": 1200,
+    "orientation": "portrait"
+  },
+  {
+    "id": "woman-posing-for-corporate-headshot-8c1313da",
+    "category": "people",
+    "src": "/library/people/woman-posing-for-corporate-headshot-8c1313da.webp",
+    "label": "Woman posing for corporate headshot",
+    "width": 896,
+    "height": 1200,
+    "orientation": "portrait"
+  },
+  {
+    "id": "woman-posing-for-corporate-headshot-8eecb908",
+    "category": "people",
+    "src": "/library/people/woman-posing-for-corporate-headshot-8eecb908.webp",
+    "label": "Woman posing for corporate headshot",
+    "width": 896,
+    "height": 1200,
+    "orientation": "portrait"
+  },
+  {
+    "id": "woman-posing-for-corporate-headshot-b0937301",
+    "category": "people",
+    "src": "/library/people/woman-posing-for-corporate-headshot-b0937301.webp",
+    "label": "Woman posing for corporate headshot",
+    "width": 896,
+    "height": 1200,
+    "orientation": "portrait"
+  },
+  {
+    "id": "woman-posing-for-corporate-headshot-b8d2c06c",
+    "category": "people",
+    "src": "/library/people/woman-posing-for-corporate-headshot-b8d2c06c.webp",
+    "label": "Woman posing for corporate headshot",
+    "width": 896,
+    "height": 1200,
+    "orientation": "portrait"
+  },
+  {
+    "id": "woman-posing-for-corporate-headshot-ef72b974",
+    "category": "people",
+    "src": "/library/people/woman-posing-for-corporate-headshot-ef72b974.webp",
+    "label": "Woman posing for corporate headshot",
+    "width": 896,
+    "height": 1200,
+    "orientation": "portrait"
+  },
+  {
+    "id": "woman-posing-for-headshot-81a1e8d6",
+    "category": "people",
+    "src": "/library/people/woman-posing-for-headshot-81a1e8d6.webp",
+    "label": "Woman posing for headshot",
+    "width": 896,
+    "height": 1200,
+    "orientation": "portrait"
+  },
+  {
+    "id": "woman-wearing-red-blazer-3ba85824",
+    "category": "people",
+    "src": "/library/people/woman-wearing-red-blazer-3ba85824.webp",
+    "label": "Woman wearing red blazer",
+    "width": 896,
+    "height": 1200,
+    "orientation": "portrait"
+  },
+  {
+    "id": "zooming-out-in-space-1a219faf",
+    "category": "video",
+    "src": "/library/video/zooming-out-in-space-1a219faf.mp4",
+    "label": "Zooming out in space",
+    "width": null,
+    "height": null,
+    "orientation": null
+  }
+]
