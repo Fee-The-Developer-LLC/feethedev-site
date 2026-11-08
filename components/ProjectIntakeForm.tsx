@@ -33,6 +33,12 @@ function openEmailFallback(data: FormData) {
       ...(normalizePromotionCode(data.get('promotionCode'))
         ? [`Promotion code: ${SIXERS_SEASON_PROMOTION.code}`]
         : []),
+      ...(data.get('veteranDiscount') === 'yes'
+        ? ['Veteran discount: requested (send verification steps)']
+        : []),
+      ...(data.get('paymentPlan') === 'deposit'
+        ? ['Payment: start with a deposit']
+        : []),
       '',
       'Project goals:',
       String(data.get('goals') ?? ''),
@@ -43,8 +49,18 @@ function openEmailFallback(data: FormData) {
 
 export function ProjectIntakeForm({
   initialPromotionCode = '',
+  services,
+  initialService = '',
+  initialVeteran = false,
+  initialDeposit = false,
+  veteranPercent,
 }: {
   initialPromotionCode?: string;
+  services: string[];
+  initialService?: string;
+  initialVeteran?: boolean;
+  initialDeposit?: boolean;
+  veteranPercent: number;
 }) {
   const [state, setState] = useState<IntakeState>('idle');
   // One id per form visit, so a retried or double-clicked submit is stored once.
@@ -190,16 +206,15 @@ export function ProjectIntakeForm({
             className={fieldClass}
             name="service"
             required
-            defaultValue=""
+            defaultValue={initialService}
           >
             <option value="" disabled>
               Select one
             </option>
-            <option>Business Authority System</option>
-            <option>E-Commerce System</option>
-            <option>Custom Software</option>
-            <option>AI Automation & Integration</option>
-            <option>Website Redesign</option>
+            {services.map((service) => (
+              <option key={service}>{service}</option>
+            ))}
+            <option>Something else / not sure yet</option>
           </select>
         </label>
         <label className="space-y-2 text-sm text-slate-200">
@@ -208,10 +223,11 @@ export function ProjectIntakeForm({
             <option value="" disabled>
               Select range
             </option>
-            <option>$1,500–$3,500</option>
-            <option>$3,500–$7,500</option>
-            <option>$7,500–$15,000</option>
-            <option>$15,000+</option>
+            <option>Under $1,000</option>
+            <option>$1,000–$2,500</option>
+            <option>$2,500–$5,000</option>
+            <option>$5,000–$10,000</option>
+            <option>$10,000+</option>
           </select>
         </label>
         <label className="space-y-2 text-sm text-slate-200">
@@ -234,6 +250,43 @@ export function ProjectIntakeForm({
           placeholder="Describe the business problem, users, desired outcome, and required integrations."
         />
       </label>
+      <fieldset className="grid gap-4 rounded-2xl border border-white/10 bg-black/20 p-5 sm:grid-cols-2">
+        <legend className="px-2 text-sm text-slate-200">
+          Discounts and payment
+        </legend>
+        <label className="flex items-start gap-3 text-sm leading-6 text-slate-200">
+          <input
+            type="checkbox"
+            name="veteranDiscount"
+            value="yes"
+            defaultChecked={initialVeteran}
+            className="mt-1 h-4 w-4 accent-greenglow"
+          />
+          <span>
+            I&apos;m a veteran or my business is veteran-owned ({veteranPercent}
+            % off).
+            <span className="block text-xs text-slate-400">
+              We&apos;ll email you how to verify. Please don&apos;t attach
+              documents here.
+            </span>
+          </span>
+        </label>
+        <label className="flex items-start gap-3 text-sm leading-6 text-slate-200">
+          <input
+            type="checkbox"
+            name="paymentPlan"
+            value="deposit"
+            defaultChecked={initialDeposit}
+            className="mt-1 h-4 w-4 accent-greenglow"
+          />
+          <span>
+            I&apos;d like to start with a 30% deposit.
+            <span className="block text-xs text-slate-400">
+              Builds from $1,000. Pay-over-time is also offered at checkout.
+            </span>
+          </span>
+        </label>
+      </fieldset>
       <label
         className="space-y-2 text-sm text-slate-200"
         htmlFor="promotion-code"

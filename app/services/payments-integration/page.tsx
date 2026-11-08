@@ -285,9 +285,10 @@ export default function PaymentsIntegrationPage() {
               Still taking payments through a builder or a button?
             </h2>
             <p className="mt-3 max-w-2xl leading-7 text-slate-300">
-              {paymentsService.price} on its own, or included with Business Site
-              Essentials and every website package above it. Tell us how money
-              moves through your business today and we will map the switch.
+              {paymentsService.price} on its own, or included with every Starter
+              Site, Business Site Essentials and every website package above it.
+              Tell us how money moves through your business today and we will
+              map the switch.
             </p>
           </div>
           <div className="flex flex-wrap gap-3">

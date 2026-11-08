@@ -1,16 +1,53 @@
 /**
  * Runs scripts/sync-pricing.mjs against an in-memory Stripe seeded like the
- * live account before pricing v2 (26 products, one active link each).
+ * live account today (26 products at the pre-v2 prices, one active link each).
  *   npm run pricing:test
  */
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import { test } from 'node:test';
-import { lookupKeyFor, syncPricing, validateCatalog } from './sync-pricing.mjs';
+import {
+  DEPOSIT_SUFFIX,
+  depositCents,
+  lookupKeyFor,
+  syncPricing,
+  validateCatalog,
+} from './sync-pricing.mjs';
 import { catalogToSql } from './pricing-to-sql.mjs';
+import { campaignBrief } from './campaign-brief.mjs';
+import { mintVeteranCode } from './veteran-code.mjs';
 
 const catalogFile = new URL('../lib/pricing-catalog.json', import.meta.url);
 const loadCatalog = () => JSON.parse(fs.readFileSync(catalogFile, 'utf8'));
+
+/** Prices live in Stripe on 2026-11-08 (from the retired link script). */
+const LIVE_PRICES = {
+  'website-launch': 550000,
+  'digital-presence-bundle': 675000,
+  'custom-software-and-automation': 350000,
+  'full-business-system': 1000000,
+  'yelp-profile-setup-or-cleanup': 35000,
+  'apple-business-connect-setup': 35000,
+  'ga4-property-review-audit': 45000,
+  'google-business-profile-setup': 52500,
+  'google-workspace-and-business-email': 52500,
+  'contact-category-location-alignment': 70000,
+  'ga4-setup-and-validation': 92500,
+  'lead-capture-and-crm-automation': 140000,
+  'api-integration-setup': 210000,
+  'ai-assistant-or-chatbot-setup': 210000,
+  'clerk-supabase-completion': 350000,
+  'business-analytics-dashboard': 350000,
+  'custom-public-data-collection-tool': 350000,
+  'strategic-website-redesign': 475000,
+  'business-website-design-and-development': 550000,
+  'e-commerce-or-custom-website-features': 1000000,
+  'website-maintenance-and-support': 17500,
+  'cloud-management': 35000,
+  'public-data-monitoring-and-alerts': 35000,
+  'developer-change-block': 52500,
+  'fee-developer-protection': 85000,
+};
 
 const iter = (rows) =>
   (async function* () {
@@ -21,12 +58,23 @@ class FakeStripe {
   constructor() {
     this.seq = 0;
     this.writes = 0;
-    const db = { products: new Map(), prices: new Map(), links: new Map() };
+    const db = {
+      products: new Map(),
+      prices: new Map(),
+      links: new Map(),
+      coupons: new Map(),
+      promotionCodes: new Map(),
+    };
     this.db = db;
     const id = (p) => `${p}_${++this.seq}`;
     const write = () => {
       this.writes += 1;
     };
+    const missing = () =>
+      Object.assign(new Error('No such resource'), {
+        statusCode: 404,
+        code: 'resource_missing',
+      });
     this.products = {
       list: () => iter([...db.products.values()]),
       retrieve: async (pid, opts = {}) => {
@@ -49,9 +97,8 @@ class FakeStripe {
       },
       update: async (pid, params) => {
         write();
-        const p = db.products.get(pid);
-        Object.assign(p, structuredClone(params));
-        return structuredClone(p);
+        Object.assign(db.products.get(pid), structuredClone(params));
+        return structuredClone(db.products.get(pid));
       },
     };
     const takeKey = (key) => {
@@ -113,6 +160,29 @@ class FakeStripe {
         return structuredClone(db.links.get(lid));
       },
     };
+    this.coupons = {
+      retrieve: async (cid) => {
+        if (!db.coupons.has(cid)) throw missing();
+        return structuredClone(db.coupons.get(cid));
+      },
+      create: async (params) => {
+        write();
+        db.coupons.set(params.id, { valid: true, ...structuredClone(params) });
+        return structuredClone(db.coupons.get(params.id));
+      },
+    };
+    this.promotionCodes = {
+      create: async (params) => {
+        write();
+        const pc = {
+          id: id('promo'),
+          active: true,
+          ...structuredClone(params),
+        };
+        db.promotionCodes.set(pc.id, pc);
+        return structuredClone(pc);
+      },
+    };
   }
 
   /** Seeds a product as the pre-v2 scripts left it. */
@@ -149,15 +219,16 @@ class FakeStripe {
   }
 }
 
-/** The account as it stood on 2026-11-08: every catalog item that has a product. */
+/** The account as it stands on 2026-11-08. */
 function seededStripe(catalog) {
   const stripe = new FakeStripe();
   for (const item of catalog.items) {
     if (item.stripeProductId) {
+      assert.ok(LIVE_PRICES[item.slug], `${item.slug} has a live price`);
       stripe.seed({
         productId: item.stripeProductId,
         slug: item.slug,
-        cents: item.amountCents,
+        cents: LIVE_PRICES[item.slug],
         interval: item.interval,
       });
     }
@@ -172,24 +243,51 @@ function seededStripe(catalog) {
 }
 
 const quiet = () => {};
-const oldLinks = (stripe) =>
+const seedLinks = (stripe) =>
   Object.fromEntries(
     [...stripe.db.links.values()].map((l) => [l.metadata.catalog_slug, l.url]),
+  );
+const linkByUrl = (stripe, url) =>
+  [...stripe.db.links.values()].find((l) => l.url === url);
+const keyed = (stripe, key) =>
+  [...stripe.db.prices.values()].filter(
+    (p) => p.lookup_key === lookupKeyFor(key),
   );
 
 test('the shipped catalog is valid', () => {
   assert.deepEqual(validateCatalog(loadCatalog()), []);
 });
 
-test('validation catches duplicate slugs, bad amounts and unknown intervals', () => {
+test('validation catches duplicate slugs, bad amounts, intervals and deposits', () => {
   const catalog = loadCatalog();
   catalog.items[1].slug = catalog.items[0].slug;
   catalog.items[2].amountCents = 199.5;
   catalog.items[3].interval = 'week';
+  catalog.items[4].depositPercent = 30; // a monthly or flat item cannot take a deposit
   const errors = validateCatalog(catalog).join('\n');
   assert.match(errors, /duplicate slug/);
   assert.match(errors, /amountCents/);
   assert.match(errors, /interval/);
+  assert.match(errors, /deposits apply only/);
+});
+
+test('v3 prices: Own Your Bookings $199 and every other price 30% lower', () => {
+  const catalog = loadCatalog();
+  const bySlug = Object.fromEntries(catalog.items.map((i) => [i.slug, i]));
+  assert.equal(bySlug['own-your-bookings'].amountCents, 19900);
+  assert.equal(bySlug['own-your-bookings'].paymentsIncluded, true);
+  for (const [slug, live] of Object.entries(LIVE_PRICES)) {
+    const item = bySlug[slug];
+    if (item.status !== 'active') continue;
+    assert.ok(
+      item.amountCents <= Math.round(live * 0.7),
+      `${slug} is at least 30% below ${live / 100}`,
+    );
+    assert.ok(
+      item.amountCents >= Math.round(live * 0.7) - 1000,
+      `${slug} is within $10 of exactly 30% off`,
+    );
+  }
 });
 
 test('plan mode writes nothing', async () => {
@@ -205,15 +303,16 @@ test('plan mode writes nothing', async () => {
   assert.ok(
     actions.some(
       (a) =>
-        a.slug === 'own-your-dotcom' && a.what.startsWith('create product'),
+        a.slug === 'own-your-bookings' && a.what.startsWith('create product'),
     ),
   );
+  assert.ok(actions.some((a) => a.slug === 'veteran-discount'));
 });
 
-test('apply creates every new item, reuses unchanged links, and is idempotent', async () => {
+test('apply reprices everything, adds deposits, keeps full price as default, and is idempotent', async () => {
   const catalog = loadCatalog();
   const stripe = seededStripe(catalog);
-  const before = oldLinks(stripe);
+  const before = seedLinks(stripe);
   const { links } = await syncPricing({
     stripe,
     catalog,
@@ -222,26 +321,43 @@ test('apply creates every new item, reuses unchanged links, and is idempotent', 
   });
 
   const active = catalog.items.filter((i) => i.status === 'active');
-  assert.deepEqual(Object.keys(links).sort(), active.map((i) => i.slug).sort());
-  // Unchanged prices keep the exact checkout URL the live site uses today.
-  assert.equal(links['website-launch'], before['website-launch']);
-  assert.equal(
-    links['payments-and-back-end-integration'],
-    before['payments-and-back-end-integration'],
+  const expectedKeys = active.flatMap((i) =>
+    i.depositPercent ? [i.slug, `${i.slug}${DEPOSIT_SUFFIX}`] : [i.slug],
   );
-  assert.ok(!('business-website-design-and-development' in links));
+  assert.deepEqual(Object.keys(links).sort(), expectedKeys.sort());
 
   for (const item of active) {
-    const keyed = [...stripe.db.prices.values()].filter(
-      (p) => p.lookup_key === lookupKeyFor(item.slug),
-    );
-    assert.equal(
-      keyed.length,
-      1,
-      `${item.slug} has exactly one lookup-keyed price`,
-    );
-    assert.equal(keyed[0].unit_amount, item.amountCents);
+    const full = keyed(stripe, item.slug);
+    assert.equal(full.length, 1, `${item.slug} has one full price`);
+    assert.equal(full[0].unit_amount, item.amountCents);
+    if (item.stripeProductId) {
+      assert.equal(
+        stripe.db.products.get(item.stripeProductId).default_price,
+        full[0].id,
+        `${item.slug} default is the full price`,
+      );
+      assert.notEqual(
+        links[item.slug],
+        before[item.slug],
+        `${item.slug} got a new link`,
+      );
+    }
+    if (item.depositPercent) {
+      const dep = keyed(stripe, `${item.slug}${DEPOSIT_SUFFIX}`);
+      assert.equal(dep.length, 1);
+      assert.equal(dep[0].unit_amount, depositCents(item));
+      assert.equal(
+        dep[0].product,
+        full[0].product,
+        'deposit sits on the same product',
+      );
+    }
   }
+  assert.equal(
+    links['website-launch--deposit'] &&
+      keyed(stripe, 'website-launch--deposit')[0].unit_amount,
+    115500,
+  );
 
   const second = await syncPricing({
     stripe,
@@ -253,7 +369,7 @@ test('apply creates every new item, reuses unchanged links, and is idempotent', 
   assert.deepEqual(second.links, links);
 });
 
-test('starter checkout refuses promotion codes; business checkout allows them', async () => {
+test('every link accepts promotion codes and the veteran coupon is created once', async () => {
   const catalog = loadCatalog();
   const stripe = seededStripe(catalog);
   const { links } = await syncPricing({
@@ -262,60 +378,63 @@ test('starter checkout refuses promotion codes; business checkout allows them', 
     mode: 'apply',
     log: quiet,
   });
-  const byUrl = (url) =>
-    [...stripe.db.links.values()].find((l) => l.url === url);
-  assert.equal(byUrl(links['own-your-dotcom']).allow_promotion_codes, false);
-  assert.equal(byUrl(links['keep-live']).allow_promotion_codes, false);
-  assert.equal(byUrl(links['website-launch']).allow_promotion_codes, true);
+  for (const url of Object.values(links)) {
+    assert.equal(linkByUrl(stripe, url).allow_promotion_codes, true, url);
+  }
+  const coupon = stripe.db.coupons.get('ftd-veteran-30');
+  assert.equal(coupon.percent_off, 30);
+  assert.equal(coupon.duration, 'forever');
+  await syncPricing({ stripe, catalog, mode: 'apply', log: quiet });
+  assert.equal(stripe.db.coupons.size, 1);
 });
 
-test('keep-live is billed yearly', async () => {
+test('veteran codes are single-use, expire, and need the coupon', async () => {
+  const catalog = loadCatalog();
+  const stripe = seededStripe(catalog);
+  await assert.rejects(
+    mintVeteranCode({ stripe, catalog, ref: 'intake-123', days: 30 }),
+    /coupon/,
+  );
+  await syncPricing({ stripe, catalog, mode: 'apply', log: quiet });
+  const now = Date.UTC(2026, 10, 8) / 1000;
+  const code = await mintVeteranCode({
+    stripe,
+    catalog,
+    ref: 'intake-123',
+    days: 30,
+    now,
+  });
+  assert.match(code.code, /^VET-[A-HJ-NP-Z2-9]{6}$/);
+  assert.equal(code.coupon, 'ftd-veteran-30');
+  assert.equal(code.max_redemptions, 1);
+  assert.equal(code.expires_at, now + 30 * 86400);
+  assert.equal(code.metadata.verification_ref, 'intake-123');
+  assert.ok(!JSON.stringify(code).includes('@'), 'no email stored on the code');
+});
+
+test('keep-live is billed yearly at $42', async () => {
   const catalog = loadCatalog();
   const stripe = seededStripe(catalog);
   await syncPricing({ stripe, catalog, mode: 'apply', log: quiet });
-  const price = [...stripe.db.prices.values()].find(
-    (p) => p.lookup_key === lookupKeyFor('keep-live'),
-  );
+  const price = keyed(stripe, 'keep-live')[0];
   assert.deepEqual(price.recurring, { interval: 'year' });
-  assert.equal(price.unit_amount, 6000);
+  assert.equal(price.unit_amount, 4200);
 });
 
-test('a price change moves the lookup key, adds a link, and retire switches off the old one only after deploy', async () => {
+test('retire switches off old links only after the new links are deployed', async () => {
   const catalog = loadCatalog();
   const stripe = seededStripe(catalog);
-  const live = oldLinks(stripe);
-  await syncPricing({ stripe, catalog, mode: 'apply', log: quiet });
-
-  const item = catalog.items.find((i) => i.slug === 'website-launch');
-  item.amountCents = 600000;
+  const live = seedLinks(stripe);
   const { links } = await syncPricing({
     stripe,
     catalog,
     mode: 'apply',
     log: quiet,
   });
-  assert.notEqual(links['website-launch'], live['website-launch']);
 
-  const keyed = [...stripe.db.prices.values()].filter(
-    (p) => p.lookup_key === lookupKeyFor('website-launch'),
-  );
-  assert.equal(keyed.length, 1);
-  assert.equal(keyed[0].unit_amount, 600000);
-  assert.equal(
-    stripe.db.products.get(item.stripeProductId).default_price,
-    keyed[0].id,
-  );
+  const oldLaunch = linkByUrl(stripe, live['website-launch']);
+  assert.equal(oldLaunch.active, true, 'apply never switches off a live link');
 
-  const oldLink = [...stripe.db.links.values()].find(
-    (l) => l.url === live['website-launch'],
-  );
-  assert.equal(
-    oldLink.active,
-    true,
-    'apply never switches off the link the live site uses',
-  );
-
-  // Retire before the new links are deployed: the old link is protected.
   const early = await syncPricing({
     stripe,
     catalog,
@@ -323,10 +442,9 @@ test('a price change moves the lookup key, adds a link, and retire switches off 
     deployedLinks: live,
     log: quiet,
   });
-  assert.equal(oldLink.active, true);
+  assert.equal(oldLaunch.active, true);
   assert.ok(early.warnings.some((w) => w.startsWith('website-launch')));
 
-  // Retire after deploy: old link off, old price archived, retired product archived.
   await syncPricing({
     stripe,
     catalog,
@@ -334,16 +452,12 @@ test('a price change moves the lookup key, adds a link, and retire switches off 
     deployedLinks: links,
     log: quiet,
   });
-  const after = [...stripe.db.links.values()].find(
-    (l) => l.url === live['website-launch'],
-  );
-  assert.equal(after.active, false);
-  assert.equal(stripe.db.prices.get(after.price).active, false);
+  assert.equal(linkByUrl(stripe, live['website-launch']).active, false);
+  assert.equal(stripe.db.prices.get(oldLaunch.price).active, false);
   assert.equal(stripe.db.products.get('prod_VMYXNYpDbudov1').active, false);
-  const newLink = [...stripe.db.links.values()].find(
-    (l) => l.url === links['website-launch'],
-  );
-  assert.equal(newLink.active, true);
+  for (const url of Object.values(links)) {
+    assert.equal(linkByUrl(stripe, url).active, true, `${url} stays active`);
+  }
 });
 
 test('an archived listed product stops the sync before any write', async () => {
@@ -379,21 +493,20 @@ test('the Supabase migration covers every catalog item', () => {
   );
 });
 
-test('campaign briefs use catalog prices, scope add-ons, and refuse retired items', async () => {
-  const { campaignBrief } = await import('./campaign-brief.mjs');
+test('campaign briefs use catalog prices, discounts and payment options', () => {
   const catalog = loadCatalog();
-  const own = campaignBrief(catalog, 'own-your-dotcom');
-  assert.match(own, /- Price: \$200\n/);
-  assert.match(own, /Promotion codes: not allowed/);
+  const own = campaignBrief(catalog, 'own-your-bookings');
+  assert.match(own, /- Price: \$199\n/);
+  assert.match(own, /Veteran: 30% off/);
+  assert.match(own, /YOBUL: not available/);
   assert.doesNotMatch(own, /Extra Chair/);
   assert.match(
     campaignBrief(catalog, 'shop-bundle'),
-    /Shop Bundle Extra Chair: \$150/,
+    /Shop Bundle Extra Chair: \$105/,
   );
-  assert.match(
-    campaignBrief(catalog, 'website-launch'),
-    /Price: Starting at \$5,500/,
-  );
+  const launch = campaignBrief(catalog, 'website-launch');
+  assert.match(launch, /Price: Starting at \$3,850/);
+  assert.match(launch, /30% deposit \(\$1,155\)/);
   assert.throws(
     () => campaignBrief(catalog, 'business-website-design-and-development'),
     /retired/,

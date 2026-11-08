@@ -26,12 +26,15 @@ export type CatalogItem = {
   interval: BillingInterval;
   priceMode: PriceMode;
   featured: boolean;
-  promoEligible: boolean;
+  /** The 76ers YOBUL quote discount applies. Never on Starter Sites. */
+  yobulEligible: boolean;
   paymentsIncluded: boolean;
   sortOrder: number;
   description: string;
   includes: string[];
   scopeNote: string;
+  /** Share of the starting price that starts the work; balance invoiced later. */
+  depositPercent?: number;
   /** Limits a starter add-on to the listed parent products. */
   appliesTo?: string[];
   /** Read by scripts/campaign-brief.mjs; featured items carry one. */
@@ -57,7 +60,16 @@ const catalog = pricingCatalog as {
   effectiveDate: string;
   lines: PricingLine[];
   items: CatalogItem[];
+  discounts: {
+    veteran: { percentOff: number };
+    yobul: { percentOff: number };
+  };
 };
+
+/** Veterans and veteran-owned businesses, on top of every price, after proof. */
+export const veteranDiscount = {
+  percentOff: catalog.discounts.veteran.percentOff,
+} as const;
 
 export const pricingVersion = catalog.version;
 
@@ -67,7 +79,7 @@ const usd = new Intl.NumberFormat('en-US', {
   maximumFractionDigits: 0,
 });
 
-/** `$200`, `$60/year`, `Starting at $5,500`, `Starting at $175/month`. */
+/** `$199`, `$42/year`, `Starting at $3,850`, `Starting at $120/month`. */
 export function formatPrice(
   item: Pick<CatalogItem, 'amountCents' | 'interval' | 'priceMode'>,
 ): string {
@@ -100,6 +112,22 @@ export const serviceCheckoutLinks: Record<string, string> = Object.fromEntries(
 );
 export type CheckoutSlug = string;
 
+/** Deposit link and amount for items that can start on a deposit. */
+export function depositFor(
+  item: Pick<CatalogItem, 'slug' | 'amountCents' | 'depositPercent'>,
+): { percent: number; amount: string; href: string } | null {
+  if (!item.depositPercent) return null;
+  const cents =
+    Math.round((item.amountCents * item.depositPercent) / 100 / 100) * 100;
+  return {
+    percent: item.depositPercent,
+    amount: usd.format(cents / 100),
+    href:
+      (checkoutLinks as Record<string, string>)[`${item.slug}--deposit`] ??
+      `/start?service=${item.slug}&plan=deposit`,
+  };
+}
+
 export function getCatalogItem(slug: string): CatalogItem | undefined {
   return activeItems.find((item) => item.slug === slug);
 }
@@ -110,6 +138,11 @@ const withPrice = (item: CatalogItem): PricedItem => ({
   price: formatPrice(item),
 });
 
+/** Featured items for the /start service menu, in display order. */
+export const intakeServices = activeItems
+  .filter((item) => item.featured)
+  .map((item) => ({ slug: item.slug, name: item.name }));
+
 /** Every active line with its items, in display order. */
 export const pricingLines = catalog.lines.map((line) => ({
   ...line,
@@ -117,8 +150,8 @@ export const pricingLines = catalog.lines.map((line) => ({
 }));
 
 /**
- * Solo-pro template products (Own Your .com and its add-ons). Kept apart from
- * the business packages so a $200 template never reads as a custom website.
+ * Starter Sites (Own Your Bookings and its add-ons). Kept apart from the
+ * business packages so a $199 template never reads as a custom website.
  */
 export const starterPricing = activeItems
   .filter((item) => item.line === 'starter')

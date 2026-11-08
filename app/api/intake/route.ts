@@ -27,6 +27,20 @@ function isSameOrigin(request: Request): boolean {
   }
 }
 
+/** Flags ride on `source` so no table change is needed. */
+function intakeSource(intake: {
+  promotionCode: string | null;
+  veteranDiscount: boolean;
+  depositPlan: boolean;
+}): string {
+  const params = new URLSearchParams();
+  if (intake.promotionCode) params.set('promo', intake.promotionCode);
+  if (intake.veteranDiscount) params.set('veteran', '1');
+  if (intake.depositPlan) params.set('plan', 'deposit');
+  const query = params.toString();
+  return query ? `feethedev-site:/start?${query}` : 'feethedev-site:/start';
+}
+
 export async function POST(request: Request) {
   if (!isSameOrigin(request)) return json({ error: 'forbidden' }, 403);
   if (!request.headers.get('content-type')?.includes('application/json')) {
@@ -80,9 +94,7 @@ export async function POST(request: Request) {
           budget_range: intake.budget,
           timeline: intake.timeline,
           goals: intake.goals,
-          source: intake.promotionCode
-            ? `feethedev-site:/start?promo=${intake.promotionCode}`
-            : 'feethedev-site:/start',
+          source: intakeSource(intake),
           user_agent: request.headers.get('user-agent')?.slice(0, 300) ?? null,
         }),
         signal: AbortSignal.timeout(8000),

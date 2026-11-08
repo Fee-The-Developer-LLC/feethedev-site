@@ -17,6 +17,7 @@
     "pricing:sql": "node scripts/pricing-to-sql.mjs",
     "pricing:test": "node --test scripts/sync-pricing.test.mjs",
     "campaign:brief": "node scripts/campaign-brief.mjs",
+    "veteran:code": "node scripts/veteran-code.mjs",
     "cf:secrets": "node scripts/set-cloudflare-secrets.mjs"
   },
   "dependencies": {

@@ -11,7 +11,11 @@
  */
 import fs from 'node:fs';
 import { pathToFileURL } from 'node:url';
-import { CATALOG_PATH, validateCatalog } from './sync-pricing.mjs';
+import {
+  CATALOG_PATH,
+  depositCents,
+  validateCatalog,
+} from './sync-pricing.mjs';
 
 const SITE = 'https://feethedeveloper.com';
 
@@ -32,6 +36,8 @@ export function campaignBrief(catalog, slug) {
   if (!item.campaign)
     throw new Error(`${slug} has no campaign block in the catalog yet.`);
   const c = item.campaign;
+  const vet = catalog.discounts?.veteran;
+  const dollars = (cents) => `$${(cents / 100).toLocaleString('en-US')}`;
   const addOns = catalog.items
     .filter((i) => i.status === 'active' && i.line === item.line && !i.featured)
     .filter((i) => !i.appliesTo || i.appliesTo.includes(item.slug))
@@ -48,8 +54,18 @@ export function campaignBrief(catalog, slug) {
     ...item.includes.map((line) => `- Includes: ${line}`),
     `- Scope: ${item.scopeNote}`,
     `- Payments & Back-End Integration: ${item.paymentsIncluded ? 'included' : 'not included'}`,
-    `- Promotion codes: ${item.promoEligible ? 'allowed' : 'not allowed (fixed price)'}`,
     `- Link: ${SITE}${c.landingPath}`,
+    '',
+    '## Discounts and ways to pay',
+    ...(vet
+      ? [
+          `- Veteran: ${vet.percentOff}% off for veterans and veteran-owned businesses, on top of this price, after proof is verified (single-use code)`,
+        ]
+      : []),
+    `- YOBUL: ${item.yobulEligible ? `${catalog.discounts?.yobul?.percentOff ?? 20}% quote discount for 76ers fans` : 'not available on this item'}`,
+    '- One discount per order.',
+    `- Pay in full${item.depositPercent ? `, or start with a ${item.depositPercent}% deposit (${dollars(depositCents(item))}); the balance is invoiced at design approval and launch` : ''}.`,
+    "- Pay over time with Affirm, Afterpay or Klarna at checkout, subject to the provider's approval.",
     '',
     '## Audience and message',
     `- Audience: ${c.audience}`,
@@ -63,6 +79,7 @@ export function campaignBrief(catalog, slug) {
     '',
     '## Rules',
     '- Only this price, wording and link. Never invent discounts, results, client counts or reviews.',
+    "- Say 'veteran-owned' about Fee The Developer only where the certification is on file.",
     '- Show the price in an ad only once /pricing lists it.',
     "- Every post, DM batch and ad budget needs King Fee's approval first.",
     '- Label AI-generated people and scenes on every platform.',

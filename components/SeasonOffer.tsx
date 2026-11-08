@@ -19,17 +19,17 @@ export function SeasonOffer({ compact = false }: { compact?: boolean }) {
               {SIXERS_SEASON_PROMOTION.code}
             </span>{' '}
             when requesting a quote. It applies across every Fee The Developer
-            service shown on our Services and Pricing pages, except the fixed
-            prices in the Own Your Name starter line. Self-identification as a
-            fan is enough.
+            service shown on our Services and Pricing pages, except Starter
+            Sites. Self-identification as a fan is enough.
           </p>
           {!compact && (
             <p className="mt-3 max-w-3xl text-xs leading-5 text-slate-400">
               Valid for quotes accepted by{' '}
               {SIXERS_SEASON_PROMOTION.validThrough}. For monthly services, the
               discount applies to invoices issued during the offer period. Taxes
-              and third-party charges are not included. Philadelphia 76ers and
-              the NBA do not sponsor or endorse this offer.
+              and third-party charges are not included. One discount per order;
+              veterans get the larger veteran discount instead. Philadelphia
+              76ers and the NBA do not sponsor or endorse this offer.
             </p>
           )}
         </div>

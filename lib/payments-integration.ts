@@ -9,6 +9,12 @@
  * item to "Live" without checking the client repo and the production site.
  */
 
+import { formatPrice, getCatalogItem } from '@/lib/catalog';
+
+const paymentsCatalogItem = getCatalogItem(
+  'payments-and-back-end-integration',
+)!;
+
 export type DeliveryStatus = 'Live' | 'Built';
 
 export const paymentsService = {
@@ -17,8 +23,8 @@ export const paymentsService = {
   shortName: 'Payments integration',
   summary:
     'Replace a borrowed checkout with payments that run on your own Stripe account and connect to the systems behind your business.',
-  // Pricing set by King Fee 2026-11-06.
-  price: '$250',
+  // Price comes from lib/pricing-catalog.json (pricing v3: $175).
+  price: formatPrice(paymentsCatalogItem),
   checkoutSlug: 'payments-and-back-end-integration',
   // Pricing v2 (2026-11): Own Your .com does not include it; see
   // lib/pricing-catalog.json `rules.paymentsIncluded`.

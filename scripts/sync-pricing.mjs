@@ -24,6 +24,12 @@
  * (`transfer_lookup_key`) and becomes the product's default price. Stripe
  * prices are never edited or deleted; old ones are archived in phase 3.
  * Re-running any phase is safe.
+ *
+ * Items with `depositPercent` also get a deposit price on the same product
+ * (lookup key `ftd_service_<slug>__deposit`) and its own Payment Link, keyed
+ * `<slug>--deposit` in the links file. Every link accepts promotion codes so
+ * single-use veteran codes (scripts/veteran-code.mjs) work everywhere; the
+ * veteran coupon itself is created here if it is missing.
  */
 import fs from 'node:fs';
 import path from 'node:path';
@@ -34,6 +40,7 @@ export const LINKS_PATH = path.join('lib', 'service-checkout-links.json');
 const LINES = ['starter', 'websites', 'systems', 'presence', 'care'];
 const INTERVALS = ['one_time', 'month', 'year'];
 const PRICE_MODES = ['flat', 'starting_at'];
+export const DEPOSIT_SUFFIX = '--deposit';
 const CONFIRMATION =
   'Payment received. Fee The Developer will follow up by email to confirm your scope and next steps.';
 
@@ -77,7 +84,17 @@ export function validateCatalog(catalog) {
       errors.push(`${at}: name, description and scopeNote are required`);
     if (!Array.isArray(item.includes))
       errors.push(`${at}: includes must be an array`);
-    for (const flag of ['featured', 'promoEligible', 'paymentsIncluded']) {
+    if (item.depositPercent !== undefined) {
+      if (
+        !Number.isInteger(item.depositPercent) ||
+        item.depositPercent < 1 ||
+        item.depositPercent > 90
+      )
+        errors.push(`${at}: depositPercent must be a whole number 1-90`);
+      if (item.priceMode !== 'starting_at' || item.interval !== 'one_time')
+        errors.push(`${at}: deposits apply only to one-time starting_at items`);
+    }
+    for (const flag of ['featured', 'yobulEligible', 'paymentsIncluded']) {
       if (typeof item[flag] !== 'boolean')
         errors.push(`${at}: ${flag} must be true or false`);
     }
@@ -92,6 +109,29 @@ const priceMatches = (price, item) =>
   price.currency === 'usd' &&
   price.unit_amount === item.amountCents &&
   intervalOf(price) === item.interval;
+export const depositCents = (item) =>
+  Math.round((item.amountCents * item.depositPercent) / 100 / 100) * 100;
+
+/** The things a customer can buy: each item, plus its deposit if it has one. */
+export function sellablesFor(item) {
+  const full = {
+    key: item.slug,
+    amountCents: item.amountCents,
+    interval: item.interval,
+    deposit: false,
+  };
+  if (!item.depositPercent) return [full];
+  return [
+    full,
+    {
+      key: `${item.slug}${DEPOSIT_SUFFIX}`,
+      amountCents: depositCents(item),
+      interval: 'one_time',
+      deposit: true,
+    },
+  ];
+}
+
 const money = (item) =>
   `$${(item.amountCents / 100).toLocaleString('en-US')}${item.interval === 'one_time' ? '' : `/${item.interval}`}`;
 
@@ -111,7 +151,9 @@ async function readStripe(stripe, catalog) {
     if (slug && (!bySlug.has(slug) || p.active)) bySlug.set(slug, p);
   }
 
-  const keys = catalog.items.map((i) => lookupKeyFor(i.slug));
+  const keys = catalog.items
+    .flatMap((i) => sellablesFor(i))
+    .map((s) => lookupKeyFor(s.key));
   const byLookup = new Map();
   for (let i = 0; i < keys.length; i += 10) {
     const page = await collect(
@@ -134,7 +176,18 @@ async function readStripe(stripe, catalog) {
     if (!linksBySlug.has(slug)) linksBySlug.set(slug, []);
     linksBySlug.get(slug).push({ link, priceId });
   }
-  return { byId, bySlug, byLookup, linksBySlug };
+  let coupon = null;
+  if (catalog.discounts?.veteran?.stripeCouponId) {
+    try {
+      coupon = await stripe.coupons.retrieve(
+        catalog.discounts.veteran.stripeCouponId,
+      );
+    } catch (error) {
+      if (error?.statusCode !== 404 && error?.code !== 'resource_missing')
+        throw error;
+    }
+  }
+  return { byId, bySlug, byLookup, linksBySlug, coupon };
 }
 
 function productFields(item, version) {
@@ -239,114 +292,162 @@ export async function syncPricing({
       if (apply) product = await stripe.products.update(product.id, fields);
     }
 
-    // 2. Price: lookup-key price, else the product default, else a new one.
-    let price = null;
-    const keyed = state.byLookup.get(key);
-    if (
-      product &&
-      keyed &&
-      keyed.product === product.id &&
-      priceMatches(keyed, item)
-    ) {
-      price = keyed;
-    } else if (product) {
-      const full = await stripe.products.retrieve(product.id, {
-        expand: ['default_price'],
-      });
-      const def =
-        full.default_price && typeof full.default_price === 'object'
-          ? full.default_price
-          : null;
-      if (priceMatches(def, item)) price = def;
-      else if (def)
-        step(item.slug, `reprice ${def.unit_amount / 100} -> ${money(item)}`);
-    }
+    for (const sell of sellablesFor(item)) {
+      const sellKey = lookupKeyFor(sell.key);
+      const label = sell.deposit
+        ? `${item.slug} deposit (${item.depositPercent}%)`
+        : item.slug;
 
-    if (!price) {
-      step(item.slug, `create price ${money(item)} (lookup key ${key})`);
-      if (apply) {
-        price = await stripe.prices.create(
-          {
-            product: product.id,
-            currency: 'usd',
-            unit_amount: item.amountCents,
-            ...(item.interval === 'one_time'
-              ? {}
-              : { recurring: { interval: item.interval } }),
-            lookup_key: key,
-            transfer_lookup_key: true,
-            metadata: { catalog_slug: item.slug, pricing_version: version },
-          },
-          {
-            idempotencyKey: `${version}:${item.slug}:price:${item.amountCents}:${item.interval}`,
-          },
-        );
-      }
-    } else if (price.lookup_key !== key) {
-      step(item.slug, `set lookup key ${key} on ${price.id}`);
-      if (apply)
-        price = await stripe.prices.update(price.id, {
-          lookup_key: key,
-          transfer_lookup_key: true,
-        });
-    }
-
-    if (product && price) {
-      const full = await stripe.products.retrieve(product.id);
-      const defId =
-        typeof full.default_price === 'object'
-          ? full.default_price?.id
-          : full.default_price;
-      if (defId !== price.id) {
-        step(item.slug, `make ${price.id} the default price`);
-        if (apply)
-          await stripe.products.update(product.id, { default_price: price.id });
-      }
-    }
-    if (price) currentPriceBySlug.set(item.slug, price.id);
-
-    // 3. Payment Link pointing at the current price.
-    const existing = (state.linksBySlug.get(item.slug) ?? []).find(
-      (l) => price && l.priceId === price.id,
-    );
-    if (existing) {
-      links[item.slug] = existing.link.url;
+      // 2. Price: lookup-key price, else the product default (full price
+      // only), else a new one.
+      let price = null;
+      const keyed = state.byLookup.get(sellKey);
       if (
-        mode !== 'retire' &&
-        Boolean(existing.link.allow_promotion_codes) !== item.promoEligible
+        product &&
+        keyed &&
+        keyed.product === product.id &&
+        priceMatches(keyed, sell)
       ) {
-        step(
-          item.slug,
-          `set promotion codes ${item.promoEligible ? 'on' : 'off'}`,
-        );
+        price = keyed;
+      } else if (product && !sell.deposit) {
+        const full = await stripe.products.retrieve(product.id, {
+          expand: ['default_price'],
+        });
+        const def =
+          full.default_price && typeof full.default_price === 'object'
+            ? full.default_price
+            : null;
+        if (priceMatches(def, sell)) price = def;
+        else if (def)
+          step(label, `reprice ${def.unit_amount / 100} -> ${money(sell)}`);
+      }
+
+      if (!price) {
+        step(label, `create price ${money(sell)} (lookup key ${sellKey})`);
         if (apply) {
-          await stripe.paymentLinks.update(existing.link.id, {
-            allow_promotion_codes: item.promoEligible,
+          price = await stripe.prices.create(
+            {
+              product: product.id,
+              currency: 'usd',
+              unit_amount: sell.amountCents,
+              ...(sell.interval === 'one_time'
+                ? {}
+                : { recurring: { interval: sell.interval } }),
+              lookup_key: sellKey,
+              transfer_lookup_key: true,
+              ...(sell.deposit
+                ? { nickname: `Deposit (${item.depositPercent}%)` }
+                : {}),
+              metadata: {
+                catalog_slug: item.slug,
+                catalog_kind: sell.deposit ? 'deposit' : 'full',
+                pricing_version: version,
+              },
+            },
+            {
+              idempotencyKey: `${version}:${sell.key}:price:${sell.amountCents}:${sell.interval}`,
+            },
+          );
+        }
+      } else if (price.lookup_key !== sellKey) {
+        step(label, `set lookup key ${sellKey} on ${price.id}`);
+        if (apply)
+          price = await stripe.prices.update(price.id, {
+            lookup_key: sellKey,
+            transfer_lookup_key: true,
           });
+      }
+
+      if (product && price && !sell.deposit) {
+        const full = await stripe.products.retrieve(product.id);
+        const defId =
+          typeof full.default_price === 'object'
+            ? full.default_price?.id
+            : full.default_price;
+        if (defId !== price.id) {
+          step(label, `make ${price.id} the default price`);
+          if (apply)
+            await stripe.products.update(product.id, {
+              default_price: price.id,
+            });
         }
       }
-    } else if (mode !== 'retire') {
-      step(item.slug, 'create payment link');
-      if (apply) {
-        const link = await stripe.paymentLinks.create(
-          {
-            line_items: [{ price: price.id, quantity: 1 }],
-            allow_promotion_codes: item.promoEligible,
-            phone_number_collection: { enabled: true },
-            after_completion: {
-              type: 'hosted_confirmation',
-              hosted_confirmation: { custom_message: CONFIRMATION },
+      if (price) currentPriceBySlug.set(sell.key, price.id);
+
+      // 3. Payment Link pointing at the current price. Every link accepts
+      // promotion codes so verified veteran codes work on everything.
+      const existing = (state.linksBySlug.get(sell.key) ?? []).find(
+        (l) => price && l.priceId === price.id,
+      );
+      if (existing) {
+        links[sell.key] = existing.link.url;
+        if (mode !== 'retire' && !existing.link.allow_promotion_codes) {
+          step(label, 'turn promotion codes on');
+          if (apply) {
+            await stripe.paymentLinks.update(existing.link.id, {
+              allow_promotion_codes: true,
+            });
+          }
+        }
+      } else if (mode !== 'retire') {
+        step(label, 'create payment link');
+        if (apply) {
+          const link = await stripe.paymentLinks.create(
+            {
+              line_items: [{ price: price.id, quantity: 1 }],
+              allow_promotion_codes: true,
+              phone_number_collection: { enabled: true },
+              after_completion: {
+                type: 'hosted_confirmation',
+                hosted_confirmation: {
+                  custom_message: sell.deposit
+                    ? `Deposit received. Fee The Developer will email your written scope and the balance schedule.`
+                    : CONFIRMATION,
+                },
+              },
+              metadata: {
+                catalog_category: 'service',
+                catalog_slug: sell.key,
+                catalog_kind: sell.deposit ? 'deposit' : 'full',
+                pricing_version: version,
+              },
             },
+            { idempotencyKey: `${version}:${sell.key}:link:${price.id}` },
+          );
+          links[sell.key] = link.url;
+        }
+      }
+    }
+  }
+
+  // Veteran coupon: 30% off, forever (applies once to one-time payments and
+  // to every invoice of a care plan). Codes are minted per verified person.
+  const vet = catalog.discounts?.veteran;
+  if (vet?.stripeCouponId && mode !== 'retire') {
+    if (!state.coupon) {
+      act(
+        'veteran-discount',
+        `create coupon ${vet.stripeCouponId} (${vet.percentOff}% off)`,
+      );
+      if (apply) {
+        await stripe.coupons.create(
+          {
+            id: vet.stripeCouponId,
+            percent_off: vet.percentOff,
+            duration: 'forever',
+            name: `Veteran ${vet.percentOff}% (verified)`,
             metadata: {
-              catalog_category: 'service',
-              catalog_slug: item.slug,
+              brand: 'Fee The Developer LLC',
               pricing_version: version,
             },
           },
-          { idempotencyKey: `${version}:${item.slug}:link:${price.id}` },
+          { idempotencyKey: `${version}:coupon:${vet.stripeCouponId}` },
         );
-        links[item.slug] = link.url;
       }
+    } else if (state.coupon.percent_off !== vet.percentOff) {
+      warnings.push(
+        `coupon ${vet.stripeCouponId} is ${state.coupon.percent_off}% in Stripe but ${vet.percentOff}% in the catalog. Stripe coupons cannot change; give the catalog a new coupon id.`,
+      );
     }
   }
 
@@ -358,7 +459,7 @@ export async function syncPricing({
     );
     for (const [slug, entries] of state.linksBySlug) {
       const current = currentPriceBySlug.get(slug);
-      const isRetired = retiredSlugs.has(slug);
+      const isRetired = retiredSlugs.has(slug.split(DEPOSIT_SUFFIX)[0]);
       if (!current && !isRetired) continue; // not in catalog: leave it alone
       const hasCurrentLink = entries.some((e) => e.priceId === current);
       for (const { link, priceId } of entries) {

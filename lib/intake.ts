@@ -28,6 +28,10 @@ export type ProjectIntake = {
   timeline: string | null;
   goals: string;
   promotionCode: string | null;
+  /** Asked for the veteran discount; proof is requested by email, never uploaded here. */
+  veteranDiscount: boolean;
+  /** Asked to start with a deposit. */
+  depositPlan: boolean;
 };
 
 export type IntakeValidation =
@@ -62,6 +66,9 @@ export function validateIntake(input: unknown): IntakeValidation {
     timeline: text(raw.timeline) || null,
     goals: text(raw.goals),
     promotionCode: normalizePromotionCode(raw.promotionCode),
+    veteranDiscount:
+      raw.veteranDiscount === 'yes' || raw.veteranDiscount === true,
+    depositPlan: raw.paymentPlan === 'deposit',
   };
 
   const errors: string[] = [];
