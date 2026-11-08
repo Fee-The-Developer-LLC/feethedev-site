@@ -1,8 +1,141 @@
 import checkoutLinks from './service-checkout-links.json';
+import pricingCatalog from './pricing-catalog.json';
 
-/** Stripe-hosted checkout URLs, written by `npm run services:links -- --apply`. */
-export const serviceCheckoutLinks = checkoutLinks;
-export type CheckoutSlug = keyof typeof checkoutLinks;
+/**
+ * `lib/pricing-catalog.json` is the single source of truth for every price on
+ * the site, in Stripe (`npm run pricing:sync`), and in Supabase
+ * (`npm run pricing:sql`). Change a price there, never in a page component.
+ */
+
+export type PricingLineId =
+  | 'starter'
+  | 'websites'
+  | 'systems'
+  | 'presence'
+  | 'care';
+export type BillingInterval = 'one_time' | 'month' | 'year';
+export type PriceMode = 'flat' | 'starting_at';
+
+export type CatalogItem = {
+  slug: string;
+  name: string;
+  line: PricingLineId;
+  status: 'active' | 'retired';
+  stripeProductId: string | null;
+  amountCents: number;
+  interval: BillingInterval;
+  priceMode: PriceMode;
+  featured: boolean;
+  promoEligible: boolean;
+  paymentsIncluded: boolean;
+  sortOrder: number;
+  description: string;
+  includes: string[];
+  scopeNote: string;
+  /** Limits a starter add-on to the listed parent products. */
+  appliesTo?: string[];
+  /** Read by scripts/campaign-brief.mjs; featured items carry one. */
+  campaign?: {
+    audience: string;
+    pain: string;
+    hook: string;
+    landingPath: string;
+    channels: string[];
+    demo: string;
+  };
+};
+
+export type PricingLine = {
+  id: PricingLineId;
+  name: string;
+  audience: string;
+  summary: string;
+};
+
+const catalog = pricingCatalog as {
+  version: string;
+  effectiveDate: string;
+  lines: PricingLine[];
+  items: CatalogItem[];
+};
+
+export const pricingVersion = catalog.version;
+
+const usd = new Intl.NumberFormat('en-US', {
+  style: 'currency',
+  currency: 'USD',
+  maximumFractionDigits: 0,
+});
+
+/** `$200`, `$60/year`, `Starting at $5,500`, `Starting at $175/month`. */
+export function formatPrice(
+  item: Pick<CatalogItem, 'amountCents' | 'interval' | 'priceMode'>,
+): string {
+  const amount = usd.format(item.amountCents / 100);
+  const suffix =
+    item.interval === 'month'
+      ? '/month'
+      : item.interval === 'year'
+        ? '/year'
+        : '';
+  const prefix = item.priceMode === 'starting_at' ? 'Starting at ' : '';
+  return `${prefix}${amount}${suffix}`;
+}
+
+const activeItems = catalog.items
+  .filter((item) => item.status === 'active')
+  .sort((a, b) => a.sortOrder - b.sortOrder);
+
+/**
+ * Stripe-hosted checkout URLs, written by `npm run pricing:sync -- --apply`.
+ * An item without a link yet (new before the first sync) falls back to the
+ * project intake form, so a button never renders without a destination.
+ */
+export const serviceCheckoutLinks: Record<string, string> = Object.fromEntries(
+  activeItems.map((item) => [
+    item.slug,
+    (checkoutLinks as Record<string, string>)[item.slug] ??
+      `/start?service=${item.slug}`,
+  ]),
+);
+export type CheckoutSlug = string;
+
+export function getCatalogItem(slug: string): CatalogItem | undefined {
+  return activeItems.find((item) => item.slug === slug);
+}
+
+type PricedItem = CatalogItem & { price: string };
+const withPrice = (item: CatalogItem): PricedItem => ({
+  ...item,
+  price: formatPrice(item),
+});
+
+/** Every active line with its items, in display order. */
+export const pricingLines = catalog.lines.map((line) => ({
+  ...line,
+  items: activeItems.filter((item) => item.line === line.id).map(withPrice),
+}));
+
+/**
+ * Solo-pro template products (Own Your .com and its add-ons). Kept apart from
+ * the business packages so a $200 template never reads as a custom website.
+ */
+export const starterPricing = activeItems
+  .filter((item) => item.line === 'starter')
+  .map(withPrice);
+
+const businessLines: PricingLineId[] = ['websites', 'systems'];
+
+/** Featured business packages: the cards on /pricing. */
+export const pricingOptions = activeItems
+  .filter((item) => item.featured && businessLines.includes(item.line))
+  .map(withPrice);
+
+/** Every other business item: the add-on list on /pricing. */
+export const addOnPricing = activeItems
+  .filter((item) => item.line !== 'starter')
+  .filter((item) => !(item.featured && businessLines.includes(item.line)))
+  .map(withPrice);
 
 export const serviceGroups = [
   {
@@ -36,185 +169,3 @@ export const serviceGroups = [
     ],
   },
 ] as const;
-
-export const pricingOptions = [
-  {
-    name: 'Website Launch',
-    slug: 'website-launch',
-    price: 'Starting at $5,500',
-    description:
-      'A professional, mobile-ready website for a business that needs a polished, conversion-focused web presence.',
-    includes: [
-      'Launch-ready website implementation',
-      'Mobile-first customer experience',
-      'Clear service and inquiry path',
-      'Payments & Back-End Integration included',
-    ],
-  },
-  {
-    name: 'Digital Presence Bundle',
-    slug: 'digital-presence-bundle',
-    price: 'Starting at $6,750',
-    description:
-      'A website plus coordinated setup across the business profiles customers search first.',
-    includes: [
-      'Website Launch foundation',
-      'Google, Apple, and Yelp presence setup',
-      'Consistent public business information',
-      'Payments & Back-End Integration included',
-    ],
-  },
-  {
-    name: 'Custom Software & Automation',
-    slug: 'custom-software-and-automation',
-    price: 'Starting at $3,500',
-    description:
-      'Custom applications, dashboards, integrations, and AI workflows built around a defined business requirement.',
-    includes: [
-      'Product discovery and workflow mapping',
-      'One defined application or automation scope',
-      'Implementation and launch configuration',
-    ],
-  },
-  {
-    name: 'Full Business System',
-    slug: 'full-business-system',
-    price: 'Starting at $10,000',
-    description:
-      'A coordinated digital launch combining website development, business presence, automation, and integrations.',
-    includes: [
-      'Website and business-presence delivery',
-      'Workflow automation and integrations',
-      'Coordinated implementation plan',
-      'Payments & Back-End Integration included',
-    ],
-  },
-] as const satisfies readonly {
-  name: string;
-  slug: CheckoutSlug;
-  price: string;
-  description: string;
-  includes: readonly string[];
-}[];
-
-export const addOnPricing = [
-  {
-    name: 'Own Your .com Starter',
-    slug: 'own-your-dotcom-starter',
-    price: '$200',
-  },
-  {
-    name: 'Payments & Back-End Integration (free with any website package)',
-    slug: 'payments-and-back-end-integration',
-    price: '$250',
-  },
-  {
-    name: 'Yelp Profile Setup or Cleanup',
-    slug: 'yelp-profile-setup-or-cleanup',
-    price: 'Starting at $350',
-  },
-  {
-    name: 'Apple Business Connect Setup',
-    slug: 'apple-business-connect-setup',
-    price: 'Starting at $350',
-  },
-  {
-    name: 'GA4 Property Review / Audit',
-    slug: 'ga4-property-review-audit',
-    price: 'Starting at $450',
-  },
-  {
-    name: 'Google Business Profile Setup & Verification Support',
-    slug: 'google-business-profile-setup',
-    price: 'Starting at $525',
-  },
-  {
-    name: 'Google Workspace & Business Email Setup',
-    slug: 'google-workspace-and-business-email',
-    price: 'Starting at $525',
-  },
-  {
-    name: 'Contact, Category, Location & Service-Area Alignment',
-    slug: 'contact-category-location-alignment',
-    price: 'Starting at $700',
-  },
-  {
-    name: 'GA4 Setup & Validation',
-    slug: 'ga4-setup-and-validation',
-    price: 'Starting at $925',
-  },
-  {
-    name: 'Lead Capture & CRM Automation',
-    slug: 'lead-capture-and-crm-automation',
-    price: 'Starting at $1,400',
-  },
-  {
-    name: 'API Integration Setup',
-    slug: 'api-integration-setup',
-    price: 'Starting at $2,100',
-  },
-  {
-    name: 'AI Assistant / Chatbot Setup',
-    slug: 'ai-assistant-or-chatbot-setup',
-    price: 'Starting at $2,100',
-  },
-  {
-    name: 'Clerk + Supabase Completion',
-    slug: 'clerk-supabase-completion',
-    price: 'Starting at $3,500',
-  },
-  {
-    name: 'Business Analytics Dashboard',
-    slug: 'business-analytics-dashboard',
-    price: 'Starting at $3,500',
-  },
-  {
-    name: 'Custom Public-Data Collection Tool',
-    slug: 'custom-public-data-collection-tool',
-    price: 'Starting at $3,500',
-  },
-  {
-    name: 'Strategic Website Redesign',
-    slug: 'strategic-website-redesign',
-    price: 'Starting at $4,750',
-  },
-  {
-    name: 'Business Website Design & Development',
-    slug: 'business-website-design-and-development',
-    price: 'Starting at $5,500',
-  },
-  {
-    name: 'E-commerce or Custom Website Features',
-    slug: 'e-commerce-or-custom-website-features',
-    price: 'Starting at $10,000',
-  },
-  {
-    name: 'Website Maintenance & Support',
-    slug: 'website-maintenance-and-support',
-    price: 'Starting at $175/month',
-  },
-  {
-    name: 'Cloud Management',
-    slug: 'cloud-management',
-    price: 'Starting at $350/month',
-  },
-  {
-    name: 'Public-Data Monitoring & Change Alerts',
-    slug: 'public-data-monitoring-and-alerts',
-    price: 'Starting at $350/month',
-  },
-  {
-    name: 'Developer Change Block',
-    slug: 'developer-change-block',
-    price: 'Starting at $525/month',
-  },
-  {
-    name: 'Fee Developer Protection',
-    slug: 'fee-developer-protection',
-    price: 'Starting at $850/month',
-  },
-] as const satisfies readonly {
-  name: string;
-  slug: CheckoutSlug;
-  price: string;
-}[];

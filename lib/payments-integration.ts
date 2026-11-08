@@ -20,7 +20,10 @@ export const paymentsService = {
   // Pricing set by King Fee 2026-11-06.
   price: '$250',
   checkoutSlug: 'payments-and-back-end-integration',
-  priceNote: 'Free with any website package',
+  // Pricing v2 (2026-11): Own Your .com does not include it; see
+  // lib/pricing-catalog.json `rules.paymentsIncluded`.
+  priceNote:
+    'Included with Business Site Essentials and every website package above it',
   feeNote: 'Stripe’s own processing fees are separate and paid to Stripe.',
 } as const;
 

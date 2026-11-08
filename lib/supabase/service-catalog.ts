@@ -15,7 +15,7 @@ export type ServiceCatalogEntry = {
   name: string;
   category: ServiceCatalogRow['category'];
   billingInterval: ServiceCatalogRow['billing_interval'];
-  /** Formatted for display, e.g. `Starting at $5,500` or `Starting at $350/month`. */
+  /** Formatted for display, e.g. `$200`, `$60/year` or `Starting at $5,500`. */
   priceLabel: string;
   amountCents: number;
   scopeNote: string;
@@ -30,14 +30,21 @@ const usd = new Intl.NumberFormat('en-US', {
 
 function toEntry(row: ServiceCatalogRow): ServiceCatalogEntry {
   const amount = usd.format(row.amount_cents / 100);
-  const suffix = row.billing_interval === 'month' ? '/month' : '';
+  const suffix =
+    row.billing_interval === 'month'
+      ? '/month'
+      : row.billing_interval === 'year'
+        ? '/year'
+        : '';
+  const prefix =
+    row.price_qualifier === 'Flat' ? '' : `${row.price_qualifier} `;
 
   return {
     slug: row.slug,
     name: row.name,
     category: row.category,
     billingInterval: row.billing_interval,
-    priceLabel: `${row.price_qualifier} ${amount}${suffix}`,
+    priceLabel: `${prefix}${amount}${suffix}`,
     amountCents: row.amount_cents,
     scopeNote: row.scope_note,
     sortOrder: row.sort_order,

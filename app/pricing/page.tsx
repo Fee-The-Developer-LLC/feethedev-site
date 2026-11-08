@@ -7,7 +7,11 @@ import {
   addOnPricing,
   pricingOptions,
   serviceCheckoutLinks,
+  starterPricing,
 } from '@/lib/catalog';
+
+const starterPackages = starterPricing.filter((item) => item.featured);
+const starterAddOns = starterPricing.filter((item) => !item.featured);
 import { siteConfig } from '@/lib/site-config';
 
 export const metadata: Metadata = {
@@ -100,6 +104,102 @@ export default function PricingPage() {
             </Card>
           ))}
         </div>
+      </Section>
+
+      <Section
+        id="own-your-name"
+        aria-labelledby="own-your-name-heading"
+        className="border-t border-white/10"
+      >
+        <div className="max-w-3xl">
+          <p className="status-chip">Own Your Name · template sites</p>
+          <h2
+            id="own-your-name-heading"
+            className="mt-5 text-3xl font-semibold text-white"
+          >
+            For solo pros who book through an app.
+          </h2>
+          <p className="mt-4 leading-7 text-slate-300">
+            Barbers, stylists, lash techs, braiders, and musicians: your own
+            .com on a Fee The Developer template, at a fixed price. Keep the
+            booking app you already use. Need a custom-designed site? Start with
+            the business packages above.
+          </p>
+        </div>
+        <div className="mt-10 grid gap-6 md:grid-cols-3">
+          {starterPackages.map((item) => (
+            <Card key={item.slug} hover={false} className="h-full p-7">
+              <div className="flex items-start justify-between gap-4">
+                <h3 className="text-xl font-semibold text-white">
+                  {item.name}
+                </h3>
+                <p className="shrink-0 text-lg font-semibold tabular-nums text-greenglow">
+                  {item.price}
+                </p>
+              </div>
+              <p className="mt-4 text-sm leading-6 text-slate-300">
+                {item.description}
+              </p>
+              <ul className="mt-5 space-y-2">
+                {item.includes.map((line) => (
+                  <li
+                    key={line}
+                    className="flex gap-3 text-sm leading-6 text-slate-200"
+                  >
+                    <span
+                      aria-hidden="true"
+                      className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-electric"
+                    />
+                    {line}
+                  </li>
+                ))}
+              </ul>
+              <CtaLink
+                href={serviceCheckoutLinks[item.slug]}
+                className="mt-6"
+                aria-label={`Buy ${item.name}, ${item.price}`}
+              >
+                Buy now
+              </CtaLink>
+            </Card>
+          ))}
+        </div>
+        <div className="mt-8 overflow-hidden rounded-3xl border border-white/10 bg-white/[0.04]">
+          <ul className="divide-y divide-white/10">
+            {starterAddOns.map(({ name, slug, price, description }) => (
+              <li
+                key={slug}
+                className="flex flex-col gap-2 px-5 py-4 sm:flex-row sm:items-center sm:justify-between sm:gap-6"
+              >
+                <span>
+                  <span className="block text-sm font-medium text-slate-200">
+                    {name}
+                  </span>
+                  <span className="mt-1 block text-xs leading-5 text-slate-400">
+                    {description}
+                  </span>
+                </span>
+                <span className="flex shrink-0 items-center justify-between gap-4">
+                  <span className="text-sm font-semibold tabular-nums text-greenglow">
+                    {price}
+                  </span>
+                  <a
+                    href={serviceCheckoutLinks[slug]}
+                    aria-label={`Buy ${name}, ${price}`}
+                    className="rounded-full border border-greenglow/40 px-4 py-2 text-xs font-semibold uppercase tracking-[0.12em] text-white transition hover:bg-greenglow/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-greenglow"
+                  >
+                    Buy
+                  </a>
+                </span>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <p className="mt-4 text-xs leading-5 text-slate-400">
+          Starter prices are fixed and promotion codes do not apply. Domain
+          renewal after the first year is Keep-Live or the domain at cost.
+          Stripe processing fees are separate.
+        </p>
       </Section>
 
       <Section className="border-y border-white/10 bg-black/25">
