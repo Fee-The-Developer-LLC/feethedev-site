@@ -62,8 +62,8 @@ export default function ApprenticeshipPage() {
             href: `mailto:${siteConfig.email}?subject=Developer%20learning%20path`,
           },
           {
-            label: 'Explore the initiative',
-            href: '/devil-to-developer',
+            label: 'See services',
+            href: '/services',
             secondary: true,
           },
         ]}

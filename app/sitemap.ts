@@ -15,7 +15,6 @@ const pages: [
   ['/work', 0.9, 'monthly'],
   ['/start', 0.8, 'monthly'],
   ['/credentials', 0.7, 'monthly'],
-  ['/devil-to-developer', 0.7, 'weekly'],
   ['/apprenticeship', 0.7, 'weekly'],
 ];
 

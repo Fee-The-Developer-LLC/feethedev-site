@@ -99,6 +99,11 @@ export const pricingOptions = [
 
 export const addOnPricing = [
   {
+    name: 'Own Your .com Starter',
+    slug: 'own-your-dotcom-starter',
+    price: '$200',
+  },
+  {
     name: 'Payments & Back-End Integration (free with any website package)',
     slug: 'payments-and-back-end-integration',
     price: '$250',

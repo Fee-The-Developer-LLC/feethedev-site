@@ -251,9 +251,6 @@ function SiteContent({ children }: Readonly<{ children: React.ReactNode }>) {
                 Client portal
               </Link>
             )}
-            <Link href="/devil-to-developer" className="hover:text-white">
-              Initiative
-            </Link>
             <Link href="/apprenticeship" className="hover:text-white">
               Learning path
             </Link>

@@ -153,6 +153,20 @@ const definitions: readonly ServiceDefinition[] = [
   },
   // Websites
   {
+    checkoutSlug: 'own-your-dotcom-starter',
+    category: 'websites',
+    summary:
+      'A two-page site on your own .com that sends clients to the booking link you already use.',
+    includes: [
+      'Your own .com, first year of the domain included',
+      'Home page and Services page with prices, photos, hours, and Instagram',
+      'Book Now button to your existing booking link',
+      'Mobile-first build hosted on Cloudflare',
+    ],
+    notes:
+      'One-time payment. Stripe payments on your site, Google Business Profile, a full mailbox, and ongoing edits are separate.',
+  },
+  {
     checkoutSlug: 'business-website-design-and-development',
     category: 'websites',
     summary:
