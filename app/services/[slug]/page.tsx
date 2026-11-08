@@ -2,7 +2,10 @@ import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { ServiceCheckoutCta } from '@/components/ServiceCheckoutCta';
+import {
+  hasCheckout,
+  ServiceCheckoutCta,
+} from '@/components/ServiceCheckoutCta';
 import { Button, Section } from '@/components/ui';
 import {
   getService,
@@ -12,14 +15,11 @@ import {
 } from '@/lib/services';
 import { siteConfig } from '@/lib/site-config';
 
-// Payments & Back-End Integration keeps its own page with the case study.
-const customPages = new Set(['payments-integration']);
-
 export const dynamicParams = false;
 
 export function generateStaticParams() {
   return services
-    .filter((service) => !customPages.has(service.slug))
+    .filter((service) => !service.custom)
     .map((service) => ({ slug: service.slug }));
 }
 
@@ -40,7 +40,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function ServicePage({ params }: Props) {
   const service = getService((await params).slug);
-  if (!service || customPages.has(service.slug)) notFound();
+  if (!service || service.custom) notFound();
+  const live = hasCheckout(service.checkoutUrl);
 
   const category = serviceCategories.find(
     (item) => item.id === service.category,
@@ -86,11 +87,14 @@ export default async function ServicePage({ params }: Props) {
               <Button
                 href={service.checkoutUrl}
                 glow="green"
-                aria-label={`Buy ${service.name}, ${service.price}`}
+                aria-label={`${live ? 'Buy' : 'Request'} ${service.name}, ${service.price}`}
               >
-                Buy now
+                {live ? 'Buy now' : 'Request'}
               </Button>
-              <Button href="/start" variant="outline">
+              <Button
+                href={`/start?service=${service.checkoutSlug}`}
+                variant="outline"
+              >
                 Ask a question
               </Button>
             </div>
