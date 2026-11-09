@@ -36,8 +36,9 @@ npm run cf:secrets            # dry run, prints names and lengths
 node scripts/set-cloudflare-secrets.mjs --apply
 ```
 
-That covers `CLERK_SECRET_KEY`, `SUPABASE_SECRET_KEY`, `STRIPE_SECRET_KEY`, and
-the four `MERCH_*_STRIPE_LINK` maps.
+That covers `CLERK_SECRET_KEY`, `SUPABASE_SECRET_KEY`, and `STRIPE_SECRET_KEY`.
+The merch store was removed on 2026-11-08; the `MERCH_*_STRIPE_LINK` Worker
+secrets are no longer read and can be deleted with `wrangler secret delete`.
 
 `CLERK_SECRET_KEY` is load-bearing. `middleware.ts` enforces `/dashboard`
 protection when both Clerk keys are present and fails closed with `404` when
@@ -79,7 +80,7 @@ runtime and is the production-parity check. Verified routes:
 
 - `/` returns 200
 - `/dashboard` returns 307 to `/sign-in` (Clerk middleware active)
-- `/merch` renders the Stripe payment links
+- `/services/<slug>` pages render their Stripe checkout links
 - `/api/supabase/health` reports key wiring and `service_catalog` reachability
 
 ## Supabase

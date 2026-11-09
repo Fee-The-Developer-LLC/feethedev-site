@@ -3,6 +3,7 @@ import { InteriorHero } from '@/components/InteriorHero';
 import { BookingModal } from '@/components/BookingModal';
 import { ProjectIntakeForm } from '@/components/ProjectIntakeForm';
 import { Body, H2, Section } from '@/components/ui';
+import { intakeServices, veteranDiscount } from '@/lib/catalog';
 import { normalizePromotionCode } from '@/lib/promotions';
 import { siteConfig } from '@/lib/site-config';
 
@@ -16,10 +17,20 @@ export const metadata: Metadata = {
 export default async function StartPage({
   searchParams,
 }: {
-  searchParams: Promise<{ promo?: string | string[] }>;
+  searchParams: Promise<{
+    promo?: string | string[];
+    service?: string | string[];
+    veteran?: string | string[];
+    plan?: string | string[];
+  }>;
 }) {
   const query = await searchParams;
+  const one = (value?: string | string[]) =>
+    Array.isArray(value) ? value[0] : value;
   const initialPromotionCode = normalizePromotionCode(query.promo) ?? '';
+  const initialService =
+    intakeServices.find((service) => service.slug === one(query.service))
+      ?.name ?? '';
 
   return (
     <main id="main-content" className="min-h-screen bg-background">
@@ -35,7 +46,7 @@ export default async function StartPage({
         description="Tell us about the goal, the people it serves, and what is getting in the way. We will use those details to shape a useful first conversation."
         actions={[
           { label: 'Share your project', href: '#project-details' },
-          { label: 'See my approach', href: '/#build', secondary: true },
+          { label: 'See services', href: '/services', secondary: true },
         ]}
       />
       <Section id="project-details" className="scroll-mt-24 bg-background">
@@ -52,8 +63,9 @@ export default async function StartPage({
             <div className="glass-panel space-y-3 p-6 text-sm leading-6 text-slate-300">
               <p>Website, software, and automation projects are all welcome.</p>
               <p>
-                This form opens your email app with the details prepared. Send
-                the email there to complete your inquiry.
+                Veterans and veteran-owned businesses get{' '}
+                {veteranDiscount.percentOff}% off every price. Tick the box and
+                we will email you how to verify; proof is never uploaded here.
               </p>
               <p>Prefer to talk first? The 15-minute consultation is free.</p>
               <div className="flex flex-wrap items-center gap-4">
@@ -67,7 +79,14 @@ export default async function StartPage({
               </div>
             </div>
           </div>
-          <ProjectIntakeForm initialPromotionCode={initialPromotionCode} />
+          <ProjectIntakeForm
+            initialPromotionCode={initialPromotionCode}
+            services={intakeServices.map((service) => service.name)}
+            initialService={initialService}
+            initialVeteran={one(query.veteran) === '1'}
+            initialDeposit={one(query.plan) === 'deposit'}
+            veteranPercent={veteranDiscount.percentOff}
+          />
         </div>
       </Section>
     </main>

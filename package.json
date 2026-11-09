@@ -13,8 +13,11 @@
     "deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",
     "upload": "opennextjs-cloudflare build && opennextjs-cloudflare upload",
     "cf-typegen": "wrangler types --env-interface CloudflareEnv cloudflare-env.d.ts",
-    "merch:links": "node scripts/create-merch-payment-links.mjs",
-    "services:links": "node scripts/create-service-payment-links.mjs",
+    "pricing:sync": "node scripts/sync-pricing.mjs",
+    "pricing:sql": "node scripts/pricing-to-sql.mjs",
+    "pricing:test": "node --test scripts/sync-pricing.test.mjs",
+    "campaign:brief": "node scripts/campaign-brief.mjs",
+    "veteran:code": "node scripts/veteran-code.mjs",
     "cf:secrets": "node scripts/set-cloudflare-secrets.mjs"
   },
   "dependencies": {
@@ -22,6 +25,8 @@
     "@gsap/react": "^2.1.2",
     "@react-three/drei": "^9.121.4",
     "@react-three/fiber": "^8.0.0",
+    "@stripe/react-stripe-js": "^7.0.1",
+    "@stripe/stripe-js": "^10.2.1",
     "@supabase/supabase-js": "^2.86.0",
     "framer-motion": "^11.0.0",
     "gsap": "^3.15.0",

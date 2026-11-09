@@ -20,9 +20,8 @@
     "head_sampling_rate": 1,
   },
   // Public runtime config. Publishable keys and URLs only - never secrets.
-  // Secrets (CLERK_SECRET_KEY, SUPABASE_SECRET_KEY, STRIPE_SECRET_KEY,
-  // MERCH_*_STRIPE_LINK) are set with `wrangler secret put` and are not
-  // stored in this file.
+  // Secrets (CLERK_SECRET_KEY, SUPABASE_SECRET_KEY, STRIPE_SECRET_KEY) are
+  // set with `wrangler secret put` and are not stored in this file.
   "vars": {
     "NEXT_PUBLIC_SITE_URL": "https://feethedeveloper.com",
     "NEXT_PUBLIC_BOOKING_URL": "https://calendar.app.google/rEzR9K3wUQYivMjn8",

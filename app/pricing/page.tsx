@@ -1,163 +1,90 @@
 import type { Metadata } from 'next';
-import { BookingModal } from '@/components/BookingModal';
-import { PageIntro } from '@/components/PageIntro';
-import { SeasonOffer } from '@/components/SeasonOffer';
-import { Button as CtaLink, Card, Section } from '@/components/ui';
-import {
-  addOnPricing,
-  pricingOptions,
-  serviceCheckoutLinks,
-} from '@/lib/catalog';
+import Link from 'next/link';
+import { OfferButton } from '@/components/offer/OfferButton';
+import { Section } from '@/components/ui';
+import { veteranDiscount } from '@/lib/catalog';
+import { serviceCategories, servicesInCategory } from '@/lib/services';
 import { siteConfig } from '@/lib/site-config';
 
 export const metadata: Metadata = {
   title: 'Pricing',
   description:
-    'Review Fee The Developer service packages, add-ons, and current starting prices.',
+    'Fee The Developer prices: Starter Sites, business websites, software and automation, setup add-ons, and care plans.',
   alternates: { canonical: new URL('/pricing', siteConfig.siteUrl) },
 };
 
 export default function PricingPage() {
   return (
     <main id="main-content" className="min-h-screen">
-      <PageIntro
-        eyebrow="Pricing / Clear starting points"
-        title={
-          <>
-            Know the range before we{' '}
-            <span className="ftd-gradient-text">scope the build.</span>
-          </>
-        }
-        description="These starting prices reflect the current Fee The Developer service catalog. A written scope confirms the final deliverables, schedule, and price before work begins."
-        aside={
-          <div className="rounded-3xl border border-greenglow/25 bg-greenglow/[0.07] p-6">
-            <p className="text-sm font-semibold text-white">
-              Free 15-minute consultation
-            </p>
-            <p className="mt-2 text-sm leading-6 text-slate-300">
-              Talk it through first at no cost, or buy any service below through
-              secure Stripe checkout.
-            </p>
-            <BookingModal
-              className="mt-4 rounded-full border border-greenglow/40 px-4 py-2 text-xs font-semibold uppercase tracking-[0.12em] text-white transition hover:bg-greenglow/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-greenglow"
-              label="Book free consultation"
-            />
-          </div>
-        }
-      />
-
-      <Section className="pb-0">
-        <SeasonOffer />
+      <Section className="pb-4 pt-14 sm:pt-20">
+        <h1 className="text-5xl font-extrabold text-white sm:text-6xl">
+          Pricing
+        </h1>
+        <p className="mt-4 text-lg text-slate-300">
+          Veterans and veteran-owned businesses save{' '}
+          {veteranDiscount.percentOff}%.
+        </p>
       </Section>
 
-      <Section>
-        <div className="grid gap-6 md:grid-cols-2">
-          {pricingOptions.map((option, index) => (
-            <Card
-              key={option.name}
-              hover={false}
-              accent={index === 1 ? 'green' : index === 3 ? 'red' : 'neutral'}
-              className="h-full p-7 sm:p-8"
-            >
-              <div className="flex flex-wrap items-start justify-between gap-4">
-                <div>
-                  <p className="text-xs uppercase tracking-[0.22em] text-slate-400">
-                    Core service
-                  </p>
-                  <h2 className="mt-3 text-2xl font-semibold text-white">
-                    {option.name}
-                  </h2>
-                </div>
-                <p className="rounded-full border border-white/10 bg-black/25 px-4 py-2 text-lg font-semibold tabular-nums text-greenglow">
-                  {option.price}
-                </p>
-              </div>
-              <p className="mt-5 text-sm leading-7 text-slate-300">
-                {option.description}
-              </p>
-              <ul className="mt-6 space-y-3">
-                {option.includes.map((item) => (
-                  <li
-                    key={item}
-                    className="flex gap-3 text-sm leading-6 text-slate-200"
-                  >
-                    <span
-                      aria-hidden="true"
-                      className="mt-2 h-2 w-2 shrink-0 rounded-full bg-electric"
-                    />
-                    {item}
-                  </li>
-                ))}
-              </ul>
-              <CtaLink
-                href={serviceCheckoutLinks[option.slug]}
-                glow="green"
-                className="mt-7"
-                aria-label={`Buy ${option.name}, ${option.price}`}
+      {serviceCategories.map((category) => (
+        <Section
+          key={category.id}
+          id={category.id}
+          className="scroll-mt-24 py-10"
+          aria-labelledby={`${category.id}-pricing`}
+        >
+          <h2
+            id={`${category.id}-pricing`}
+            className="border-b border-white/10 pb-4 text-2xl font-extrabold text-white"
+          >
+            {category.name}
+          </h2>
+          <ul className="divide-y divide-white/10">
+            {servicesInCategory(category.id).map((service) => (
+              <li
+                key={service.slug}
+                className="flex flex-col gap-4 py-5 sm:flex-row sm:items-center sm:justify-between"
               >
-                Buy now
-              </CtaLink>
-            </Card>
-          ))}
-        </div>
-      </Section>
-
-      <Section className="border-y border-white/10 bg-black/25">
-        <div className="grid gap-10 lg:grid-cols-[0.65fr_1.35fr]">
-          <div>
-            <p className="status-chip">Focused add-ons</p>
-            <h2 className="mt-5 text-3xl font-semibold text-white">
-              Add only what moves the system forward.
-            </h2>
-            <p className="mt-4 leading-7 text-slate-300">
-              Each service covers one defined implementation scope. Larger or
-              multi-system work is quoted after discovery.
-            </p>
-          </div>
-          <div className="overflow-hidden rounded-3xl border border-white/10 bg-white/[0.04]">
-            <ul className="divide-y divide-white/10">
-              {addOnPricing.map(({ name, slug, price }) => (
-                <li
-                  key={slug}
-                  className="flex flex-col gap-2 px-5 py-4 sm:flex-row sm:items-center sm:justify-between sm:gap-6"
-                >
-                  <span className="text-sm font-medium text-slate-200">
-                    {name}
+                <div>
+                  <Link
+                    href={service.href}
+                    className="text-lg font-bold text-white hover:text-cyan"
+                  >
+                    {service.name}
+                  </Link>
+                  <p className="mt-1 text-base font-semibold tabular-nums text-greenglow">
+                    {service.price}
+                    {service.requiredNote && (
+                      <span className="ml-2 text-sm font-medium text-slate-400">
+                        {service.requiredNote}
+                      </span>
+                    )}
+                  </p>
+                </div>
+                {service.primary ? (
+                  <OfferButton
+                    href={service.primary.href}
+                    label={service.primary.label}
+                    size="sm"
+                  />
+                ) : (
+                  <span className="text-sm font-semibold text-slate-400">
+                    Starts at launch
                   </span>
-                  <span className="flex shrink-0 items-center justify-between gap-4">
-                    <span className="text-sm font-semibold tabular-nums text-greenglow">
-                      {price}
-                    </span>
-                    <a
-                      href={serviceCheckoutLinks[slug]}
-                      aria-label={`Buy ${name}, ${price}`}
-                      className="rounded-full border border-greenglow/40 px-4 py-2 text-xs font-semibold uppercase tracking-[0.12em] text-white transition hover:bg-greenglow/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-greenglow"
-                    >
-                      Buy
-                    </a>
-                  </span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-      </Section>
+                )}
+              </li>
+            ))}
+          </ul>
+        </Section>
+      ))}
 
-      <Section>
-        <div className="mx-auto max-w-3xl text-center">
-          <p className="text-sm leading-7 text-slate-400">
-            Prices are in USD and represent the current catalog. Buying a
-            service pays its starting price. We confirm your written scope
-            before work begins, and anything beyond the starting scope is quoted
-            for your approval first. Third-party fees, taxes, domains, hosting,
-            paid software, content production, and work outside the agreed scope
-            may be separate. Platform approvals are controlled by each platform
-            and are not guaranteed.
-          </p>
-          <div className="mt-7 flex justify-center">
-            <CtaLink href="/start">Plan my project</CtaLink>
-          </div>
-        </div>
+      <Section className="pt-6">
+        <p className="max-w-3xl text-sm leading-6 text-slate-500">
+          Prices in USD. &quot;Starting at&quot; prices are the entry price of a
+          scoped build; a written scope confirms the final price. Stripe fees,
+          subscriptions, and domain renewals after year one are separate unless
+          listed.
+        </p>
       </Section>
     </main>
   );
