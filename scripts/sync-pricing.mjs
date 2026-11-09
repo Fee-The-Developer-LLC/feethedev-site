@@ -37,7 +37,7 @@ import { pathToFileURL } from 'node:url';
 
 export const CATALOG_PATH = path.join('lib', 'pricing-catalog.json');
 export const LINKS_PATH = path.join('lib', 'service-checkout-links.json');
-const LINES = ['starter', 'websites', 'systems', 'presence', 'care'];
+const LINES = ['starter', 'websites', 'systems', 'ai', 'presence', 'care'];
 const INTERVALS = ['one_time', 'month', 'year'];
 const PRICE_MODES = ['flat', 'starting_at'];
 export const DEPOSIT_SUFFIX = '--deposit';

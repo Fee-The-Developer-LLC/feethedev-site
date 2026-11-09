@@ -16,7 +16,7 @@ export type ServiceCatalogRow = {
   billing_interval: 'one_time' | 'month' | 'year';
   price_qualifier: 'Starting at' | 'Flat';
   /** Added by 20261108220000_service_catalog_pricing_v2.sql. */
-  line: 'starter' | 'websites' | 'systems' | 'presence' | 'care' | null;
+  line: 'starter' | 'websites' | 'systems' | 'ai' | 'presence' | 'care' | null;
   scope_note: string;
   sort_order: number;
   source_ref: string;

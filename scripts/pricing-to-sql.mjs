@@ -31,7 +31,7 @@ export function catalogToSql(catalog) {
   const problems = validateCatalog(catalog);
   if (problems.length)
     throw new Error(`Catalog is invalid:\n- ${problems.join('\n- ')}`);
-  const lines = ['starter', 'websites', 'systems', 'presence', 'care'];
+  const lines = ['starter', 'websites', 'systems', 'ai', 'presence', 'care'];
   const source = `lib/pricing-catalog.json@${catalog.version}`;
 
   const rows = [...catalog.items]
