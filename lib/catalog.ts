@@ -187,6 +187,35 @@ export const starterPricing = activeItems
   .filter((item) => item.line === 'starter')
   .map(withPrice);
 
+export type PackageRule = { id: string; title: string; body: string };
+
+/** Starter Sites rules ("The rules, in writing"), King Fee 2026-11-08. */
+export const packageRules: PackageRule[] =
+  (pricingCatalog as { packageRules?: PackageRule[] }).packageRules ?? [];
+
+const ruleBody = (id: string) =>
+  packageRules.find((rule) => rule.id === id)?.body;
+
+/**
+ * Starter page FAQ, built from the rules and the Starter Hosting item so no
+ * answer can drift from what the catalog promises.
+ */
+export const starterFaq: { question: string; answer: string }[] = [
+  {
+    question: 'What does hosting cover?',
+    answer: (() => {
+      const hosting = getCatalogItem('starter-hosting');
+      return hosting
+        ? `${formatPrice(hosting)}, from launch. ${hosting.description.replace(/^[^:]*:\s*/, 'It covers ')}`
+        : undefined;
+    })(),
+  },
+  { question: 'How fast do you reply?', answer: ruleBody('replies') },
+  { question: 'Can I move my domain?', answer: ruleBody('leaving') },
+].filter((entry): entry is { question: string; answer: string } =>
+  Boolean(entry.answer),
+);
+
 const businessLines: PricingLineId[] = ['websites', 'systems'];
 
 /** Featured business packages: the cards on /pricing. */

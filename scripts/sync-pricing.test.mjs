@@ -14,7 +14,7 @@ import {
   validateCatalog,
 } from './sync-pricing.mjs';
 import { catalogToSql } from './pricing-to-sql.mjs';
-import { campaignBrief } from './campaign-brief.mjs';
+import { campaignBrief, ctaLabel, formatPrice } from './campaign-brief.mjs';
 import { mintVeteranCode } from './veteran-code.mjs';
 
 const catalogFile = new URL('../lib/pricing-catalog.json', import.meta.url);
@@ -525,4 +525,48 @@ test('campaign briefs use catalog prices, discounts and payment options', () => 
   )) {
     assert.ok(item.campaign, `${item.slug} has a campaign block`);
   }
+});
+
+test('every button label quotes the catalog price or the Stripe deposit', () => {
+  const catalog = loadCatalog();
+  const dollars = (cents) => `$${(cents / 100).toLocaleString('en-US')}`;
+  const advertised = catalog.items.filter(
+    (i) => i.status === 'active' && i.campaign,
+  );
+  assert.ok(advertised.length >= 8, 'every Wave 1 offer has a campaign block');
+  for (const item of advertised) {
+    const label = ctaLabel(item);
+    const expected = item.depositPercent
+      ? `Start with ${dollars(depositCents(item))} down`
+      : `${item.campaign.cta} · ${formatPrice(item).replace('Starting at ', 'from ')}`;
+    assert.equal(label, expected, item.slug);
+    // The number on the button is the number Stripe charges.
+    const charged = item.depositPercent ? depositCents(item) : item.amountCents;
+    assert.ok(label.includes(dollars(charged)), `${item.slug}: ${label}`);
+  }
+  const bySlug = (slug) => catalog.items.find((i) => i.slug === slug);
+  assert.equal(ctaLabel(bySlug('own-your-bookings')), 'Own my bookings · $199');
+  assert.equal(ctaLabel(bySlug('website-launch')), 'Start with $1,155 down');
+});
+
+test('package rules are complete and quote the Starter Hosting price', () => {
+  const catalog = loadCatalog();
+  assert.deepEqual(
+    catalog.packageRules.map((r) => r.id),
+    ['own-domain', 'hosting', 'payments', 'replies', 'leaving'],
+  );
+  const stale = loadCatalog();
+  stale.items.find((i) => i.slug === 'starter-hosting').amountCents = 1500;
+  assert.ok(
+    validateCatalog(stale).some((e) =>
+      /packageRules\.hosting: \$10 does not match Starter Hosting \(\$15\)/.test(
+        e,
+      ),
+    ),
+  );
+  const missing = loadCatalog();
+  missing.packageRules[0].body = '';
+  assert.ok(
+    validateCatalog(missing).some((e) => /packageRules\.own-domain/.test(e)),
+  );
 });

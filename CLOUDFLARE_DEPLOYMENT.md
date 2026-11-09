@@ -40,6 +40,14 @@ That covers `CLERK_SECRET_KEY`, `SUPABASE_SECRET_KEY`, and `STRIPE_SECRET_KEY`.
 The merch store was removed on 2026-11-08; the `MERCH_*_STRIPE_LINK` Worker
 secrets are no longer read and can be deleted with `wrangler secret delete`.
 
+`NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` is a build-time value, not a Worker
+secret or var. `components/EmbeddedStripeCheckout.tsx` reads it in the browser,
+so Next.js inlines it during `next build`; it must be in `.env.local` (or the
+CI build environment) on the machine that builds. Adding it to `wrangler.jsonc`
+`vars` alone does nothing for the client bundle. Without it, `/checkout/[slug]`
+falls back to the Stripe-hosted Payment Link. See `.env.example` for every
+variable name.
+
 `CLERK_SECRET_KEY` is load-bearing. `middleware.ts` enforces `/dashboard`
 protection when both Clerk keys are present and fails closed with `404` when
 they are not.

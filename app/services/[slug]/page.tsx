@@ -5,7 +5,7 @@ import { notFound } from 'next/navigation';
 import { OfferButton } from '@/components/offer/OfferButton';
 import { OfferHeader, OfferPhoneBar } from '@/components/offer/OfferChrome';
 import { Section } from '@/components/ui';
-import { veteranDiscount } from '@/lib/catalog';
+import { packageRules, starterFaq, veteranDiscount } from '@/lib/catalog';
 import { getService, services } from '@/lib/services';
 import { siteConfig } from '@/lib/site-config';
 
@@ -119,6 +119,50 @@ export default async function OfferPage({ params }: Props) {
             {service.notes}
           </p>
         </Section>
+
+        {service.category === 'starter' && packageRules.length > 0 && (
+          <Section className="border-t border-white/10">
+            <h2 className="text-3xl font-extrabold text-white">
+              The rules, in writing
+            </h2>
+            <ol className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {packageRules.map((rule, index) => (
+                <li
+                  key={rule.id}
+                  className="rounded-2xl border border-white/10 bg-white/[0.04] p-5"
+                >
+                  <p className="text-xs font-bold uppercase tracking-[0.2em] text-greenglow">
+                    {index + 1}
+                  </p>
+                  <h3 className="mt-2 text-lg font-bold text-white">
+                    {rule.title}
+                  </h3>
+                  <p className="mt-2 text-base leading-7 text-slate-300">
+                    {rule.body}
+                  </p>
+                </li>
+              ))}
+            </ol>
+          </Section>
+        )}
+
+        {service.category === 'starter' && starterFaq.length > 0 && (
+          <Section className="border-t border-white/10">
+            <h2 className="text-3xl font-extrabold text-white">Questions</h2>
+            <dl className="mt-8 grid max-w-3xl gap-6">
+              {starterFaq.map((entry) => (
+                <div key={entry.question}>
+                  <dt className="text-lg font-bold text-white">
+                    {entry.question}
+                  </dt>
+                  <dd className="mt-2 text-base leading-7 text-slate-300">
+                    {entry.answer}
+                  </dd>
+                </div>
+              ))}
+            </dl>
+          </Section>
+        )}
 
         {service.primary && (
           <Section className="border-t border-white/10 bg-black/25 text-center">
