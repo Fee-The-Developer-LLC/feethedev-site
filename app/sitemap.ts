@@ -14,8 +14,6 @@ const pages: [
   ['/pricing', 0.9, 'monthly'],
   ['/work', 0.9, 'monthly'],
   ['/start', 0.8, 'monthly'],
-  ['/credentials', 0.7, 'monthly'],
-  ['/apprenticeship', 0.7, 'weekly'],
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {

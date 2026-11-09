@@ -1,9 +1,10 @@
 import { ClerkProvider, Show, UserButton } from '@clerk/nextjs';
 import type { Metadata, Viewport } from 'next';
 import { Manrope } from 'next/font/google';
+import Image from 'next/image';
 import Link from 'next/link';
-import { BookingModal } from '@/components/BookingModal';
-import { SignUpAction } from '@/components/SignUpAction';
+import { HideOnOfferPages } from '@/components/HideOnOfferPages';
+import { clerkAppearance } from '@/lib/clerk-appearance';
 import { siteConfig } from '@/lib/site-config';
 import '../styles/globals.css';
 
@@ -119,7 +120,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${manrope.variable} font-sans`}>
         {hasClerkKeys ? (
-          <ClerkProvider>
+          <ClerkProvider appearance={clerkAppearance}>
             <SiteContent>{children}</SiteContent>
           </ClerkProvider>
         ) : (
@@ -139,78 +140,94 @@ function SiteContent({ children }: Readonly<{ children: React.ReactNode }>) {
       >
         Skip to content
       </a>
-      <header className="relative z-50 border-b border-white/10 bg-background/85 backdrop-blur-xl">
-        <div className="shell flex flex-wrap items-center justify-between gap-4 py-4">
-          <Link
-            href="/"
-            className="text-base font-extrabold uppercase tracking-[0.1em] text-white sm:text-lg"
-          >
-            Fee The <span className="ftd-gradient-text">Developer</span>
-          </Link>
+      <HideOnOfferPages>
+        <header className="sticky top-0 z-50 border-b border-white/10 bg-background/90 backdrop-blur-xl">
+          <div className="shell flex items-center justify-between gap-4 py-3">
+            <Link
+              href="/"
+              aria-label="Fee The Developer home"
+              className="shrink-0"
+            >
+              <Image
+                src="/brand/ftd-wordmark-header.webp"
+                alt="Fee The Developer"
+                width={250}
+                height={112}
+                priority
+                className="h-10 w-auto"
+              />
+            </Link>
+            <nav
+              aria-label="Main navigation"
+              className="hidden items-center gap-7 text-sm font-semibold text-slate-300 md:flex"
+            >
+              <Link href="/services" className="hover:text-white">
+                Services
+              </Link>
+              <Link href="/pricing" className="hover:text-white">
+                Pricing
+              </Link>
+              <Link href="/work" className="hover:text-white">
+                Work
+              </Link>
+            </nav>
+            <div className="flex items-center gap-3">
+              {hasClerkKeys ? (
+                <>
+                  <Show when="signed-out">
+                    <Link
+                      href="/sign-in"
+                      className="hidden text-sm font-semibold text-slate-300 hover:text-white sm:inline"
+                    >
+                      Sign in
+                    </Link>
+                    <Link
+                      href="/sign-up"
+                      className="inline-flex min-h-10 items-center gap-2 rounded-full bg-silver px-4 text-xs font-extrabold uppercase tracking-[0.12em] text-background shadow-electric transition hover:bg-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-greenglow"
+                    >
+                      <span
+                        aria-hidden="true"
+                        className="h-2 w-2 rounded-full bg-[#0FAF86]"
+                      />
+                      Sign up free
+                    </Link>
+                  </Show>
+                  <Show when="signed-in">
+                    <Link
+                      href="/dashboard"
+                      className="text-sm font-semibold text-slate-300 hover:text-white"
+                    >
+                      Dashboard
+                    </Link>
+                    <UserButton />
+                  </Show>
+                </>
+              ) : (
+                <Link
+                  href="/services"
+                  className="inline-flex min-h-10 items-center rounded-full bg-silver px-4 text-xs font-extrabold uppercase tracking-[0.12em] text-background"
+                >
+                  See services
+                </Link>
+              )}
+            </div>
+          </div>
           <nav
-            aria-label="Main navigation"
-            className="order-3 flex w-full items-center gap-6 overflow-x-auto text-sm text-slate-300 sm:order-none sm:w-auto"
+            aria-label="Main navigation, mobile"
+            className="shell flex gap-6 pb-3 text-sm font-semibold text-slate-300 md:hidden"
           >
-            <Link href="/services" className="shrink-0 hover:text-white">
+            <Link href="/services" className="hover:text-white">
               Services
             </Link>
-            <Link href="/pricing" className="shrink-0 hover:text-white">
+            <Link href="/pricing" className="hover:text-white">
               Pricing
             </Link>
-            <Link href="/work" className="shrink-0 hover:text-white">
+            <Link href="/work" className="hover:text-white">
               Work
             </Link>
-            {hasClerkKeys && (
-              <Show when="signed-out">
-                <span className="flex shrink-0 items-center gap-5 lg:hidden">
-                  <Link href="/sign-in" className="hover:text-white">
-                    Sign in
-                  </Link>
-                  <SignUpAction className="hover:text-white" />
-                </span>
-              </Show>
-            )}
           </nav>
-          <div className="flex items-center gap-3">
-            <BookingModal
-              label="Free consultation"
-              className="hidden rounded-full border border-greenglow/40 px-4 py-2 text-xs font-semibold uppercase tracking-[0.12em] text-white transition hover:bg-greenglow/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-greenglow md:inline-flex"
-            />
-            {hasClerkKeys && (
-              <Show when="signed-out">
-                <span className="hidden items-center gap-3 text-sm lg:flex">
-                  <Link
-                    href="/sign-in"
-                    className="text-slate-300 hover:text-white"
-                  >
-                    Sign in
-                  </Link>
-                  <SignUpAction className="rounded-full border border-white/15 bg-white/[0.06] px-3 py-2 text-white hover:bg-white/[0.1] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-greenglow" />
-                </span>
-              </Show>
-            )}
-            {hasClerkKeys && (
-              <Show when="signed-in">
-                <span className="flex items-center gap-3">
-                  <Link
-                    href="/dashboard"
-                    className="hidden text-sm text-slate-300 hover:text-white md:inline"
-                  >
-                    Dashboard
-                  </Link>
-                  <UserButton />
-                </span>
-              </Show>
-            )}
-            <Link
-              href="/start"
-              className="rounded-full border border-electric/40 bg-electric/15 px-4 py-2 text-xs font-semibold uppercase tracking-[0.12em] text-white transition hover:bg-electric/25"
-            >
-              Start a project
-            </Link>
-          </div>
-        </div>
-      </header>
+        </header>
+      </HideOnOfferPages>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
@@ -238,10 +255,7 @@ function SiteContent({ children }: Readonly<{ children: React.ReactNode }>) {
               Services
             </Link>
             <Link href="/work" className="hover:text-white">
-              Showroom
-            </Link>
-            <Link href="/credentials" className="hover:text-white">
-              Credentials
+              Work
             </Link>
             <Link href="/pricing" className="hover:text-white">
               Pricing
@@ -251,9 +265,6 @@ function SiteContent({ children }: Readonly<{ children: React.ReactNode }>) {
                 Client portal
               </Link>
             )}
-            <Link href="/apprenticeship" className="hover:text-white">
-              Learning path
-            </Link>
           </nav>
           <div className="space-y-2 lg:text-right">
             <a

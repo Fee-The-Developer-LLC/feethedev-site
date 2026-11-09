@@ -25,6 +25,8 @@
     "@gsap/react": "^2.1.2",
     "@react-three/drei": "^9.121.4",
     "@react-three/fiber": "^8.0.0",
+    "@stripe/react-stripe-js": "^7.0.1",
+    "@stripe/stripe-js": "^10.2.1",
     "@supabase/supabase-js": "^2.86.0",
     "framer-motion": "^11.0.0",
     "gsap": "^3.15.0",

@@ -32,6 +32,10 @@ export type ProjectIntake = {
   veteranDiscount: boolean;
   /** Asked to start with a deposit. */
   depositPlan: boolean;
+  /** Stripe Checkout Session id when the intake follows an on-site payment. */
+  checkoutSession: string | null;
+  /** Catalog slug the payment was for. */
+  paidService: string | null;
 };
 
 export type IntakeValidation =
@@ -42,6 +46,8 @@ export type IntakeValidation =
 const UUID_PATTERN =
   /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const CHECKOUT_SESSION_PATTERN = /^cs_(live|test)_[A-Za-z0-9]{10,200}$/;
+const SLUG_PATTERN = /^[a-z0-9]+(-[a-z0-9]+)*$/;
 
 function text(value: unknown): string {
   return typeof value === 'string' ? value.trim() : '';
@@ -69,6 +75,12 @@ export function validateIntake(input: unknown): IntakeValidation {
     veteranDiscount:
       raw.veteranDiscount === 'yes' || raw.veteranDiscount === true,
     depositPlan: raw.paymentPlan === 'deposit',
+    checkoutSession: CHECKOUT_SESSION_PATTERN.test(text(raw.checkoutSession))
+      ? text(raw.checkoutSession)
+      : null,
+    paidService: SLUG_PATTERN.test(text(raw.paidService))
+      ? text(raw.paidService)
+      : null,
   };
 
   const errors: string[] = [];

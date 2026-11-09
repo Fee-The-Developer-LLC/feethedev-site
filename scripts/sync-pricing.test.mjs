@@ -412,13 +412,22 @@ test('veteran codes are single-use, expire, and need the coupon', async () => {
   assert.ok(!JSON.stringify(code).includes('@'), 'no email stored on the code');
 });
 
-test('keep-live is billed yearly at $42', async () => {
+test('starter hosting is billed monthly at $10 and keep-live is retired', async () => {
   const catalog = loadCatalog();
   const stripe = seededStripe(catalog);
   await syncPricing({ stripe, catalog, mode: 'apply', log: quiet });
-  const price = keyed(stripe, 'keep-live')[0];
-  assert.deepEqual(price.recurring, { interval: 'year' });
-  assert.equal(price.unit_amount, 4200);
+  const price = keyed(stripe, 'starter-hosting')[0];
+  assert.deepEqual(price.recurring, { interval: 'month' });
+  assert.equal(price.unit_amount, 1000);
+  assert.equal(keyed(stripe, 'keep-live').length, 0);
+  for (const slug of [
+    'own-your-bookings',
+    'own-your-bookings-plus',
+    'shop-bundle',
+  ]) {
+    const item = catalog.items.find((i) => i.slug === slug);
+    assert.equal(item.requires, 'starter-hosting', `${slug} requires hosting`);
+  }
 });
 
 test('retire switches off old links only after the new links are deployed', async () => {

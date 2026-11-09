@@ -46,7 +46,7 @@ export default async function StartPage({
         description="Tell us about the goal, the people it serves, and what is getting in the way. We will use those details to shape a useful first conversation."
         actions={[
           { label: 'Share your project', href: '#project-details' },
-          { label: 'See my approach', href: '/#build', secondary: true },
+          { label: 'See services', href: '/services', secondary: true },
         ]}
       />
       <Section id="project-details" className="scroll-mt-24 bg-background">

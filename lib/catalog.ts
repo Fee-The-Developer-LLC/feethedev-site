@@ -37,6 +37,10 @@ export type CatalogItem = {
   depositPercent?: number;
   /** Limits a starter add-on to the listed parent products. */
   appliesTo?: string[];
+  /** A recurring item the buyer must also take, e.g. Starter Hosting. */
+  requires?: string;
+  /** false = no buy button; the link is sent privately (Starter Hosting). */
+  publicCheckout?: boolean;
   /** Read by scripts/campaign-brief.mjs; featured items carry one. */
   campaign?: {
     audience: string;
@@ -45,6 +49,10 @@ export type CatalogItem = {
     landingPath: string;
     channels: string[];
     demo: string;
+    /** Button words before the price, e.g. "Own my bookings". */
+    cta?: string;
+    /** The platform's own ad button: "Shop Now" or "Learn More". */
+    platformButton?: string;
   };
 };
 
@@ -126,6 +134,28 @@ export function depositFor(
       (checkoutLinks as Record<string, string>)[`${item.slug}--deposit`] ??
       `/start?service=${item.slug}&plan=deposit`,
   };
+}
+
+/**
+ * The one button label shared by the ad end card, the offer page and the
+ * phone bar: `Own my bookings · $199`, `Start with $1,155 down`.
+ * Mirrors `ctaLabel` in scripts/campaign-brief.mjs.
+ */
+export function ctaLabel(
+  item: Pick<
+    CatalogItem,
+    | 'slug'
+    | 'amountCents'
+    | 'interval'
+    | 'priceMode'
+    | 'depositPercent'
+    | 'campaign'
+  >,
+): string {
+  const deposit = depositFor(item);
+  if (deposit) return `Start with ${deposit.amount} down`;
+  const price = formatPrice(item).replace('Starting at ', 'from ');
+  return `${item.campaign?.cta ?? 'Buy now'} · ${price}`;
 }
 
 export function getCatalogItem(slug: string): CatalogItem | undefined {

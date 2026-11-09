@@ -8,7 +8,10 @@
  * Images: set one per line below, or add a slug to `serviceImages`.
  */
 import {
+  ctaLabel,
   depositFor,
+  formatPrice,
+  getCatalogItem,
   pricingLines,
   serviceCheckoutLinks,
   type PricingLineId,
@@ -55,35 +58,54 @@ const serviceImages: Partial<Record<string, ServiceImage>> = {
   },
 };
 
-/** Items whose page is hand-built instead of using the shared template. */
-const customRoutes: Partial<Record<string, string>> = {
-  'payments-and-back-end-integration': 'payments-integration',
-};
-
 export const serviceCategories = pricingLines
   .filter((line) => line.items.length > 0)
   .map((line) => ({ id: line.id, name: line.name, summary: line.summary }));
 
 export type ServiceCategoryId = PricingLineId;
 
+export type OfferAction = { label: string; href: string };
+
 const allServices = pricingLines.flatMap((line) =>
   line.items.map((item) => {
-    const slug = customRoutes[item.slug] ?? item.slug;
+    const deposit = depositFor(item);
+    const checkout = `/checkout/${item.slug}`;
+    const sellable = item.publicCheckout !== false;
+    // Deposit items lead with the deposit (storyboard board 6).
+    const primary: OfferAction | null = !sellable
+      ? null
+      : deposit
+        ? { label: ctaLabel(item), href: `${checkout}?plan=deposit` }
+        : { label: ctaLabel(item), href: checkout };
+    const secondary: OfferAction | null =
+      sellable && deposit
+        ? { label: `Pay in full · ${formatPrice(item)}`, href: checkout }
+        : null;
+    const required = item.requires ? getCatalogItem(item.requires) : undefined;
+    const requiredNote = required
+      ? `+ ${formatPrice(required)} ${required.name.toLowerCase()} from launch`
+      : null;
+
     return {
-      slug,
-      checkoutSlug: item.slug,
+      slug: item.slug,
       category: line.id,
+      lineName: line.name,
       name: item.name,
       price: item.price,
+      flat: item.priceMode === 'flat',
+      hook: item.campaign?.hook ?? null,
       summary: item.description,
       includes: item.includes,
       notes: item.scopeNote,
-      checkoutUrl: serviceCheckoutLinks[item.slug],
-      deposit: depositFor(item),
+      hostedCheckoutUrl: serviceCheckoutLinks[item.slug],
+      deposit,
+      requiredNote,
+      requiredHref: required ? `/services/${required.slug}` : null,
+      primary,
+      secondary,
       monthly: item.interval === 'month',
       yearly: item.interval === 'year',
-      custom: Boolean(customRoutes[item.slug]),
-      href: `/services/${slug}`,
+      href: `/services/${item.slug}`,
       image: serviceImages[item.slug] ?? lineImages[line.id],
     };
   }),

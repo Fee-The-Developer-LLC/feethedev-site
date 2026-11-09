@@ -1,56 +1,27 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
-import { PageIntro } from '@/components/PageIntro';
+import { OfferButton } from '@/components/offer/OfferButton';
 import { Tilt3D } from '@/components/Tilt3D';
-import { Button as CtaLink, Section } from '@/components/ui';
-import { showroomSites, showroomVerifiedOn } from '@/lib/showroom';
+import { Section } from '@/components/ui';
+import { showroomSites } from '@/lib/showroom';
 import { siteConfig } from '@/lib/site-config';
 
 export const metadata: Metadata = {
-  title: 'Showroom',
+  title: 'Work',
   description:
     'Live websites designed, built, and hosted by Fee The Developer for businesses across apparel, music, property, freight, auto, and personal services.',
   alternates: { canonical: new URL('/work', siteConfig.siteUrl) },
 };
 
-const verifiedLabel = new Date(
-  `${showroomVerifiedOn}T12:00:00Z`,
-).toLocaleDateString('en-US', {
-  month: 'long',
-  day: 'numeric',
-  year: 'numeric',
-});
-
 export default function WorkPage() {
   return (
     <main id="main-content" className="min-h-screen">
-      <PageIntro
-        eyebrow="Showroom / Live work"
-        title={
-          <>
-            Real sites.{' '}
-            <span className="ftd-gradient-text">Live right now.</span>
-          </>
-        }
-        description="Every site here is built and running on our platform today. Open any of them and look around. This is the same standard your business gets."
-        aside={
-          <div className="signal-rail rounded-3xl border border-white/10 bg-white/[0.04] p-6">
-            <p className="text-xs uppercase tracking-[0.22em] text-cyan">
-              On the floor
-            </p>
-            <p className="mt-4 text-5xl font-semibold text-white">
-              {showroomSites.length}
-            </p>
-            <p className="mt-2 text-sm text-slate-300">
-              live sites across{' '}
-              {new Set(showroomSites.map((s) => s.industry)).size} industries
-            </p>
-            <p className="mt-5 text-xs text-slate-500">
-              Checked live {verifiedLabel}
-            </p>
-          </div>
-        }
-      />
+      <Section className="pb-4 pt-14 sm:pt-20">
+        <h1 className="text-5xl font-extrabold text-white sm:text-6xl">Work</h1>
+        <p className="mt-4 text-lg text-slate-300">
+          Live sites we built. Open any of them.
+        </p>
+      </Section>
 
       <Section>
         <ul className="grid gap-8 md:grid-cols-2">
@@ -139,17 +110,12 @@ export default function WorkPage() {
         </ul>
       </Section>
 
-      <Section className="pt-0">
-        <div className="signal-rail flex flex-col items-start justify-between gap-6 rounded-3xl border border-white/10 bg-white/[0.04] p-8 sm:flex-row sm:items-center sm:p-10">
-          <div>
-            <h2 className="text-2xl font-semibold text-white sm:text-3xl">
-              Your business belongs in this room.
-            </h2>
-            <p className="mt-2 text-sm text-slate-300">
-              Tell us what you run and we will map the site that fits it.
-            </p>
-          </div>
-          <CtaLink href="/start">Start a project</CtaLink>
+      <Section className="pt-0 text-center">
+        <h2 className="text-3xl font-extrabold text-white">
+          Your business is next.
+        </h2>
+        <div className="mt-6 flex justify-center">
+          <OfferButton href="/services" label="See services" />
         </div>
       </Section>
     </main>

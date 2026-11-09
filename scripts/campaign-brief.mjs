@@ -25,6 +25,19 @@ export function formatPrice(item) {
   return `${item.priceMode === 'starting_at' ? 'Starting at ' : ''}${amount}${suffix}`;
 }
 
+/**
+ * The one button label shared by the ad end card, the offer page and the
+ * phone bar. Mirrors `ctaLabel` in lib/catalog.ts.
+ */
+export function ctaLabel(item) {
+  if (item.depositPercent) {
+    const down = (depositCents(item) / 100).toLocaleString('en-US');
+    return `Start with $${down} down`;
+  }
+  const price = formatPrice(item).replace('Starting at ', 'from ');
+  return `${item.campaign?.cta ?? 'Buy now'} · ${price}`;
+}
+
 export function campaignBrief(catalog, slug) {
   const problems = validateCatalog(catalog);
   if (problems.length)
@@ -55,6 +68,8 @@ export function campaignBrief(catalog, slug) {
     `- Scope: ${item.scopeNote}`,
     `- Payments & Back-End Integration: ${item.paymentsIncluded ? 'included' : 'not included'}`,
     `- Link: ${SITE}${c.landingPath}`,
+    `- Button (ad end card, page, phone bar): ${ctaLabel(item)}`,
+    `- Platform button: ${c.platformButton ?? (item.priceMode === 'flat' ? 'Shop Now' : 'Learn More')}`,
     '',
     '## Discounts and ways to pay',
     ...(vet

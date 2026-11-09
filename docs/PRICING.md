@@ -19,25 +19,37 @@ Owner-developer model: the owner builds the work, reuses proven Fee The Develope
 
 ## Price chart (v3)
 
-| Line                  | Item                                                                                                        | Price                                                 |
-| --------------------- | ----------------------------------------------------------------------------------------------------------- | ----------------------------------------------------- |
-| Starter Sites (fixed) | **Own Your Bookings**: .com (year 1), home + services pages, custom booking page with Stripe checkout       | $199                                                  |
-|                       | Own Your Bookings Plus: up to 4 pages, deposits at checkout                                                 | $525                                                  |
-|                       | Shop Bundle (4 chairs, booking page per chair) · extra chair                                                | from $840 · $105                                      |
-|                       | Keep-Live (domain, hosting, 2 updates)                                                                      | $42/year                                              |
-|                       | Get Found on Google · Pro Inbox · Extra Page                                                                | $99 · $69 · $49                                       |
-| Business Websites     | Business Site Essentials                                                                                    | from $1,750                                           |
-|                       | Strategic Website Redesign                                                                                  | from $3,325                                           |
-|                       | Website Launch                                                                                              | from $3,850                                           |
-|                       | Digital Presence Bundle                                                                                     | from $4,725                                           |
-|                       | E-commerce or Custom Website Features                                                                       | from $7,000                                           |
-| Software & Automation | Lead Capture & CRM · API Integration · AI Assistant                                                         | from $980 · $1,470 · $1,470                           |
-|                       | Custom Software · Clerk + Supabase · Analytics Dashboard · Public-Data Tool                                 | from $2,450 each                                      |
-|                       | Full Business System                                                                                        | from $7,000                                           |
-| Presence add-ons      | Payments & Back-End · Yelp · Apple · GA4 Audit · Business Profile · Workspace Email · Alignment · GA4 Setup | $175 · $245 · $245 · $315 · $365 · $365 · $490 · $645 |
-| Care plans (monthly)  | Maintenance · Cloud Mgmt · Monitoring · Change Block · Protection                                           | $120 · $245 · $245 · $365 · $595                      |
+| Line                  | Item                                                                                                              | Price                                                 |
+| --------------------- | ----------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------- |
+| Starter Sites (fixed) | **Own Your Bookings**: .com in the client's name, home + services pages, custom booking page with Stripe checkout | $199                                                  |
+|                       | Own Your Bookings Plus: up to 4 pages, deposits at checkout                                                       | $525                                                  |
+|                       | Shop Bundle (4 chairs, booking page per chair) · extra chair                                                      | from $840 · $105                                      |
+|                       | **Starter Hosting** (required, from launch): hosting, SSL, domain renewal, DNS and email forwarding               | $10/month                                             |
+|                       | Get Found on Google · Pro Inbox · Extra Page                                                                      | $99 · $69 · $49                                       |
+| Business Websites     | Business Site Essentials                                                                                          | from $1,750                                           |
+|                       | Strategic Website Redesign                                                                                        | from $3,325                                           |
+|                       | Website Launch                                                                                                    | from $3,850                                           |
+|                       | Digital Presence Bundle                                                                                           | from $4,725                                           |
+|                       | E-commerce or Custom Website Features                                                                             | from $7,000                                           |
+| Software & Automation | Lead Capture & CRM · API Integration · AI Assistant                                                               | from $980 · $1,470 · $1,470                           |
+|                       | Custom Software · Clerk + Supabase · Analytics Dashboard · Public-Data Tool                                       | from $2,450 each                                      |
+|                       | Full Business System                                                                                              | from $7,000                                           |
+| Presence add-ons      | Payments & Back-End · Yelp · Apple · GA4 Audit · Business Profile · Workspace Email · Alignment · GA4 Setup       | $175 · $245 · $245 · $315 · $365 · $365 · $490 · $645 |
+| Care plans (monthly)  | Maintenance · Cloud Mgmt · Monitoring · Change Block · Protection                                                 | $120 · $245 · $245 · $365 · $595                      |
 
-Retired: Business Website Design & Development (duplicated Website Launch), Get Paid Button (checkout is now in every Starter Site). Booked & Paid became Own Your Bookings Plus.
+Retired: Business Website Design & Development (duplicated Website Launch), Get Paid Button (checkout is now in every Starter Site), Keep-Live (replaced by Starter Hosting). Booked & Paid became Own Your Bookings Plus.
+
+## Starter Sites package rules (King Fee, 2026-11-08)
+
+Applies to Own Your Bookings, Own Your Bookings Plus and Shop Bundle. Business websites keep their care plans.
+
+1. **You own your .com.** The domain is registered in the client's name.
+2. **We host it for $10 a month, from launch.** Covers hosting, SSL, domain renewal and the domain settings (DNS) that keep booking, checkout and email working. FTD holds the domain controls while hosting is active, in exchange for the service.
+3. **Your money goes to you.** Clients pay into the client's own Stripe account. Stripe's processing fees apply.
+4. **Replies within 24 hours.** Forms, change requests and questions.
+5. **Leave any time.** To move the domain to another host, FTD transfers the domain to the client and sends the site's code. Hosting ends and the site comes off FTD's servers.
+
+Billing: the $199/$525/$840 checkout is one-time. The Starter Hosting subscription link goes out with the go-live approval, and the site goes live once it is active. In the catalog, Starter Hosting has `publicCheckout: false` (no buy button on the site) and each package has `requires: "starter-hosting"` (the offer page shows "+ $10/month starter hosting from launch"). Open: what happens when a hosting payment fails.
 
 ## Discounts
 

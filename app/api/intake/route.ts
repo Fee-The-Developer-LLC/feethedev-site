@@ -32,8 +32,14 @@ function intakeSource(intake: {
   promotionCode: string | null;
   veteranDiscount: boolean;
   depositPlan: boolean;
+  checkoutSession: string | null;
+  paidService: string | null;
 }): string {
   const params = new URLSearchParams();
+  if (intake.checkoutSession && intake.paidService) {
+    params.set('checkout', intake.checkoutSession);
+    return `feethedev-site:/services/${intake.paidService}/welcome?${params}`;
+  }
   if (intake.promotionCode) params.set('promo', intake.promotionCode);
   if (intake.veteranDiscount) params.set('veteran', '1');
   if (intake.depositPlan) params.set('plan', 'deposit');

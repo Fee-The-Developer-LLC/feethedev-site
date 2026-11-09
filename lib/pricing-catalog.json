@@ -57,23 +57,26 @@
       "sortOrder": 1,
       "description": "Your own .com with a home page, a services page, and a custom booking page where clients book and pay you directly through Stripe.",
       "includes": [
-        "Your .com domain, first year included",
+        "Your .com, registered in your name",
         "Two pages: home and services",
         "Custom booking page with Stripe checkout",
         "Payments land in your own Stripe account",
         "you@yourdomain.com email forwarding to your inbox",
         "Launch after you approve a preview link"
       ],
-      "scopeNote": "Built on the FTD booking and checkout system. Two pages, client-supplied text and photos, one Stripe account. Stripe processing fees, domain renewal after year one, extra pages and custom design are separate.",
+      "scopeNote": "Built on the FTD booking and checkout system. Two pages, client-supplied text and photos, one Stripe account. Starter Hosting ($10/month) is required from launch. Stripe processing fees, extra pages and custom design are separate.",
       "campaign": {
         "audience": "Barbers, stylists, lash techs, braiders and musicians whose link is a booking-app or link-in-bio URL",
         "pain": "Booking apps own the link, take fees and keep the client list",
         "hook": "Your clients should book you, not an app.",
-        "landingPath": "/pricing#starter-sites",
+        "landingPath": "/services/own-your-bookings",
         "channels": ["instagram", "facebook", "tiktok", "dm"],
-        "demo": "Own Your Bookings"
+        "demo": "Own Your Bookings",
+        "cta": "Own my bookings",
+        "platformButton": "Shop Now"
       },
-      "yobulEligible": false
+      "yobulEligible": false,
+      "requires": "starter-hosting"
     },
     {
       "slug": "own-your-bookings-plus",
@@ -89,22 +92,25 @@
       "sortOrder": 2,
       "description": "Everything in Own Your Bookings with more pages and deposits at checkout, for pros ready to cut no-shows.",
       "includes": [
-        "Your .com domain, first year included",
+        "Your .com, registered in your name",
         "Up to four pages, such as gallery and about",
         "Custom booking page with deposits at checkout",
         "Payments land in your own Stripe account",
         "Pay-over-time options where Stripe supports them"
       ],
-      "scopeNote": "Built on the FTD booking and checkout system. Up to four pages, one booking calendar, one Stripe account. Stripe processing fees are separate. Custom design is a Business Website.",
+      "scopeNote": "Built on the FTD booking and checkout system. Up to four pages, one booking calendar, one Stripe account. Starter Hosting ($10/month) is required from launch. Stripe processing fees are separate. Custom design is a Business Website.",
       "campaign": {
         "audience": "Solo pros losing money to no-shows and DM payments",
         "pain": "Empty chairs and chasing payments by message",
         "hook": "An empty chair is money you already counted.",
-        "landingPath": "/pricing#starter-sites",
+        "landingPath": "/services/own-your-bookings-plus",
         "channels": ["instagram", "facebook", "tiktok", "dm"],
-        "demo": "Own Your Bookings Plus"
+        "demo": "Own Your Bookings Plus",
+        "cta": "Stop no-shows",
+        "platformButton": "Shop Now"
       },
-      "yobulEligible": false
+      "yobulEligible": false,
+      "requires": "starter-hosting"
     },
     {
       "slug": "shop-bundle",
@@ -120,42 +126,69 @@
       "sortOrder": 3,
       "description": "One shop site on the shop's .com, plus a page for each barber or stylist.",
       "includes": [
-        "Shop site on the shop's .com, first year included",
+        "Shop site on the shop's .com, registered in the shop's name",
         "Up to four barber or stylist pages",
         "Each chair gets its own booking page",
         "Stripe checkout for the shop",
         "Additional chairs $105 each"
       ],
-      "scopeNote": "Starting scope covers four chairs and one Stripe account for the shop. Separate Stripe accounts per chair are quoted. Each additional chair is the Shop Bundle Extra Chair item.",
+      "scopeNote": "Starting scope covers four chairs and one Stripe account for the shop. Starter Hosting ($10/month) is required from launch. Separate Stripe accounts per chair are quoted. Each additional chair is the Shop Bundle Extra Chair item.",
       "campaign": {
         "audience": "Barbershop and salon owners with booth renters",
         "pain": "Every chair books through a different link",
         "hook": "One site for the shop. A page for every chair.",
-        "landingPath": "/pricing#starter-sites",
+        "landingPath": "/services/shop-bundle",
         "channels": ["instagram", "facebook", "dm", "in-person"],
-        "demo": "Shop Bundle"
+        "demo": "Shop Bundle",
+        "cta": "Put my shop online",
+        "platformButton": "Shop Now"
       },
+      "yobulEligible": false,
+      "requires": "starter-hosting"
+    },
+    {
+      "slug": "starter-hosting",
+      "name": "Starter Hosting",
+      "line": "starter",
+      "status": "active",
+      "stripeProductId": null,
+      "amountCents": 1000,
+      "interval": "month",
+      "priceMode": "flat",
+      "featured": false,
+      "paymentsIncluded": false,
+      "sortOrder": 4,
+      "publicCheckout": false,
+      "description": "Hosting for Starter Sites, required from launch: hosting, SSL, domain renewal, DNS and email forwarding.",
+      "includes": [
+        "You own your .com: registered in your name",
+        "Hosting, SSL, domain renewal, DNS and email forwarding",
+        "Your money goes to you, through your own Stripe account",
+        "Replies within 24 hours to forms, changes and questions",
+        "Leave any time: we transfer your domain and send your site code"
+      ],
+      "scopeNote": "Required for Own Your Bookings, Own Your Bookings Plus and Shop Bundle, from launch. FTD holds the domain controls while hosting is active. The subscription link is sent with your go-live approval. If you leave, hosting ends and the site comes off FTD servers.",
       "yobulEligible": false
     },
     {
       "slug": "keep-live",
       "name": "Keep-Live",
       "line": "starter",
-      "status": "active",
+      "status": "retired",
       "stripeProductId": null,
       "amountCents": 4200,
       "interval": "year",
       "priceMode": "flat",
       "featured": false,
       "paymentsIncluded": false,
-      "sortOrder": 4,
+      "sortOrder": 90,
       "description": "Keeps a Starter site live: domain renewal, hosting, and two text or price updates a year.",
       "includes": [
         "Domain renewal",
         "Hosting and email forwarding",
         "Two text or price updates a year"
       ],
-      "scopeNote": "Applies to Own Your Bookings, Own Your Bookings Plus and Shop Bundle sites. Design changes and new pages are separate.",
+      "scopeNote": "Retired 2026-11-08: replaced by Starter Hosting ($10/month).",
       "yobulEligible": false
     },
     {
@@ -268,9 +301,10 @@
         "audience": "Small businesses on an outdated template or no site",
         "pain": "The business grew and the website did not",
         "hook": "Your business grew. Your website didn't.",
-        "landingPath": "/pricing",
+        "landingPath": "/services/business-site-essentials",
         "channels": ["facebook", "instagram", "linkedin", "google-search"],
-        "demo": "Business Site Essentials"
+        "demo": "Business Site Essentials",
+        "platformButton": "Learn More"
       },
       "yobulEligible": true,
       "depositPercent": 30
@@ -299,9 +333,10 @@
         "audience": "Established local businesses that need a polished custom site",
         "pain": "First impressions happen online before they walk in",
         "hook": "First impressions happen before the first visit.",
-        "landingPath": "/pricing",
+        "landingPath": "/services/website-launch",
         "channels": ["facebook", "linkedin", "google-search"],
-        "demo": "Website Launch"
+        "demo": "Website Launch",
+        "platformButton": "Learn More"
       },
       "yobulEligible": true,
       "depositPercent": 30
@@ -330,9 +365,10 @@
         "audience": "Local service businesses customers cannot find online",
         "pain": "Good work, hard to find",
         "hook": "You do great work. The problem is being found.",
-        "landingPath": "/pricing",
+        "landingPath": "/services/digital-presence-bundle",
         "channels": ["facebook", "google-search", "linkedin"],
-        "demo": "Digital Presence Bundle"
+        "demo": "Digital Presence Bundle",
+        "platformButton": "Learn More"
       },
       "yobulEligible": true,
       "depositPercent": 30
@@ -413,9 +449,10 @@
         "audience": "Operators and teams repeating manual work",
         "pain": "People doing work software should do",
         "hook": "Some work should not need a person every time.",
-        "landingPath": "/pricing",
+        "landingPath": "/services/custom-software-and-automation",
         "channels": ["linkedin", "facebook", "dm"],
-        "demo": "Custom Software & Automation"
+        "demo": "Custom Software & Automation",
+        "platformButton": "Learn More"
       },
       "yobulEligible": true,
       "depositPercent": 30
@@ -444,9 +481,10 @@
         "audience": "Owners scaling past a patchwork of tools",
         "pain": "Too many disconnected tools",
         "hook": "At some point the business needs a system, not more tools.",
-        "landingPath": "/pricing",
+        "landingPath": "/services/full-business-system",
         "channels": ["linkedin", "dm"],
-        "demo": "Full Business System"
+        "demo": "Full Business System",
+        "platformButton": "Learn More"
       },
       "yobulEligible": true,
       "depositPercent": 30

@@ -817,5 +817,50 @@
     "width": null,
     "height": null,
     "orientation": null
+  },
+  {
+    "id": "hero-globe-web",
+    "category": "video",
+    "src": "/library/video/hero-globe-web.mp4",
+    "label": "Globe rotating with streaming orbits (web, muted)",
+    "width": 1280,
+    "height": 720,
+    "orientation": "landscape"
+  },
+  {
+    "id": "hero-globe-poster",
+    "category": "video",
+    "src": "/library/video/hero-globe-poster.webp",
+    "label": "Autonomy Has Levels badge, last frame of the globe video",
+    "width": 1280,
+    "height": 720,
+    "orientation": "landscape"
+  },
+  {
+    "id": "autonomy-has-levels-badge",
+    "category": "brand",
+    "src": "/library/brand/autonomy-has-levels-badge.webp",
+    "label": "Autonomy Has Levels badge",
+    "width": 1024,
+    "height": 1024,
+    "orientation": "square"
+  },
+  {
+    "id": "ftd-wordmark-full",
+    "category": "brand",
+    "src": "/library/brand/ftd-wordmark-full.webp",
+    "label": "Fee The Developer wordmark with tagline and URL",
+    "width": 1069,
+    "height": 653,
+    "orientation": "landscape"
+  },
+  {
+    "id": "ftd-wordmark-mark",
+    "category": "brand",
+    "src": "/library/brand/ftd-wordmark-mark.webp",
+    "label": "Fee The Developer wordmark",
+    "width": 1069,
+    "height": 479,
+    "orientation": "landscape"
   }
 ]
