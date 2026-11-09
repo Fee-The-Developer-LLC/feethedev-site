@@ -1,0 +1,18 @@
+{
+  // King Fee's marketing hub router. Deploys on its own, separate from the
+  // feethedeveloper.com Worker: run `npx wrangler deploy` from this folder.
+  "$schema": "../node_modules/wrangler/config-schema.json",
+  "name": "realplayscorp-hub",
+  "main": "src/index.mjs",
+  "compatibility_date": "2026-10-01",
+  "workers_dev": false,
+  "routes": [
+    { "pattern": "realplayscorp.com", "custom_domain": true },
+    { "pattern": "www.realplayscorp.com", "custom_domain": true },
+  ],
+  // Click counts by door, source, medium, campaign, content and country.
+  "analytics_engine_datasets": [
+    { "binding": "HUB_CLICKS", "dataset": "realplayscorp_hub_clicks" },
+  ],
+  "observability": { "enabled": true },
+}
