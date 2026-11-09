@@ -10,6 +10,33 @@
     "campaigns": "Ads read price and name from this file through scripts/campaign-brief.mjs. Never put a price in an ad that this file and /pricing do not show.",
     "pricingBasis": "2026-11 v3: every price cut 30% from v2 and rounded down to a clean number. Owner-developer model: the owner builds the work and reuses proven FTD systems, so there is no agency markup."
   },
+  "packageRules": [
+    {
+      "id": "own-domain",
+      "title": "You own your .com",
+      "body": "Your domain is registered in your name."
+    },
+    {
+      "id": "hosting",
+      "title": "We host it for $10 a month",
+      "body": "From launch: hosting, SSL, domain renewal and the domain settings that keep booking, checkout and email working. We hold the domain controls while hosting is active."
+    },
+    {
+      "id": "payments",
+      "title": "Your money goes to you",
+      "body": "Clients pay into your own Stripe account. Stripe's processing fees apply."
+    },
+    {
+      "id": "replies",
+      "title": "Replies within 24 hours",
+      "body": "Forms, change requests and questions get a reply within 24 hours."
+    },
+    {
+      "id": "leaving",
+      "title": "Leave any time",
+      "body": "Want your domain at another host? We transfer the domain to you and send your site's code. Hosting ends and the site comes off our servers."
+    }
+  ],
   "lines": [
     {
       "id": "starter",

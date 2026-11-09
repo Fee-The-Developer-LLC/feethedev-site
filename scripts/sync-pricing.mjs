@@ -99,6 +99,31 @@ export function validateCatalog(catalog) {
         errors.push(`${at}: ${flag} must be true or false`);
     }
   }
+  // Starter package rules quote the Starter Hosting price in words; keep that
+  // number tied to the catalog item so a reprice cannot leave stale copy.
+  if (catalog.packageRules !== undefined) {
+    if (!Array.isArray(catalog.packageRules)) {
+      errors.push('packageRules must be an array');
+    } else {
+      const hosting = catalog.items.find((i) => i.slug === 'starter-hosting');
+      const hostingDollars = hosting
+        ? `$${(hosting.amountCents / 100).toLocaleString('en-US')}`
+        : null;
+      for (const rule of catalog.packageRules) {
+        const at = `packageRules.${rule?.id ?? '(no id)'}`;
+        if (!rule?.id || !rule.title || !rule.body)
+          errors.push(`${at}: id, title and body are required`);
+        for (const amount of `${rule?.title} ${rule?.body}`.match(
+          /\$[\d,]+(\.\d+)?/g,
+        ) ?? []) {
+          if (amount !== hostingDollars)
+            errors.push(
+              `${at}: ${amount} does not match Starter Hosting (${hostingDollars ?? 'missing'})`,
+            );
+        }
+      }
+    }
+  }
   return errors;
 }
 
