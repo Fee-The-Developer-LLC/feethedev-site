@@ -11,6 +11,7 @@ export type PricingLineId =
   | 'starter'
   | 'websites'
   | 'systems'
+  | 'ai'
   | 'presence'
   | 'care';
 export type BillingInterval = 'one_time' | 'month' | 'year';

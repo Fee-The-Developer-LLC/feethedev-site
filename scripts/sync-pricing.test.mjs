@@ -570,3 +570,51 @@ test('package rules are complete and quote the Starter Hosting price', () => {
     validateCatalog(missing).some((e) => /packageRules\.own-domain/.test(e)),
   );
 });
+
+test('AI Skills & Plugins carry the prices King Fee set', () => {
+  const catalog = loadCatalog();
+  const byslug = Object.fromEntries(catalog.items.map((i) => [i.slug, i]));
+  const expected = {
+    'ai-plugin-claude': [15000, 'one_time'],
+    'ai-plugin-chatgpt': [10000, 'one_time'],
+    'ai-plugin-gemini': [7500, 'one_time'],
+    'ai-plugin-microsoft-365': [5000, 'one_time'],
+    'ai-plugin-github': [5000, 'one_time'],
+    'ai-plugin-all-platforms': [35000, 'one_time'],
+    'ai-plugin-claude-maintenance': [2500, 'month'],
+    'ai-plugin-chatgpt-maintenance': [2000, 'month'],
+  };
+  for (const [slug, [cents, interval]] of Object.entries(expected)) {
+    const item = byslug[slug];
+    assert.ok(item, `${slug} is in the catalog`);
+    assert.equal(item.line, 'ai', `${slug} is on the AI line`);
+    assert.equal(item.amountCents, cents, `${slug} price`);
+    assert.equal(item.interval, interval, `${slug} interval`);
+    assert.equal(item.status, 'active');
+  }
+  assert.ok(
+    catalog.lines.some((l) => l.id === 'ai'),
+    'the AI line exists',
+  );
+
+  // The bundle must cost less than the five platforms bought one by one.
+  const single = [
+    'ai-plugin-claude',
+    'ai-plugin-chatgpt',
+    'ai-plugin-gemini',
+    'ai-plugin-microsoft-365',
+    'ai-plugin-github',
+  ].reduce((sum, slug) => sum + byslug[slug].amountCents, 0);
+  assert.equal(single, 42500);
+  assert.ok(byslug['ai-plugin-all-platforms'].amountCents < single);
+
+  // Claude and ChatGPT require their maintenance plan, which has no public
+  // buy button (the link goes out at delivery, like Starter Hosting).
+  for (const [plugin, plan] of [
+    ['ai-plugin-claude', 'ai-plugin-claude-maintenance'],
+    ['ai-plugin-chatgpt', 'ai-plugin-chatgpt-maintenance'],
+  ]) {
+    assert.equal(byslug[plugin].requires, plan);
+    assert.equal(byslug[plan].publicCheckout, false);
+  }
+});

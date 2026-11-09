@@ -34,6 +34,9 @@ Owner-developer model: the owner builds the work, reuses proven Fee The Develope
 | Software & Automation | Lead Capture & CRM · API Integration · AI Assistant                                                               | from $980 · $1,470 · $1,470                           |
 |                       | Custom Software · Clerk + Supabase · Analytics Dashboard · Public-Data Tool                                       | from $2,450 each                                      |
 |                       | Full Business System                                                                                              | from $7,000                                           |
+| AI Skills & Plugins   | Claude · ChatGPT · Gemini · Microsoft 365 Copilot · GitHub Copilot (one plugin, one use case, one-time)           | $150 · $100 · $75 · $50 · $50                         |
+|                       | All-Platform AI Package (all five, same use case)                                                                 | $350                                                  |
+|                       | Maintenance, required from delivery: Claude · ChatGPT                                                             | $25/month · $20/month                                 |
 | Presence add-ons      | Payments & Back-End · Yelp · Apple · GA4 Audit · Business Profile · Workspace Email · Alignment · GA4 Setup       | $175 · $245 · $245 · $315 · $365 · $365 · $490 · $645 |
 | Care plans (monthly)  | Maintenance · Cloud Mgmt · Monitoring · Change Block · Protection                                                 | $120 · $245 · $245 · $365 · $595                      |
 
@@ -79,3 +82,7 @@ Every phase is safe to re-run. A listed product that is missing or archived stop
 ## Checks
 
 `npm run pricing:test`: 13 tests against an in-memory Stripe seeded at today's live prices. Covers plan writes nothing, every price at least 30% lower, deposits on the right items and never the default price, idempotent apply, promotion codes on every link, one veteran coupon, single-use expiring veteran codes with no email stored, retire safety, missing or archived products, the migration, and campaign briefs.
+
+## AI Skills & Plugins (King Fee, 2026-11-09)
+
+Built with Plays Ranch, FTD's development partner. Each price buys one plugin package for one defined use case on that platform; a second use case is a second plugin. The client supplies their own plan on each platform. Claude and ChatGPT plugins require monthly maintenance ($25 and $20) from delivery; like Starter Hosting, the maintenance link has no public buy button and goes out at delivery. The All-Platform package builds the same use case on all five for $350 (the five bought separately total $425). Veteran 30% applies; YOBUL does not.
