@@ -479,8 +479,17 @@ export async function syncPricing({
         act(slug, `deactivate link ${link.url}`);
         await stripe.paymentLinks.update(link.id, { active: false });
         if (priceId && priceId !== current) {
-          act(slug, `archive price ${priceId}`);
-          await stripe.prices.update(priceId, { active: false });
+          try {
+            await stripe.prices.update(priceId, { active: false });
+            act(slug, `archive price ${priceId}`);
+          } catch (error) {
+            // A product's default price cannot be archived; archiving the
+            // retired product below takes it off sale instead.
+            if (!/default price/i.test(String(error?.message))) throw error;
+            warnings.push(
+              `${slug}: ${priceId} is its product's default price. Kept; the product is archived if retired.`,
+            );
+          }
         }
       }
     }
