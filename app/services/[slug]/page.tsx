@@ -76,7 +76,7 @@ export default async function OfferPage({ params }: Props) {
                 </div>
               ) : (
                 <p className="mt-7 text-base font-semibold text-slate-200">
-                  Starts at launch with your Starter Site.
+                  {service.startsWhen.full}
                 </p>
               )}
               <p className="mt-4 text-sm text-slate-400">

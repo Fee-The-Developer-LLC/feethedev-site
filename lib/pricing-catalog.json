@@ -57,6 +57,12 @@
       "summary": "Applications, integrations, dashboards, and AI workflows built around one defined requirement."
     },
     {
+      "id": "ai",
+      "name": "AI Skills & Plugins",
+      "audience": "Owners and teams who want the AI they already use to know their business",
+      "summary": "One plugin package per platform: your workflows, documents and voice built into Claude, ChatGPT, Gemini, Microsoft 365 or GitHub. Built with our development partner, Plays Ranch."
+    },
+    {
       "id": "presence",
       "name": "Presence and Setup Add-ons",
       "audience": "Any client",
@@ -843,6 +849,182 @@
       "includes": [],
       "scopeNote": "Protection reduces risk; it does not guarantee security or uninterrupted service.",
       "yobulEligible": true
+    },
+    {
+      "slug": "ai-plugin-claude",
+      "name": "Claude Plugin Package",
+      "line": "ai",
+      "status": "active",
+      "stripeProductId": null,
+      "amountCents": 15000,
+      "interval": "one_time",
+      "priceMode": "flat",
+      "featured": false,
+      "paymentsIncluded": false,
+      "sortOrder": 40,
+      "description": "One plugin built for Claude: your workflows as skills, with your documents, processes and voice built in.",
+      "includes": [
+        "One plugin with skills for one defined use case",
+        "Your documents, processes and brand voice built in",
+        "Installed and tested on your Claude account",
+        "A short guide for you and your team"
+      ],
+      "scopeNote": "Built with Plays Ranch, Fee The Developer's development partner. One plugin covers one defined use case; a second use case is a second plugin. Requires your own Claude plan. Claude Plugin Maintenance starts at delivery.",
+      "yobulEligible": false,
+      "requires": "ai-plugin-claude-maintenance"
+    },
+    {
+      "slug": "ai-plugin-chatgpt",
+      "name": "ChatGPT Plugin Package",
+      "line": "ai",
+      "status": "active",
+      "stripeProductId": null,
+      "amountCents": 10000,
+      "interval": "one_time",
+      "priceMode": "flat",
+      "featured": false,
+      "paymentsIncluded": false,
+      "sortOrder": 41,
+      "description": "One custom GPT built for your business: instructions, knowledge files and actions where your ChatGPT plan allows.",
+      "includes": [
+        "One custom GPT for one defined use case",
+        "Your documents, processes and brand voice built in",
+        "Set up and tested on your ChatGPT account",
+        "A short guide for you and your team"
+      ],
+      "scopeNote": "Built with Plays Ranch, Fee The Developer's development partner. One plugin covers one defined use case; a second use case is a second plugin. Requires your own ChatGPT plan. ChatGPT Plugin Maintenance starts at delivery.",
+      "yobulEligible": false,
+      "requires": "ai-plugin-chatgpt-maintenance"
+    },
+    {
+      "slug": "ai-plugin-gemini",
+      "name": "Gemini Gem Package",
+      "line": "ai",
+      "status": "active",
+      "stripeProductId": null,
+      "amountCents": 7500,
+      "interval": "one_time",
+      "priceMode": "flat",
+      "featured": false,
+      "paymentsIncluded": false,
+      "sortOrder": 42,
+      "description": "One Gem built for your business in Gemini, with your instructions and files.",
+      "includes": [
+        "One Gem for one defined use case",
+        "Your documents and brand voice built in",
+        "Set up and tested on your Google account"
+      ],
+      "scopeNote": "Built with Plays Ranch, Fee The Developer's development partner. One plugin covers one defined use case; a second use case is a second plugin. Requires a Gemini plan that supports Gems.",
+      "yobulEligible": false
+    },
+    {
+      "slug": "ai-plugin-microsoft-365",
+      "name": "Microsoft 365 Copilot Agent",
+      "line": "ai",
+      "status": "active",
+      "stripeProductId": null,
+      "amountCents": 5000,
+      "interval": "one_time",
+      "priceMode": "flat",
+      "featured": false,
+      "paymentsIncluded": false,
+      "sortOrder": 43,
+      "description": "One Copilot agent for Microsoft 365, with your instructions and files.",
+      "includes": [
+        "One agent for one defined use case",
+        "Your documents and instructions built in",
+        "Set up and tested in your Microsoft 365 tenant"
+      ],
+      "scopeNote": "Built with Plays Ranch, Fee The Developer's development partner. One plugin covers one defined use case; a second use case is a second plugin. Requires a Microsoft 365 plan that includes Copilot agents.",
+      "yobulEligible": false
+    },
+    {
+      "slug": "ai-plugin-github",
+      "name": "GitHub Copilot Package",
+      "line": "ai",
+      "status": "active",
+      "stripeProductId": null,
+      "amountCents": 5000,
+      "interval": "one_time",
+      "priceMode": "flat",
+      "featured": false,
+      "paymentsIncluded": false,
+      "sortOrder": 44,
+      "description": "Copilot custom instructions, prompt files and agent setup for one GitHub repository.",
+      "includes": [
+        "Custom instructions for one repository",
+        "Prompt files for your common tasks",
+        "Set up and tested with your GitHub Copilot plan"
+      ],
+      "scopeNote": "Built with Plays Ranch, Fee The Developer's development partner. One package covers one repository. Requires a GitHub Copilot plan.",
+      "yobulEligible": false
+    },
+    {
+      "slug": "ai-plugin-all-platforms",
+      "name": "All-Platform AI Package",
+      "line": "ai",
+      "status": "active",
+      "stripeProductId": null,
+      "amountCents": 35000,
+      "interval": "one_time",
+      "priceMode": "flat",
+      "featured": false,
+      "paymentsIncluded": false,
+      "sortOrder": 45,
+      "description": "The same use case built for all five: Claude, ChatGPT, Gemini, Microsoft 365 and GitHub. Saves $75 against buying each one.",
+      "includes": [
+        "Claude plugin",
+        "ChatGPT custom GPT",
+        "Gemini Gem",
+        "Microsoft 365 Copilot agent",
+        "GitHub Copilot package"
+      ],
+      "scopeNote": "Built with Plays Ranch, Fee The Developer's development partner. One defined use case across all five platforms. Claude and ChatGPT maintenance ($25 and $20 a month) start at delivery. Requires your own plan on each platform.",
+      "yobulEligible": false
+    },
+    {
+      "slug": "ai-plugin-claude-maintenance",
+      "name": "Claude Plugin Maintenance",
+      "line": "ai",
+      "status": "active",
+      "stripeProductId": null,
+      "amountCents": 2500,
+      "interval": "month",
+      "priceMode": "flat",
+      "featured": false,
+      "paymentsIncluded": false,
+      "sortOrder": 46,
+      "description": "Keeps your Claude plugin current: updates when Claude changes, fixes, and small changes to skills and knowledge.",
+      "includes": [
+        "Updates when Claude changes",
+        "Fixes and small skill or knowledge changes",
+        "Replies within 24 hours"
+      ],
+      "scopeNote": "Starts at delivery, billed monthly. A new use case is a new plugin. Cancel any time; the plugin stays yours.",
+      "yobulEligible": false,
+      "publicCheckout": false
+    },
+    {
+      "slug": "ai-plugin-chatgpt-maintenance",
+      "name": "ChatGPT Plugin Maintenance",
+      "line": "ai",
+      "status": "active",
+      "stripeProductId": null,
+      "amountCents": 2000,
+      "interval": "month",
+      "priceMode": "flat",
+      "featured": false,
+      "paymentsIncluded": false,
+      "sortOrder": 47,
+      "description": "Keeps your custom GPT current: updates when ChatGPT changes, fixes, and small changes to instructions and knowledge.",
+      "includes": [
+        "Updates when ChatGPT changes",
+        "Fixes and small instruction or knowledge changes",
+        "Replies within 24 hours"
+      ],
+      "scopeNote": "Starts at delivery, billed monthly. A new use case is a new GPT. Cancel any time; the GPT stays yours.",
+      "yobulEligible": false,
+      "publicCheckout": false
     }
   ],
   "discounts": {

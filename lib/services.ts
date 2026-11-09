@@ -32,6 +32,10 @@ const lineImages: Record<PricingLineId, ServiceImage> = {
     src: '/library/graphics/gears-surrounding-glowing-neural-55c25d43.webp',
     alt: 'Gears around a glowing network core',
   },
+  ai: {
+    src: '/library/graphics/glowing-code-brackets-on-cube-6b7f15f4.webp',
+    alt: 'Glowing code brackets around a cube',
+  },
   presence: {
     src: '/library/graphics/chrome-map-pin-above-storefront-ef4ca26c.webp',
     alt: 'A map pin above a storefront',
@@ -83,7 +87,7 @@ const allServices = pricingLines.flatMap((line) =>
         : null;
     const required = item.requires ? getCatalogItem(item.requires) : undefined;
     const requiredNote = required
-      ? `+ ${formatPrice(required)} ${required.name.toLowerCase()} from launch`
+      ? `+ ${formatPrice(required)} ${item.line === 'starter' ? required.name.toLowerCase() : required.name} from ${item.line === 'starter' ? 'launch' : 'delivery'}`
       : null;
 
     return {
@@ -103,6 +107,17 @@ const allServices = pricingLines.flatMap((line) =>
       requiredHref: required ? `/services/${required.slug}` : null,
       primary,
       secondary,
+      // Items with no public checkout start alongside the thing they support.
+      startsWhen:
+        item.line === 'starter'
+          ? {
+              short: 'Starts at launch',
+              full: 'Starts at launch with your Starter Site.',
+            }
+          : {
+              short: 'Starts at delivery',
+              full: 'Starts at delivery with your package.',
+            },
       monthly: item.interval === 'month',
       yearly: item.interval === 'year',
       href: `/services/${item.slug}`,

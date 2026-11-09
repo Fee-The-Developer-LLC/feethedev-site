@@ -9,7 +9,7 @@ import { siteConfig } from '@/lib/site-config';
 export const metadata: Metadata = {
   title: 'Pricing',
   description:
-    'Fee The Developer prices: Starter Sites, business websites, software and automation, setup add-ons, and care plans.',
+    'Fee The Developer prices: Starter Sites, business websites, software and automation, AI skills and plugins, setup add-ons, and care plans.',
   alternates: { canonical: new URL('/pricing', siteConfig.siteUrl) },
 };
 
@@ -69,7 +69,7 @@ export default function PricingPage() {
                   />
                 ) : (
                   <span className="text-sm font-semibold text-slate-400">
-                    Starts at launch
+                    {service.startsWhen.short}
                   </span>
                 )}
               </li>
