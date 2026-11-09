@@ -63,7 +63,7 @@ export function BookingModal({
             <span aria-hidden="true">×</span>
           </button>
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-greenglow">
-            Google Calendar
+            Free consultation
           </p>
           <h2
             id={`${dialogId}-title`}
@@ -90,7 +90,8 @@ export function BookingModal({
             </span>
           </a>
           <p className="mt-4 text-xs leading-5 text-slate-500">
-            Scheduling opens securely in Google Calendar.
+            Pick a time on our booking calendar. Your confirmation includes Add
+            to Google Calendar.
           </p>
         </div>
       </dialog>

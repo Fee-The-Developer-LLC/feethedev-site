@@ -1,6 +1,9 @@
 const defaultSiteUrl = 'https://feethedeveloper.com';
-const defaultBookingUrl = 'https://calendar.app.google/rEzR9K3wUQYivMjn8';
+// FTD's own booking calendar (repo Fee-The-Developer-LLC/ftd-booking-calendar).
+const defaultBookingUrl =
+  'https://book.feethedeveloper.com/b/fee-the-developer';
 const approvedBookingHosts = new Set([
+  'book.feethedeveloper.com',
   'calendar.app.google',
   'calendar.google.com',
 ]);
@@ -29,7 +32,7 @@ function getBookingUrl(value: string | undefined): string {
       return url.toString();
     }
   } catch {
-    // Fall back to the approved Google Calendar booking page.
+    // Fall back to the FTD booking calendar.
   }
 
   return defaultBookingUrl;
