@@ -18,7 +18,48 @@ import { campaignBrief, ctaLabel, formatPrice } from './campaign-brief.mjs';
 import { mintVeteranCode } from './veteran-code.mjs';
 
 const catalogFile = new URL('../lib/pricing-catalog.json', import.meta.url);
-const loadCatalog = () => JSON.parse(fs.readFileSync(catalogFile, 'utf8'));
+
+/**
+ * Product ids from the previous Stripe account, pinned here so the fake
+ * Stripe below keeps modelling an account that already holds products. The
+ * live catalog leaves stripeProductId null since the move to the new account
+ * on 2026-11-10; the sync finds those products by metadata.catalog_slug.
+ */
+const FIXTURE_PRODUCT_IDS = {
+  'website-launch': 'prod_VGjrHAx19yKTIq',
+  'digital-presence-bundle': 'prod_VGjsalRgji5dqT',
+  'strategic-website-redesign': 'prod_VMYXmVBPwrnPnz',
+  'e-commerce-or-custom-website-features': 'prod_VMYXliEposgfiK',
+  'business-website-design-and-development': 'prod_VMYXNYpDbudov1',
+  'custom-software-and-automation': 'prod_VGjsbJhpltwP0b',
+  'full-business-system': 'prod_VGjscI7z3TYfbd',
+  'lead-capture-and-crm-automation': 'prod_VGpBZp5ZZQdBwj',
+  'api-integration-setup': 'prod_VGpA3DkShRrfkY',
+  'ai-assistant-or-chatbot-setup': 'prod_VGpA2i1uTo0uLV',
+  'clerk-supabase-completion': 'prod_VMYXMBCNHUGGIj',
+  'business-analytics-dashboard': 'prod_VGpAgg29b3P8TO',
+  'custom-public-data-collection-tool': 'prod_VGpAq8aUWsXNcU',
+  'yelp-profile-setup-or-cleanup': 'prod_VGpA287OuKvPyg',
+  'apple-business-connect-setup': 'prod_VGpAn2gN3pl4MQ',
+  'ga4-property-review-audit': 'prod_VMYXm4LvowqB1p',
+  'google-business-profile-setup': 'prod_VGpA8TZKqVziri',
+  'google-workspace-and-business-email': 'prod_VGpAbPNExLsS6I',
+  'contact-category-location-alignment': 'prod_VMYXcHn2DMLJsm',
+  'ga4-setup-and-validation': 'prod_VMYXPozyZdIVbz',
+  'website-maintenance-and-support': 'prod_VMYX538VQVhgTu',
+  'cloud-management': 'prod_VMYXpv4C65evaC',
+  'public-data-monitoring-and-alerts': 'prod_VGpAHXYYJ8Wz4j',
+  'developer-change-block': 'prod_VMYXxVFmEBJeGG',
+  'fee-developer-protection': 'prod_VMYXp4kwWjCU4c',
+};
+
+const loadCatalog = () => {
+  const catalog = JSON.parse(fs.readFileSync(catalogFile, 'utf8'));
+  for (const item of catalog.items) {
+    item.stripeProductId = FIXTURE_PRODUCT_IDS[item.slug] ?? item.stripeProductId;
+  }
+  return catalog;
+};
 
 /** Prices live in Stripe on 2026-11-08 (from the retired link script). */
 const LIVE_PRICES = {
