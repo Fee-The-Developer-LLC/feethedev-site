@@ -4,8 +4,12 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { OfferButton } from '@/components/offer/OfferButton';
 import { OfferHeader, OfferPhoneBar } from '@/components/offer/OfferChrome';
+import { ProductBuyCut } from '@/components/offer/ProductBuyCut';
+import { ProductConcierge } from '@/components/offer/ProductConcierge';
 import { Section } from '@/components/ui';
 import { packageRules, starterFaq, veteranDiscount } from '@/lib/catalog';
+import { conciergeFor } from '@/lib/concierge';
+import { getBuyCut } from '@/lib/product-stories';
 import { getService, services } from '@/lib/services';
 import { siteConfig } from '@/lib/site-config';
 
@@ -32,6 +36,8 @@ export default async function OfferPage({ params }: Props) {
   if (!service) notFound();
 
   const headline = service.hook ?? service.name;
+  const cut = getBuyCut(service.slug);
+  const concierge = conciergeFor(service.slug);
 
   return (
     <>
@@ -97,6 +103,12 @@ export default async function OfferPage({ params }: Props) {
           </div>
         </Section>
 
+        {cut && (
+          <Section className="overflow-hidden border-t border-white/10">
+            <ProductBuyCut cut={cut} action={service.primary} />
+          </Section>
+        )}
+
         <Section className="border-t border-white/10">
           <h2 className="text-3xl font-extrabold text-white">
             What you get{service.flat ? ` for ${service.price}` : ''}
@@ -119,6 +131,27 @@ export default async function OfferPage({ params }: Props) {
             {service.notes}
           </p>
         </Section>
+
+        {concierge && (
+          <Section className="border-t border-white/10">
+            <div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-start">
+              <div>
+                <p className="text-xs font-bold uppercase tracking-[0.2em] text-greenglow">
+                  Concierge
+                </p>
+                <h2 className="mt-3 text-3xl font-extrabold text-white">
+                  Ask before you buy
+                </h2>
+                <p className="mt-4 max-w-md text-base leading-7 text-slate-300">
+                  Tap a question or type your own. Answers come from the same
+                  price list as checkout. Anything else goes straight to King
+                  Fee.
+                </p>
+              </div>
+              <ProductConcierge script={concierge} checkout={service.primary} />
+            </div>
+          </Section>
+        )}
 
         {service.category === 'starter' && packageRules.length > 0 && (
           <Section className="border-t border-white/10">
