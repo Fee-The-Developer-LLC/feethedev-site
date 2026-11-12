@@ -266,11 +266,11 @@
     );
   }
 
-  .signal-rail li {
+  .signal-rail > li {
     @apply relative pl-8;
   }
 
-  .signal-rail li::before {
+  .signal-rail > li::before {
     content: '';
     position: absolute;
     left: 0;
@@ -282,7 +282,7 @@
     box-shadow: 0 0 16px rgba(20, 232, 180, 0.65);
   }
 
-  .signal-rail li:not(:last-child)::after {
+  .signal-rail > li:not(:last-child)::after {
     content: '';
     position: absolute;
     left: 0.3rem;

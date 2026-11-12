@@ -260,6 +260,9 @@ function SiteContent({ children }: Readonly<{ children: React.ReactNode }>) {
             <Link href="/pricing" className="hover:text-white">
               Pricing
             </Link>
+            <Link href="/stack" className="hover:text-white">
+              How we build
+            </Link>
             {hasClerkKeys && (
               <Link href="/dashboard" className="hover:text-white">
                 Client portal

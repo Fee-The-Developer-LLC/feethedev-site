@@ -80,7 +80,7 @@ Primary actions use solid or luminous treatments; secondary actions use quiet ou
 
 ### Navigation and data display
 
-Public navigation is kept short: Services, Pricing, Work, a free-consultation button, and Start a project. Each service has its own page at `/services/<slug>` with a Stripe checkout call to action. Credentials, program pages, and the Client portal are linked from the footer. Product navigation marks the current destination. Lists favor semantic markup and explicit statuses over decorative charts.
+Public navigation is kept short: Services, Pricing, Work, a free-consultation button, and Start a project. Each service has its own page at `/services/<slug>` with a Stripe checkout call to action. Credentials, program pages, and the Client portal are linked from the footer. The `/stack` page (How we build) lists the platforms FTD uses and the five-step workflow; the homepage carries a short text-only "Built with" strip that links to it. Vendor names appear as plain text, never logos, until each owner grants written permission, and they never imply endorsement or partnership. Keep vendor names out of metadata keywords; the source of truth and brand rules live in `lib/stack.ts`. Product navigation marks the current destination. Lists favor semantic markup and explicit statuses over decorative charts.
 
 ### Forms and overlays
 
