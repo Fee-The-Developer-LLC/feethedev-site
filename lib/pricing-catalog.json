@@ -980,7 +980,17 @@
         "GitHub Copilot package"
       ],
       "scopeNote": "Built with Plays Ranch, Fee The Developer's development partner. One defined use case across all five platforms. Claude and ChatGPT maintenance ($25 and $20 a month) start at delivery. Requires your own plan on each platform.",
-      "yobulEligible": false
+      "yobulEligible": false,
+      "campaign": {
+        "audience": "Owners and teams already paying for Claude, ChatGPT, Gemini, Microsoft 365 or GitHub",
+        "pain": "The AI they pay for does not know their business, so they re-explain it every time",
+        "hook": "The AI you already pay for should know your business.",
+        "landingPath": "/services/ai-plugin-all-platforms",
+        "channels": ["instagram", "facebook", "linkedin", "dm"],
+        "demo": "AI Skills & Plugins",
+        "cta": "Build my AI",
+        "platformButton": "Shop Now"
+      }
     },
     {
       "slug": "ai-plugin-claude-maintenance",
