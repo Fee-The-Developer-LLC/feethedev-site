@@ -13,6 +13,7 @@ const pages: [
   ['/services', 0.9, 'monthly'],
   ['/pricing', 0.9, 'monthly'],
   ['/work', 0.9, 'monthly'],
+  ['/switch', 0.8, 'monthly'],
   ['/start', 0.8, 'monthly'],
 ];
 
