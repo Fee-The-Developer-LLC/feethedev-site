@@ -15,6 +15,16 @@ export const DOORS = {
     company: 'ftd',
     campaign: 'ftd-own-your-bookings',
   },
+  switch: {
+    to: 'https://feethedeveloper.com/switch',
+    company: 'ftd',
+    campaign: 'ftd-switch-from-vagaro',
+  },
+  booking: {
+    to: 'https://honeybeeonlinesolutions.com/booking/',
+    company: 'honeybee',
+    campaign: 'honeybee-switch-from-vagaro',
+  },
   build: {
     to: 'https://feethedeveloper.com/services/business-site-essentials',
     company: 'ftd',

@@ -13,16 +13,18 @@ company, tags, country).
 
 Edit `src/routes.mjs` (`DOORS`). Adding a door is one entry.
 
-| Path                                                                  | Goes to                                                      |
-| --------------------------------------------------------------------- | ------------------------------------------------------------ |
-| `/` and `/start`                                                      | The start page: one button per door                          |
-| `/websites`                                                           | feethedeveloper.com/services/own-your-bookings               |
-| `/build`                                                              | feethedeveloper.com/services/business-site-essentials        |
-| `/ai`                                                                 | feethedeveloper.com/pricing#ai                               |
-| `/hutchrok`                                                           | hutchrok.com                                                 |
-| `/music`                                                              | feetheproducer.com                                           |
-| `/shop`                                                               | runnergangls.com                                             |
-| `/sites/beauty`, `realestate`, `transport`, `apparel`, `music`, `pro` | Each sector's flagship (beauty: FTD showroom until sign-off) |
+| Path                                                                  | Goes to                                                        |
+| --------------------------------------------------------------------- | -------------------------------------------------------------- |
+| `/` and `/start`                                                      | The start page: one button per door                            |
+| `/websites`                                                           | feethedeveloper.com/services/own-your-bookings                 |
+| `/switch`                                                             | feethedeveloper.com/switch (Own Your .com, switch from Vagaro) |
+| `/booking`                                                            | honeybeeonlinesolutions.com/booking/ (Hive Booking)            |
+| `/build`                                                              | feethedeveloper.com/services/business-site-essentials          |
+| `/ai`                                                                 | feethedeveloper.com/pricing#ai                                 |
+| `/hutchrok`                                                           | hutchrok.com                                                   |
+| `/music`                                                              | feetheproducer.com                                             |
+| `/shop`                                                               | runnergangls.com                                               |
+| `/sites/beauty`, `realestate`, `transport`, `apparel`, `music`, `pro` | Each sector's flagship (beauty: FTD showroom until sign-off)   |
 
 Anything else redirects to `/start`.
 

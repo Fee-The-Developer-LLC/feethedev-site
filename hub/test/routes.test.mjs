@@ -73,6 +73,7 @@ test('every door goes to https on a company domain', () => {
     'runnergangls.com',
     'deploypropertysg.com',
     '54bravoauto.com',
+    'honeybeeonlinesolutions.com',
   ];
   for (const [key, door] of Object.entries(DOORS)) {
     const u = new URL(door.to);
@@ -138,4 +139,19 @@ test('counting failures never block the redirect', async () => {
     env,
   );
   assert.equal(res.status, 302);
+});
+
+test('switch doors send Vagaro switchers to each company edition', () => {
+  const ftd = new URL(go('/switch?m=group').location);
+  assert.equal(ftd.origin + ftd.pathname, 'https://feethedeveloper.com/switch');
+  assert.equal(ftd.searchParams.get('utm_campaign'), 'ftd-switch-from-vagaro');
+  const hbo = new URL(go('/booking?m=dm').location);
+  assert.equal(
+    hbo.origin + hbo.pathname,
+    'https://honeybeeonlinesolutions.com/booking/',
+  );
+  assert.equal(
+    hbo.searchParams.get('utm_campaign'),
+    'honeybee-switch-from-vagaro',
+  );
 });
