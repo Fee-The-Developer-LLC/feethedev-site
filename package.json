@@ -20,7 +20,8 @@
     "veteran:code": "node scripts/veteran-code.mjs",
     "cf:secrets": "node scripts/set-cloudflare-secrets.mjs",
     "hub:test": "node --test hub/test/routes.test.mjs",
-    "hub:deploy": "cd hub && wrangler deploy"
+    "hub:deploy": "cd hub && wrangler deploy",
+    "orders:test": "node --experimental-strip-types --no-warnings --test lib/orders/core.test.mjs"
   },
   "dependencies": {
     "@clerk/nextjs": "^7.9.4",

@@ -149,3 +149,6 @@ export async function getPaidSession(
     return null;
   }
 }
+
+/** Low-level Stripe REST call for other server modules (webhook lookups). */
+export { stripe as stripeApi };

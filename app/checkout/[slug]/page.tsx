@@ -10,6 +10,8 @@ import {
   getCatalogItem,
   serviceCheckoutLinks,
 } from '@/lib/catalog';
+import { TERMS_APPROVED_ON } from '@/lib/orders/terms';
+import { promiseFor } from '@/lib/orders/promises';
 
 export const metadata: Metadata = {
   title: 'Checkout',
@@ -27,6 +29,7 @@ export default async function CheckoutPage({ params, searchParams }: Props) {
   if (!item) notFound();
 
   const deposit = depositFor(item);
+  const promise = promiseFor(item);
   const wantsDeposit = (await searchParams).plan === 'deposit';
   const plan = wantsDeposit && deposit ? 'deposit' : 'full';
   const fallbackUrl =
@@ -70,6 +73,27 @@ export default async function CheckoutPage({ params, searchParams }: Props) {
                   </li>
                 ))}
               </ul>
+              {promise.promise && (
+                <p className="mt-8 rounded-2xl border border-white/10 bg-white/[0.04] p-4 text-sm text-slate-200">
+                  <span className="font-semibold text-white">
+                    When you get it:{' '}
+                  </span>
+                  {promise.promise.headline}
+                </p>
+              )}
+              <p className="mt-6 text-xs text-slate-400">
+                Secure payment by Stripe. You get Stripe&apos;s receipt and an
+                order confirmation with your next steps right after paying.
+                {TERMS_APPROVED_ON && (
+                  <>
+                    {' '}
+                    <Link href="/terms" className="underline hover:text-white">
+                      Terms, refunds and delivery
+                    </Link>
+                    .
+                  </>
+                )}
+              </p>
             </div>
             <EmbeddedStripeCheckout
               slug={slug}

@@ -7,6 +7,9 @@ import { WelcomeIntakeForm } from '@/components/WelcomeIntakeForm';
 import { getCatalogItem } from '@/lib/catalog';
 import { siteConfig } from '@/lib/site-config';
 import { getPaidSession } from '@/lib/stripe-checkout';
+import { OrderNextSteps } from '@/components/orders/OrderNextSteps';
+import { orderNumberFor } from '@/lib/orders/core';
+import { promiseFor } from '@/lib/orders/promises';
 
 export const dynamic = 'force-dynamic';
 
@@ -28,6 +31,8 @@ export default async function WelcomePage({ params, searchParams }: Props) {
   const raw = (await searchParams).session_id;
   const sessionId = Array.isArray(raw) ? raw[0] : raw;
   const paid = sessionId ? await getPaidSession(sessionId, slug) : null;
+  const orderNumber = paid ? await orderNumberFor(paid.id) : null;
+  const promise = promiseFor(item);
 
   return (
     <>
@@ -44,8 +49,17 @@ export default async function WelcomePage({ params, searchParams }: Props) {
                   You&apos;re in. {item.name} starts now.
                 </h1>
                 <p className="mt-5 text-lg text-slate-300">
-                  Send your details and we start. Stripe emails your receipt.
+                  Your order is confirmed. Send your details and we start.
                 </p>
+                <OrderNextSteps
+                  orderNumber={orderNumber ?? ''}
+                  email={paid.email}
+                  headline={promise.promise?.headline ?? null}
+                  steps={promise.steps}
+                  youDo={promise.promise?.youDo ?? []}
+                  videoUrl={promise.promise?.videoUrl ?? null}
+                  contact={siteConfig}
+                />
               </div>
               <WelcomeIntakeForm
                 serviceName={item.name}
