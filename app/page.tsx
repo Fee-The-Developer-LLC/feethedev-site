@@ -1,9 +1,11 @@
 import { Show } from '@clerk/nextjs';
+import Link from 'next/link';
 import { BookingModal } from '@/components/BookingModal';
 import { HeroVideo } from '@/components/HeroVideo';
 import { OfferButton } from '@/components/offer/OfferButton';
 import { ServiceDirectory } from '@/components/ServiceDirectory';
 import { Section } from '@/components/ui';
+import { stackHighlights } from '@/lib/stack';
 
 const hasClerkKeys = Boolean(
   process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY && process.env.CLERK_SECRET_KEY,
@@ -45,6 +47,31 @@ export default function Home() {
             />
           </div>
           <HeroVideo />
+        </div>
+      </Section>
+
+      <Section
+        aria-labelledby="built-with-heading"
+        className="border-b border-white/10 py-8 sm:py-10"
+      >
+        <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+          <h2
+            id="built-with-heading"
+            className="text-xs font-semibold uppercase tracking-[0.22em] text-slate-400"
+          >
+            Built with
+          </h2>
+          <ul className="flex flex-wrap gap-x-6 gap-y-2 text-sm font-semibold text-slate-200">
+            {stackHighlights.map((name) => (
+              <li key={name}>{name}</li>
+            ))}
+          </ul>
+          <Link
+            href="/stack"
+            className="text-sm font-semibold text-cyan underline-offset-4 hover:text-white hover:underline"
+          >
+            How we build <span aria-hidden="true">→</span>
+          </Link>
         </div>
       </Section>
 
