@@ -3,9 +3,7 @@
  *
  * Everything a page shows (name, price, description, inclusions, scope note,
  * deposit) comes from `lib/pricing-catalog.json` through `lib/catalog.ts`.
- * This file only adds routing and images.
- *
- * Images: set one per line below, or add a slug to `serviceImages`.
+ * This file only adds routing.
  */
 import {
   ctaLabel,
@@ -16,51 +14,6 @@ import {
   serviceCheckoutLinks,
   type PricingLineId,
 } from '@/lib/catalog';
-
-export type ServiceImage = { src: string; alt: string };
-
-const lineImages: Record<PricingLineId, ServiceImage> = {
-  starter: {
-    src: '/library/spaces/rain-wet-street-with-storefronts-cf1bfd80.webp',
-    alt: 'Storefronts on a city street at night',
-  },
-  websites: {
-    src: '/library/graphics/floating-browser-window-glowing-960a9dfc.webp',
-    alt: 'A glowing browser window',
-  },
-  systems: {
-    src: '/library/graphics/gears-surrounding-glowing-neural-55c25d43.webp',
-    alt: 'Gears around a glowing network core',
-  },
-  ai: {
-    src: '/library/graphics/glowing-code-brackets-on-cube-6b7f15f4.webp',
-    alt: 'Glowing code brackets around a cube',
-  },
-  presence: {
-    src: '/library/graphics/chrome-map-pin-above-storefront-ef4ca26c.webp',
-    alt: 'A map pin above a storefront',
-  },
-  care: {
-    src: '/library/spaces/futuristic-server-room-corridor-036287e5.webp',
-    alt: 'A server room corridor',
-  },
-};
-
-/** Per-service overrides; anything missing uses its line image. */
-const serviceImages: Partial<Record<string, ServiceImage>> = {
-  'payments-and-back-end-integration': {
-    src: '/library/graphics/payment-card-with-check-mark-31acfea4.webp',
-    alt: 'A payment card with a check mark',
-  },
-  'business-analytics-dashboard': {
-    src: '/library/graphics/floating-dashboard-with-bar-charts-b3d74149.webp',
-    alt: 'A floating dashboard with bar charts',
-  },
-  'ai-assistant-or-chatbot-setup': {
-    src: '/library/graphics/holographic-globe-with-orbit-rings-31c85b13.webp',
-    alt: 'A holographic globe with orbit rings',
-  },
-};
 
 export const serviceCategories = pricingLines
   .filter((line) => line.items.length > 0)
@@ -121,7 +74,6 @@ const allServices = pricingLines.flatMap((line) =>
       monthly: item.interval === 'month',
       yearly: item.interval === 'year',
       href: `/services/${item.slug}`,
-      image: serviceImages[item.slug] ?? lineImages[line.id],
     };
   }),
 );

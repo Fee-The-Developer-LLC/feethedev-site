@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import type { ReactNode } from 'react';
 import { Body, Button, H1 } from '@/components/ui';
 
@@ -10,27 +9,15 @@ export function InteriorHero({
   description,
   actions,
   children,
-  backgroundImage = '/brand/ftd-cta-system.webp',
 }: {
   eyebrow: string;
   title: ReactNode;
   description: string;
   actions: Action[];
   children?: ReactNode;
-  backgroundImage?: string;
 }) {
   return (
     <section className="relative overflow-hidden border-b border-white/10 py-20 sm:py-28">
-      <Image
-        src={backgroundImage}
-        alt=""
-        aria-hidden="true"
-        fill
-        priority
-        sizes="100vw"
-        className="object-cover opacity-40"
-      />
-      <div className="absolute inset-0 bg-gradient-to-r from-background via-background/90 to-background/45" />
       <div className="shell relative z-10">
         <div className="max-w-4xl space-y-7">
           <p className="status-chip text-cyan">{eyebrow}</p>

@@ -19,11 +19,7 @@ export function BarberAdReel() {
   return (
     <ul className="grid gap-10 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8">
       {slots.map(({ ad, service }, index) => {
-        const poster = ad.video
-          ? `${barberAdsPath}/${ad.slug}.webp`
-          : ad.fallback.src;
-        const showsPerson =
-          ad.video || ad.fallback.src.startsWith('/library/people/');
+        const poster = `${barberAdsPath}/${ad.slug}.webp`;
 
         return (
           <li
@@ -40,14 +36,16 @@ export function BarberAdReel() {
                 className="absolute -inset-8 rounded-full bg-electric/15 blur-3xl"
               />
               <div className="relative aspect-[9/16] overflow-hidden rounded-[2.4rem] border border-white/15 bg-background p-2 shadow-[0_30px_80px_-24px_rgba(37,120,255,0.5)]">
-                <div className="relative h-full w-full overflow-hidden rounded-[2rem] bg-panel">
-                  <Image
-                    src={poster}
-                    alt={ad.fallback.alt}
-                    fill
-                    sizes="280px"
-                    className="object-cover"
-                  />
+                <div className="relative h-full w-full overflow-hidden rounded-[2rem] bg-panel bg-[radial-gradient(circle_at_50%_70%,rgba(37,120,255,0.28),transparent_60%),radial-gradient(circle_at_30%_100%,rgba(20,232,180,0.18),transparent_50%)]">
+                  {ad.video && (
+                    <Image
+                      src={poster}
+                      alt=""
+                      fill
+                      sizes="280px"
+                      className="object-cover"
+                    />
+                  )}
                   {ad.video && (
                     <video
                       className="absolute inset-0 h-full w-full object-cover motion-reduce:hidden"
@@ -73,7 +71,7 @@ export function BarberAdReel() {
                         Ad in production
                       </span>
                     )}
-                    {ad.aiGenerated && showsPerson && (
+                    {ad.aiGenerated && ad.video && (
                       <span className="ml-auto rounded-full bg-background/70 px-2.5 py-1 text-[0.65rem] font-semibold text-slate-400">
                         AI-generated
                       </span>

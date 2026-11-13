@@ -1,5 +1,4 @@
 import type { Metadata } from 'next';
-import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { OfferButton } from '@/components/offer/OfferButton';
@@ -44,7 +43,7 @@ export default async function OfferPage({ params }: Props) {
       <OfferHeader action={service.primary} />
       <main id="main-content" className="min-h-screen pb-24 sm:pb-0">
         <Section className="py-12 sm:py-20">
-          <div className="grid gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
+          <div className="max-w-3xl">
             <div>
               <p className="text-xs font-bold uppercase tracking-[0.2em] text-greenglow">
                 {service.name}
@@ -89,16 +88,6 @@ export default async function OfferPage({ params }: Props) {
                 Veterans and veteran-owned businesses save{' '}
                 {veteranDiscount.percentOff}%.
               </p>
-            </div>
-            <div className="relative aspect-[4/3] overflow-hidden rounded-3xl border border-white/10 bg-panel">
-              <Image
-                src={service.image.src}
-                alt={service.image.alt}
-                fill
-                priority
-                sizes="(min-width: 1024px) 45vw, 92vw"
-                className="object-cover"
-              />
             </div>
           </div>
         </Section>

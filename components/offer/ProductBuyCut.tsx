@@ -8,9 +8,9 @@ import type { BuyCut } from '@/lib/product-stories';
  * the 3D product layer floating beside it, the three storyboard beats, and
  * the same end card button the ad uses.
  *
- * Until the clip is committed (`cut.media === false`) the phone shows the 3D
- * layer as a still, so the section never renders an empty player. Visitors
- * who prefer reduced motion always get the poster frame.
+ * Until the clip is committed (`cut.media === false`) the phone shows a dark
+ * branded screen with the hook, so the section never renders an empty player
+ * or a stock picture. Visitors who prefer reduced motion get the poster frame.
  */
 export function ProductBuyCut({
   cut,
@@ -19,12 +19,8 @@ export function ProductBuyCut({
   cut: BuyCut;
   action: { href: string; label: string } | null;
 }) {
-  const poster = cut.media
-    ? `${cut.mediaPath}/end.webp`
-    : cut.layerFallback.src;
-  const layer = cut.media
-    ? `${cut.mediaPath}/layer.webp`
-    : cut.layerFallback.src;
+  const poster = `${cut.mediaPath}/end.webp`;
+  const layer = `${cut.mediaPath}/layer.webp`;
 
   return (
     <div className="grid items-center gap-12 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)]">
@@ -34,14 +30,16 @@ export function ProductBuyCut({
           className="absolute -inset-10 rounded-full bg-electric/20 blur-3xl"
         />
         <div className="relative aspect-[9/19.5] overflow-hidden rounded-[2.6rem] border border-white/15 bg-background p-2.5 shadow-[0_30px_80px_-20px_rgba(37,120,255,0.45)]">
-          <div className="relative h-full w-full overflow-hidden rounded-[2.1rem] bg-panel">
-            <Image
-              src={poster}
-              alt={cut.layerFallback.alt}
-              fill
-              sizes="304px"
-              className="object-cover"
-            />
+          <div className="relative h-full w-full overflow-hidden rounded-[2.1rem] bg-panel bg-[radial-gradient(circle_at_50%_70%,rgba(37,120,255,0.28),transparent_60%),radial-gradient(circle_at_30%_100%,rgba(20,232,180,0.18),transparent_50%)]">
+            {cut.media && (
+              <Image
+                src={poster}
+                alt=""
+                fill
+                sizes="304px"
+                className="object-cover"
+              />
+            )}
             {cut.media && (
               <video
                 className="absolute inset-0 h-full w-full object-cover motion-reduce:hidden"
@@ -67,20 +65,22 @@ export function ProductBuyCut({
             />
           </div>
         </div>
-        <Tilt3D
-          className="absolute -right-10 bottom-10 hidden w-36 sm:block lg:-right-16 lg:w-44"
-          max={12}
-        >
-          <div className="overflow-hidden rounded-3xl border border-white/10 bg-background shadow-[0_20px_60px_-15px_rgba(20,232,180,0.35)]">
-            <Image
-              src={layer}
-              alt=""
-              width={352}
-              height={352}
-              className="h-auto w-full"
-            />
-          </div>
-        </Tilt3D>
+        {cut.media && (
+          <Tilt3D
+            className="absolute -right-10 bottom-10 hidden w-36 sm:block lg:-right-16 lg:w-44"
+            max={12}
+          >
+            <div className="overflow-hidden rounded-3xl border border-white/10 bg-background shadow-[0_20px_60px_-15px_rgba(20,232,180,0.35)]">
+              <Image
+                src={layer}
+                alt=""
+                width={352}
+                height={352}
+                className="h-auto w-full"
+              />
+            </div>
+          </Tilt3D>
+        )}
       </div>
 
       <div>
