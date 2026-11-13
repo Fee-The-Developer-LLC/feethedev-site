@@ -151,6 +151,40 @@
     background: rgba(20, 232, 180, 0.68);
   }
 
+  /* Home page globe backdrop (components/GlobeBackdrop.tsx). */
+  .ftd-globe-layer {
+    opacity: 0.5;
+    mix-blend-mode: screen;
+    -webkit-mask-image: radial-gradient(
+      circle at center,
+      #000 0%,
+      #000 30%,
+      transparent 62%
+    );
+    mask-image: radial-gradient(
+      circle at center,
+      #000 0%,
+      #000 30%,
+      transparent 62%
+    );
+    animation: ftd-globe-spin 240s linear infinite;
+  }
+
+  @keyframes ftd-globe-spin {
+    from {
+      transform: translate(-50%, -50%) rotate(0deg);
+    }
+    to {
+      transform: translate(-50%, -50%) rotate(360deg);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ftd-globe-layer {
+      animation: none;
+    }
+  }
+
   .signal-artwork {
     --signal-accent: 37 120 255;
     position: relative;
