@@ -9,7 +9,7 @@ import { siteConfig } from '@/lib/site-config';
 export const metadata: Metadata = {
   title: 'Work',
   description:
-    'Live websites designed, built, and hosted by Fee The Developer for businesses across apparel, music, property, freight, auto, and personal services.',
+    'Live websites designed, built, and hosted by Fee The Developer for businesses across marketing, music, property, freight, auto, and personal services.',
   alternates: { canonical: new URL('/work', siteConfig.siteUrl) },
 };
 

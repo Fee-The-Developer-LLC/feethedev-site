@@ -8,6 +8,12 @@
  *
  * When a Worker is added or retired, update this list and recapture its
  * screenshot so the showroom only ever shows what is actually live.
+ *
+ * 2026-11-15: Runner Gang Lifestyle (runnergangls.com) pulled from the
+ * showroom for now. Honey Bee Online Solutions and Aaron Draper added; their
+ * screenshots were captured from local production builds of
+ * honebeeonline_os and aaron_draper-site, and their live domains still need
+ * an HTTP 200 check before showroomVerifiedOn is moved forward.
  */
 export type ShowroomSite = {
   name: string;
@@ -37,18 +43,14 @@ export const showroomSites: ShowroomSite[] = [
     ],
   },
   {
-    name: 'Runner Gang Lifestyle',
-    domain: 'runnergangls.com',
-    worker: 'runner-gang-lifestyle',
-    industry: 'Apparel and e-commerce',
+    name: 'Honey Bee Online Solutions',
+    domain: 'honeybeeonlinesolutions.com',
+    worker: 'honeybee-online-site',
+    industry: 'Marketing and lead generation',
     summary:
-      'A cinematic digital flagship that walks shoppers through the campaign lineup and resolves every reveal to a real product.',
-    image: '/work/runner-gang.jpg',
-    highlights: [
-      'Cinematic walkthrough',
-      'Live storefront',
-      'Sound and motion controls',
-    ],
+      'Ads, social, local search, and follow-up for small businesses, with every inquiry captured in one pipeline and routed the same day.',
+    image: '/work/honey-bee-online.jpg',
+    highlights: ['Lead plan intake', 'Client portal', 'Online booking'],
   },
   {
     name: 'Fee The Producer',
@@ -59,6 +61,16 @@ export const showroomSites: ShowroomSite[] = [
       'A studio home for original records, videos, and custom production inquiries, built around the artist identity.',
     image: '/work/fee-the-producer.jpg',
     highlights: ['Music catalog', 'Merch', 'Project inquiries'],
+  },
+  {
+    name: 'Aaron "Drape" Draper',
+    domain: 'adrape30.com',
+    worker: 'aaron-draper-site',
+    industry: 'Musician and percussionist',
+    summary:
+      'The official home of a touring percussionist, with a credits wall, career timeline, video library, rig, press, and booking.',
+    image: '/work/aaron-draper.jpg',
+    highlights: ['Credits wall', 'Video library', 'Booking requests'],
   },
   {
     name: 'Hairline Matters',
