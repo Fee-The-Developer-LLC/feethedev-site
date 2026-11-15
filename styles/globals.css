@@ -556,3 +556,106 @@
     contain-intrinsic-size: 900px;
   }
 }
+
+/* Sign-in / sign-up popup (components/auth/AuthDialog.tsx). */
+@layer components {
+  .auth-dialog {
+    margin: auto;
+    width: min(calc(100% - 2rem), 56.25rem);
+    max-width: none;
+    max-height: calc(
+      100dvh - 2rem - env(safe-area-inset-top) - env(safe-area-inset-bottom)
+    );
+    padding: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 1.5rem;
+    background: #0b1018;
+    color: #f3f6fa;
+    box-shadow:
+      0 28px 100px rgba(0, 0, 0, 0.65),
+      0 0 60px rgba(37, 120, 255, 0.16);
+  }
+
+  .auth-dialog[open] {
+    animation: auth-dialog-in 180ms ease-out;
+  }
+
+  .auth-dialog::backdrop {
+    background: rgba(5, 7, 11, 0.72);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+  }
+
+  .auth-dialog__frame {
+    display: grid;
+    min-height: 100%;
+  }
+
+  .auth-dialog__brand {
+    display: none;
+    position: relative;
+    overflow: hidden;
+    padding: 2.5rem;
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .auth-dialog__form {
+    min-width: 0;
+    padding: 1rem 1rem calc(1.25rem + env(safe-area-inset-bottom));
+  }
+
+  @media (min-width: 640px) {
+    .auth-dialog__form {
+      padding: 1.5rem 2rem 2rem;
+    }
+  }
+
+  @media (min-width: 768px) {
+    .auth-dialog__frame {
+      grid-template-columns: 2fr 3fr;
+    }
+
+    .auth-dialog__brand {
+      display: block;
+    }
+  }
+
+  .auth-dialog__spinner {
+    animation: auth-dialog-spin 800ms linear infinite;
+  }
+
+  @keyframes auth-dialog-in {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @keyframes auth-dialog-spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .auth-dialog[open] {
+      animation: auth-dialog-fade 120ms linear;
+    }
+
+    .auth-dialog__spinner {
+      animation-duration: 2.4s;
+    }
+  }
+
+  @keyframes auth-dialog-fade {
+    from {
+      opacity: 0;
+    }
+  }
+}
