@@ -2,24 +2,35 @@ import { SignUp } from '@clerk/nextjs';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { AuthShell } from '@/components/AuthShell';
+import { safeReturnPath } from '@/lib/safe-redirect';
 
 export const metadata: Metadata = {
   title: 'Sign up',
   robots: { index: false, follow: false },
 };
 
-export default function Page() {
+export default async function Page({
+  searchParams,
+}: {
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
+}) {
   if (
     !process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY ||
     !process.env.CLERK_SECRET_KEY
   )
     notFound();
+  // Validated on the server; see app/sign-in for the reasoning.
+  const destination = safeReturnPath((await searchParams).redirect_url);
   return (
     <AuthShell
-      title="Create your free account."
-      description="Get offers first, track your projects, and check out faster."
+      title="Your next build starts here."
+      description="One account for your projects, requests, and checkout."
     >
-      <SignUp fallbackRedirectUrl="/dashboard" signInUrl="/sign-in" />
+      <SignUp
+        forceRedirectUrl={destination}
+        signInForceRedirectUrl={destination}
+        signInUrl="/sign-in"
+      />
     </AuthShell>
   );
 }

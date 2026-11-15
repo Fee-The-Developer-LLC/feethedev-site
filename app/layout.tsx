@@ -3,8 +3,9 @@ import type { Metadata, Viewport } from 'next';
 import { Manrope } from 'next/font/google';
 import Image from 'next/image';
 import Link from 'next/link';
+import { AuthDialogProvider, AuthTrigger } from '@/components/auth/AuthDialog';
 import { HideOnOfferPages } from '@/components/HideOnOfferPages';
-import { clerkAppearance } from '@/lib/clerk-appearance';
+import { clerkAppearance, clerkLocalization } from '@/lib/clerk-appearance';
 import { siteConfig } from '@/lib/site-config';
 import '../styles/globals.css';
 
@@ -120,8 +121,15 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${manrope.variable} font-sans`}>
         {hasClerkKeys ? (
-          <ClerkProvider appearance={clerkAppearance}>
-            <SiteContent>{children}</SiteContent>
+          <ClerkProvider
+            appearance={clerkAppearance}
+            localization={clerkLocalization}
+            signInUrl="/sign-in"
+            signUpUrl="/sign-up"
+          >
+            <AuthDialogProvider>
+              <SiteContent>{children}</SiteContent>
+            </AuthDialogProvider>
           </ClerkProvider>
         ) : (
           <SiteContent>{children}</SiteContent>
@@ -175,22 +183,22 @@ function SiteContent({ children }: Readonly<{ children: React.ReactNode }>) {
               {hasClerkKeys ? (
                 <>
                   <Show when="signed-out">
-                    <Link
-                      href="/sign-in"
-                      className="hidden text-sm font-semibold text-slate-300 hover:text-white sm:inline"
+                    <AuthTrigger
+                      mode="sign-in"
+                      className="hidden min-h-11 items-center text-sm font-semibold text-slate-300 hover:text-white sm:inline-flex"
                     >
                       Sign in
-                    </Link>
-                    <Link
-                      href="/sign-up"
-                      className="inline-flex min-h-10 items-center gap-2 rounded-full bg-silver px-4 text-xs font-extrabold uppercase tracking-[0.12em] text-background shadow-electric transition hover:bg-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-greenglow"
+                    </AuthTrigger>
+                    <AuthTrigger
+                      mode="sign-up"
+                      className="inline-flex min-h-11 items-center gap-2 rounded-full bg-silver px-4 text-xs font-extrabold uppercase tracking-[0.12em] text-background shadow-electric transition hover:bg-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-greenglow"
                     >
                       <span
                         aria-hidden="true"
                         className="h-2 w-2 rounded-full bg-[#0FAF86]"
                       />
                       Sign up free
-                    </Link>
+                    </AuthTrigger>
                   </Show>
                   <Show when="signed-in">
                     <Link
@@ -225,6 +233,16 @@ function SiteContent({ children }: Readonly<{ children: React.ReactNode }>) {
             <Link href="/work" className="hover:text-white">
               Work
             </Link>
+            {hasClerkKeys && (
+              <Show when="signed-out">
+                <AuthTrigger
+                  mode="sign-in"
+                  className="-my-3 ml-auto inline-flex min-h-11 items-center text-cyan hover:text-white sm:hidden"
+                >
+                  Sign in
+                </AuthTrigger>
+              </Show>
+            )}
           </nav>
         </header>
       </HideOnOfferPages>

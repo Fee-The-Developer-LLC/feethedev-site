@@ -3,7 +3,12 @@ import Link from 'next/link';
 import { BarberAdReel } from '@/components/BarberAdReel';
 import { BookingModal } from '@/components/BookingModal';
 import { GlobeBackdrop } from '@/components/GlobeBackdrop';
-import { OfferButton } from '@/components/offer/OfferButton';
+import { AuthTrigger } from '@/components/auth/AuthDialog';
+import {
+  OfferButton,
+  OfferButtonDot,
+  offerButtonClass,
+} from '@/components/offer/OfferButton';
 import { ProductShelf } from '@/components/ProductShelf';
 import { Section } from '@/components/ui';
 import { stackHighlights } from '@/lib/stack';
@@ -44,11 +49,12 @@ export default function Home() {
             <div className="mt-10 flex flex-wrap justify-center gap-3">
               <OfferButton href="#products" label="Shop products" />
               <SignedOut>
-                <OfferButton
-                  href="/sign-up"
-                  label="Sign up free"
-                  variant="secondary"
-                />
+                <AuthTrigger
+                  mode="sign-up"
+                  className={offerButtonClass({ variant: 'secondary' })}
+                >
+                  Sign up free
+                </AuthTrigger>
               </SignedOut>
             </div>
             <BookingModal
@@ -145,7 +151,10 @@ export default function Home() {
               Create your free account for member offers and faster checkout.
             </p>
             <div className="mt-8 flex justify-center">
-              <OfferButton href="/sign-up" label="Sign up free" />
+              <AuthTrigger mode="sign-up" className={offerButtonClass()}>
+                <OfferButtonDot />
+                Sign up free
+              </AuthTrigger>
             </div>
           </Section>
         </SignedOut>
