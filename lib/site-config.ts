@@ -32,7 +32,15 @@ function getBookingUrl(value: string | undefined): string {
     const url = new URL(
       /^[a-z][a-z\d+.-]*:\/\//i.test(raw) ? raw : `https://${raw}`,
     );
-    if (url.protocol === 'https:' && approvedBookingHosts.has(url.hostname)) {
+    // Never publish a calendar feed (.ics / /api/feed/ links carry a secret
+    // key that exposes every booking).
+    const isPrivateFeed =
+      url.pathname.includes('/api/feed/') || url.pathname.endsWith('.ics');
+    if (
+      url.protocol === 'https:' &&
+      approvedBookingHosts.has(url.hostname) &&
+      !isPrivateFeed
+    ) {
       return url.toString();
     }
   } catch {
