@@ -51,7 +51,7 @@ export function BookingModal({
         onClick={(event) => {
           if (event.target === event.currentTarget) closeDialog();
         }}
-        className="m-auto w-[min(92vw,34rem)] rounded-[1.75rem] border border-white/15 bg-[#0b1018] p-0 text-white shadow-[0_28px_100px_rgba(0,0,0,0.65)] backdrop:bg-black/75 backdrop:backdrop-blur-sm"
+        className="m-auto max-h-[92svh] w-[min(94vw,46rem)] overflow-y-auto rounded-[1.75rem] border border-white/15 bg-[#0b1018] p-0 text-white shadow-[0_28px_100px_rgba(0,0,0,0.65)] backdrop:bg-black/75 backdrop:backdrop-blur-sm"
       >
         <div className="relative p-7 sm:p-9">
           <button
@@ -78,6 +78,16 @@ export function BookingModal({
             Choose an available time to talk through your website, software,
             automation, or online presence. There is no cost and no deposit.
           </p>
+          {open && (
+            <div className="mt-6 overflow-hidden rounded-2xl border border-white/10 bg-white">
+              <iframe
+                src={siteConfig.calendarEmbedUrl}
+                title="Fee The Developer calendar"
+                loading="lazy"
+                className="block h-[22rem] w-full border-0 sm:h-[26rem]"
+              />
+            </div>
+          )}
           <a
             href={siteConfig.bookingUrl}
             target="_blank"

@@ -24,10 +24,14 @@ function getSiteUrl(value: string | undefined): string {
 }
 
 function getBookingUrl(value: string | undefined): string {
-  if (!value?.trim()) return defaultBookingUrl;
+  const raw = value?.trim();
+  if (!raw) return defaultBookingUrl;
 
   try {
-    const url = new URL(value.trim());
+    // Accept a bare host such as "book.feethedeveloper.com".
+    const url = new URL(
+      /^[a-z][a-z\d+.-]*:\/\//i.test(raw) ? raw : `https://${raw}`,
+    );
     if (url.protocol === 'https:' && approvedBookingHosts.has(url.hostname)) {
       return url.toString();
     }
@@ -66,6 +70,9 @@ export const siteConfig = {
   phone: '+12144400022',
   phoneDisplay: '(214) 440-0022',
   bookingUrl: getBookingUrl(process.env.NEXT_PUBLIC_BOOKING_URL),
+  /** Public Google Calendar embed shown in the booking popup (view only). */
+  calendarEmbedUrl:
+    'https://calendar.google.com/calendar/embed?src=h1j4ka57u8eooolkqbk2rk1171o0mqe1%40import.calendar.google.com&ctz=America%2FChicago&mode=AGENDA&showTitle=0&showPrint=0&showCalendars=0&showTz=0&bgcolor=%230b1018',
   location: 'Texas, United States',
   services: [
     'Website design and development',
