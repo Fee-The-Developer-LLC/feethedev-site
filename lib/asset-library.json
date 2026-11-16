@@ -837,6 +837,24 @@
     "orientation": "landscape"
   },
   {
+    "id": "services-hero-web",
+    "category": "video",
+    "src": "/library/video/services-hero-web.mp4",
+    "label": "Fee The Developer wordmark with tool icons and light trails (web, muted)",
+    "width": 1280,
+    "height": 720,
+    "orientation": "landscape"
+  },
+  {
+    "id": "services-hero-poster",
+    "category": "video",
+    "src": "/library/video/services-hero-poster.webp",
+    "label": "Fee The Developer wordmark, still frame of the services video",
+    "width": 1280,
+    "height": 720,
+    "orientation": "landscape"
+  },
+  {
     "id": "autonomy-has-levels-badge",
     "category": "brand",
     "src": "/library/brand/autonomy-has-levels-badge.webp",

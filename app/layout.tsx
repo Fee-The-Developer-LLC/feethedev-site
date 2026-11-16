@@ -5,6 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { AuthDialogProvider, AuthTrigger } from '@/components/auth/AuthDialog';
 import { HideOnOfferPages } from '@/components/HideOnOfferPages';
+import { SiteHeaderShell } from '@/components/SiteHeaderShell';
 import { clerkAppearance, clerkLocalization } from '@/lib/clerk-appearance';
 import { siteConfig } from '@/lib/site-config';
 import '../styles/globals.css';
@@ -149,7 +150,7 @@ function SiteContent({ children }: Readonly<{ children: React.ReactNode }>) {
         Skip to content
       </a>
       <HideOnOfferPages>
-        <header className="sticky top-0 z-50 border-b border-white/10 bg-background/90 backdrop-blur-xl">
+        <SiteHeaderShell>
           <div className="shell flex items-center justify-between gap-4 py-3">
             <Link
               href="/"
@@ -244,7 +245,7 @@ function SiteContent({ children }: Readonly<{ children: React.ReactNode }>) {
               </Show>
             )}
           </nav>
-        </header>
+        </SiteHeaderShell>
       </HideOnOfferPages>
       <script
         type="application/ld+json"

@@ -52,6 +52,10 @@ const virtualRouting = { routing: 'virtual' } as unknown as {
   routing?: 'hash';
 };
 
+const AUTO_PROMPT_KEY = 'ftd:signup-prompt-shown';
+const AUTO_PROMPT_DELAY_MS = 8_000;
+const AUTO_PROMPT_PATHS = new Set(['/', '/services']);
+
 const DIALOG_LABEL: Record<AuthMode, string> = {
   'sign-in': 'Sign in to Fee The Developer',
   'sign-up': 'Create your free Fee The Developer account',
@@ -145,6 +149,27 @@ export function AuthDialogProvider({ children }: { children: ReactNode }) {
     const timer = window.setTimeout(() => setLoadStalled(true), 10_000);
     return () => window.clearTimeout(timer);
   }, [mode, isLoaded]);
+
+  // One-time sign-up invite: signed-out visitors on Home or Services see the
+  // sign-up popup once, a few seconds after landing. Remembered per browser.
+  useEffect(() => {
+    if (!isLoaded || isSignedIn || isOpen) return;
+    if (!AUTO_PROMPT_PATHS.has(pathname ?? '')) return;
+    try {
+      if (window.localStorage.getItem(AUTO_PROMPT_KEY)) return;
+    } catch {
+      return;
+    }
+    const timer = window.setTimeout(() => {
+      try {
+        window.localStorage.setItem(AUTO_PROMPT_KEY, String(Date.now()));
+      } catch {
+        // Storage blocked: still show it this once.
+      }
+      open('sign-up', { trigger: null });
+    }, AUTO_PROMPT_DELAY_MS);
+    return () => window.clearTimeout(timer);
+  }, [isLoaded, isSignedIn, isOpen, pathname, open]);
 
   const value = useMemo(() => ({ open }), [open]);
 
