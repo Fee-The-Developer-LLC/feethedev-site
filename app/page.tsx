@@ -3,10 +3,7 @@ import Link from 'next/link';
 import { BookingModal } from '@/components/BookingModal';
 import { GlobeBackdrop } from '@/components/GlobeBackdrop';
 import { AuthTrigger } from '@/components/auth/AuthDialog';
-import {
-  OfferButton,
-  offerButtonClass,
-} from '@/components/offer/OfferButton';
+import { OfferButton, offerButtonClass } from '@/components/offer/OfferButton';
 import { stackHighlights } from '@/lib/stack';
 
 const hasClerkKeys = Boolean(

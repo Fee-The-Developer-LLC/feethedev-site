@@ -21,17 +21,18 @@
 
 ## 2. Current verified state (checked 2026-11-09, 08:55 CT)
 
-| Area | State | Evidence |
-| --- | --- | --- |
-| Local clone | On `main` @ `87fd5b1`, clean | `git status` |
-| `feat/pricing-v3` | Pushed, **PR #29 open** | `b24d8ce` v3 catalog, `c1427a9` service pages, `86df8f5` v3 synced to Stripe |
-| `feat/offer-pages` (built on pricing-v3) | Pushed, **PR #30 open** | `5a544a5` offer pages + on-site checkout + Clerk sign-up + Starter Hosting; `83cf268` migration; `43e9cc2` Starter Hosting synced to Stripe; `85ed12c` retire fix; `5ff2fb0` "update" (deletes `public/logo.png` and two showcase PNGs) |
-| Production | **Ahead of `main`.** feethedeveloper.com/services/own-your-bookings returns 200 with the hook and "$10/month" | HTTP check from King Fee's machine |
-| CI | **Blocked, not failing.** Both PRs: "The job was not started because your account is locked due to a billing issue." | `gh run view 42545903074` |
-| Stripe | v3 prices + Starter Hosting ($10/month, link recorded) synced live | commits above, `lib/service-checkout-links.json` |
-| Tests | 13 in `scripts/sync-pricing.test.mjs` | file |
+| Area                                     | State                                                                                                                | Evidence                                                                                                                                                                                                                                |
+| ---------------------------------------- | -------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Local clone                              | On `main` @ `87fd5b1`, clean                                                                                         | `git status`                                                                                                                                                                                                                            |
+| `feat/pricing-v3`                        | Pushed, **PR #29 open**                                                                                              | `b24d8ce` v3 catalog, `c1427a9` service pages, `86df8f5` v3 synced to Stripe                                                                                                                                                            |
+| `feat/offer-pages` (built on pricing-v3) | Pushed, **PR #30 open**                                                                                              | `5a544a5` offer pages + on-site checkout + Clerk sign-up + Starter Hosting; `83cf268` migration; `43e9cc2` Starter Hosting synced to Stripe; `85ed12c` retire fix; `5ff2fb0` "update" (deletes `public/logo.png` and two showcase PNGs) |
+| Production                               | **Ahead of `main`.** feethedeveloper.com/services/own-your-bookings returns 200 with the hook and "$10/month"        | HTTP check from King Fee's machine                                                                                                                                                                                                      |
+| CI                                       | **Blocked, not failing.** Both PRs: "The job was not started because your account is locked due to a billing issue." | `gh run view 42545903074`                                                                                                                                                                                                               |
+| Stripe                                   | v3 prices + Starter Hosting ($10/month, link recorded) synced live                                                   | commits above, `lib/service-checkout-links.json`                                                                                                                                                                                        |
+| Tests                                    | 13 in `scripts/sync-pricing.test.mjs`                                                                                | file                                                                                                                                                                                                                                    |
 
 Not verified (check before calling this done):
+
 - Embedded checkout end to end, in test mode then live
 - Retire run
 - Supabase migration applied
@@ -41,6 +42,7 @@ Not verified (check before calling this done):
 ## 3. What was built
 
 ### Pricing v3 (single source of truth: `lib/pricing-catalog.json`)
+
 - Feeds:
   - the site, via `lib/catalog.ts`
   - Stripe, via `scripts/sync-pricing.mjs`: lookup keys `ftd_service_<slug_with_underscores>` and `…__deposit`; plan, then apply, then retire
@@ -61,32 +63,32 @@ Not verified (check before calling this done):
 
 **Starter Sites**
 
-| Item | Price |
-| --- | --- |
-| Own Your Bookings | $199 |
-| Own Your Bookings Plus | $525 |
-| Shop Bundle | from $840, extra chair $105 |
-| **Starter Hosting** (required, from launch) | $10/month |
-| Get Found on Google · Pro Inbox · Extra Page | $99 · $69 · $49 |
+| Item                                         | Price                       |
+| -------------------------------------------- | --------------------------- |
+| Own Your Bookings                            | $199                        |
+| Own Your Bookings Plus                       | $525                        |
+| Shop Bundle                                  | from $840, extra chair $105 |
+| **Starter Hosting** (required, from launch)  | $10/month                   |
+| Get Found on Google · Pro Inbox · Extra Page | $99 · $69 · $49             |
 
 **Business Websites** (30% deposit in brackets)
 
-| Item | Price |
-| --- | --- |
-| Business Site Essentials | from $1,750 (dep $525) |
-| Strategic Website Redesign | from $3,325 |
-| Website Launch | from $3,850 (dep $1,155) |
-| Digital Presence Bundle | from $4,725 (dep $1,418) |
-| E-commerce | from $7,000 |
+| Item                       | Price                    |
+| -------------------------- | ------------------------ |
+| Business Site Essentials   | from $1,750 (dep $525)   |
+| Strategic Website Redesign | from $3,325              |
+| Website Launch             | from $3,850 (dep $1,155) |
+| Digital Presence Bundle    | from $4,725 (dep $1,418) |
+| E-commerce                 | from $7,000              |
 
 **Systems**
 
-| Item | Price |
-| --- | --- |
-| Lead Capture & CRM | from $980 |
-| API Integration · AI Assistant | $1,470 each |
+| Item                                                                        | Price            |
+| --------------------------------------------------------------------------- | ---------------- |
+| Lead Capture & CRM                                                          | from $980        |
+| API Integration · AI Assistant                                              | $1,470 each      |
 | Custom Software · Clerk + Supabase · Analytics Dashboard · Public-Data Tool | from $2,450 each |
-| Full Business System | from $7,000 |
+| Full Business System                                                        | from $7,000      |
 
 **Presence add-ons:** Payments & Back-End $175 · Yelp $245 · Apple $245 · GA4 Audit $315 · Business Profile $365 · Workspace Email $365 · Alignment $490 · GA4 Setup $645
 
@@ -95,6 +97,7 @@ Not verified (check before calling this done):
 **Retired:** Business Website Design & Development, Get Paid Button, Keep-Live. Booked & Paid became Own Your Bookings Plus.
 
 ### Starter Sites package rules (King Fee, Nov 8)
+
 1. **You own your .com.** It is registered in the client's name.
 2. **We host it for $10 a month, from launch.** Covers hosting, SSL, domain renewal, DNS and email forwarding. FTD holds the domain controls while hosting is active, in exchange for the service.
 3. **Your money goes to you.** Clients pay into their own Stripe account. Stripe's processing fees apply.
@@ -104,6 +107,7 @@ Not verified (check before calling this done):
 Billing: the package checkout is one-time. The Starter Hosting subscription goes out with the go-live approval. In the catalog, `publicCheckout: false` on Starter Hosting, and `requires: "starter-hosting"` on each package.
 
 ### Ad to checkout (storyboard canvas: https://claude.ai/artifact/MnEpsx13nQ4cX6L8gMknV5)
+
 - Each ad lands on `/services/<slug>` (the catalog's `campaign.landingPath`).
 - The page H1 is `campaign.hook`, word for word. The hero image is the ad's last frame.
 - One button phrase, built by `ctaLabel()` in `lib/catalog.ts`, mirrored in `campaign-brief.mjs`, rendered by `components/offer/OfferButton.tsx`. It appears on:
@@ -113,16 +117,16 @@ Billing: the package checkout is one-time. The Starter Hosting subscription goes
   - the phone bar
   - the closing button
 
-| Slug | Hook (= H1) | Button | Ad button |
-| --- | --- | --- | --- |
-| own-your-bookings | Your clients should book you, not an app. | Own my bookings · $199 | Shop Now |
-| own-your-bookings-plus | An empty chair is money you already counted. | Stop no-shows · $525 | Shop Now |
-| shop-bundle | One site for the shop. A page for every chair. | Put my shop online · $840 | Shop Now |
-| business-site-essentials | Your business grew. Your website didn't. | Start with $525 down | Learn More |
-| website-launch | First impressions happen before the first visit. | Start with $1,155 down | Learn More |
-| digital-presence-bundle | You do great work. The problem is being found. | Start with $1,418 down | Learn More |
-| custom-software-and-automation | Some work should not need a person every time. | Start with $735 down | Learn More |
-| full-business-system | At some point the business needs a system, not more tools. | Start with $2,100 down | Learn More |
+| Slug                           | Hook (= H1)                                                | Button                    | Ad button  |
+| ------------------------------ | ---------------------------------------------------------- | ------------------------- | ---------- |
+| own-your-bookings              | Your clients should book you, not an app.                  | Own my bookings · $199    | Shop Now   |
+| own-your-bookings-plus         | An empty chair is money you already counted.               | Stop no-shows · $525      | Shop Now   |
+| shop-bundle                    | One site for the shop. A page for every chair.             | Put my shop online · $840 | Shop Now   |
+| business-site-essentials       | Your business grew. Your website didn't.                   | Start with $525 down      | Learn More |
+| website-launch                 | First impressions happen before the first visit.           | Start with $1,155 down    | Learn More |
+| digital-presence-bundle        | You do great work. The problem is being found.             | Start with $1,418 down    | Learn More |
+| custom-software-and-automation | Some work should not need a person every time.             | Start with $735 down      | Learn More |
+| full-business-system           | At some point the business needs a system, not more tools. | Start with $2,100 down    | Learn More |
 
 - Starter price line, everywhere: "$199 one time · then $10/month hosting from launch".
 - UTM tags: `?utm_source=<instagram|facebook|tiktok|linkedin>&utm_medium=<paid_social|organic|dm>&utm_campaign=<slug>&utm_content=<creative id>`.
@@ -133,11 +137,13 @@ Billing: the package checkout is one-time. The Starter Hosting subscription goes
 - Detailed specs: `docs/handoffs/FTD_AD_TO_CHECKOUT_STORYBOARD_2026-11-08.md` and Addendum A, on `feat/offer-pages`.
 
 ### Upwork (live)
+
 - Title: "Army Veteran Full-Stack Developer | Booking Sites, Stripe & AI".
 - The overview opens on the owner-developer advantage and lists the v3 starting prices, veteran 30% and a 30% first milestone.
 - Hourly rate is still $50. No Project Catalog items yet. No website or Stripe links on Upwork, because Upwork restricts taking payment off the platform.
 
 ### Campaign and creative
+
 - Claude Docs: campaign war plan https://claude.ai/artifact/CjyDktioWswYhgX89SHDp3 · product demo storyboards (narration, DM openers) https://claude.ai/artifact/H96SiLFCQHaGtmcZhC88Do. Both use the Own Your Bookings naming.
 - Google Flow, "Fee The Developer" project:
   - 9:16 defaults; 4 stills; 3 clips rendered (72 credits); about 964 credits left until Nov 26.
@@ -146,12 +152,14 @@ Billing: the package checkout is one-time. The Starter Hosting subscription goes
 - Project docs: price chart, flow kit, brand bible, system map (see `claude/` in the Fee The Developer project).
 
 ## 4. Decisions log
+
 - 2026-11-08: v3 = 30% below v2. Own Your Bookings at $199. Veteran 30% on top of the new prices, verified first, one-time code. Deposits 30% on builds from $1,000. Pay over time through Stripe.
 - 2026-11-08: Upwork title and overview published (King Fee: "Publish both").
 - 2026-11-08: Landing pages are `/services/<slug>`, not a separate `/offers` route. One button phrase per offer. Deposit-first on builds.
 - 2026-11-08: Starter Hosting $10/month from launch, renewal included, Starter Sites only. The client owns the domain. Leaving = domain transfer + site code, and the site comes down. "Within 24 hours" is a reply promise.
 
 ## 5. Open decisions (King Fee)
+
 1. Does Starter Hosting include updates? Keep-Live included two text or price updates a year.
 2. What happens when a hosting payment fails (grace period, pause)? No copy ships until this is decided.
 3. Approve the short logo intro on offer pages (about 1 second, skippable).
@@ -161,21 +169,23 @@ Billing: the package checkout is one-time. The Starter Hosting subscription goes
 
 ## 6. Next actions, in order
 
-| # | Owner | Action |
-| --- | --- | --- |
-| 1 | King Fee | Clear the GitHub billing lock on Fee-The-Developer-LLC, then re-run CI on PRs #29 and #30. |
-| 2 | Claude Code | In **Stripe test mode**, run the embedded checkout for `own-your-bookings` (full) and `website-launch` (deposit). Confirm `/services/<slug>/welcome` renders and the intake saves to `project_intakes`. Confirm `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` reaches the build. Then do one live smoke check with King Fee. |
-| 3 | Claude Code | Add `STRIPE_SECRET_KEY` and `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` (names only) to `.env.example` and the env docs. |
-| 4 | Claude Code | Finish Addendum A: add the top-level `packageRules` array to the catalog, render "The rules, in writing" from it, and add the FAQ items (what hosting covers, 24-hour replies, moving the domain). Add a test that every button label matches `formatPrice` or `depositFor`. |
-| 5 | King Fee approves | Merge #29, then #30, so `main` matches production. |
-| 6 | King Fee | Run `npm run pricing:sync -- --retire --live` if not yet run. Apply the v3 Supabase migration if not yet applied. Turn on Affirm, Afterpay and Klarna. |
-| 7 | Claude + King Fee | Ads: export each ad's last-frame still to `public/library/ads/<slug>-last-frame.webp`. After the credit approval, render Wave 1 in Flow. Pull every caption and DM from `npm run campaign:brief -- <slug>`. Schedule in Metricool as drafts for review only. |
-| 8 | Claude, with approval | Upwork Project Catalog item for Own Your Bookings at $199. Decide the hourly rate. |
+| #   | Owner                 | Action                                                                                                                                                                                                                                                                                                              |
+| --- | --------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 1   | King Fee              | Clear the GitHub billing lock on Fee-The-Developer-LLC, then re-run CI on PRs #29 and #30.                                                                                                                                                                                                                          |
+| 2   | Claude Code           | In **Stripe test mode**, run the embedded checkout for `own-your-bookings` (full) and `website-launch` (deposit). Confirm `/services/<slug>/welcome` renders and the intake saves to `project_intakes`. Confirm `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` reaches the build. Then do one live smoke check with King Fee. |
+| 3   | Claude Code           | Add `STRIPE_SECRET_KEY` and `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` (names only) to `.env.example` and the env docs.                                                                                                                                                                                                   |
+| 4   | Claude Code           | Finish Addendum A: add the top-level `packageRules` array to the catalog, render "The rules, in writing" from it, and add the FAQ items (what hosting covers, 24-hour replies, moving the domain). Add a test that every button label matches `formatPrice` or `depositFor`.                                        |
+| 5   | King Fee approves     | Merge #29, then #30, so `main` matches production.                                                                                                                                                                                                                                                                  |
+| 6   | King Fee              | Run `npm run pricing:sync -- --retire --live` if not yet run. Apply the v3 Supabase migration if not yet applied. Turn on Affirm, Afterpay and Klarna.                                                                                                                                                              |
+| 7   | Claude + King Fee     | Ads: export each ad's last-frame still to `public/library/ads/<slug>-last-frame.webp`. After the credit approval, render Wave 1 in Flow. Pull every caption and DM from `npm run campaign:brief -- <slug>`. Schedule in Metricool as drafts for review only.                                                        |
+| 8   | Claude, with approval | Upwork Project Catalog item for Own Your Bookings at $199. Decide the hourly rate.                                                                                                                                                                                                                                  |
 
 ## 7. Env vars (names only, never values)
+
 `STRIPE_SECRET_KEY` (server / Worker secret) · `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` · `CLERK_SECRET_KEY` · `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` · `SUPABASE_URL` · `SUPABASE_SECRET_KEY` · `SUPABASE_PUBLISHABLE_KEY` · `NEXT_PUBLIC_SUPABASE_URL` · `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` · `NEXT_PUBLIC_SITE_URL` · `PORTAL_ADMIN_EMAILS`
 
 ## 8. Standing rules
+
 - Every price comes from the catalog. Never type one into a page, ad, caption or DM.
 - King Fee approves every deploy, merge to `main`, public post, DM batch, ad budget and credit spend.
 - No fake reviews, stats or client counts. Label AI-generated people and scenes. Say "veteran-owned" about FTD only where the certification is on file ("Veteran-led" is fine).

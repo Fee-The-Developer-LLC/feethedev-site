@@ -1,15 +1,15 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { OfferButton } from '@/components/offer/OfferButton';
-import { barberAds, barberAdsPath } from '@/lib/barber-ads';
+import { starterAds, starterAdsPath } from '@/lib/starter-ads';
 import { getService } from '@/lib/services';
 
 /**
- * Middle-of-home ad reel for barbers: three vertical ads in phone frames,
+ * Own Your .com ad reel for small businesses and sole proprietors: three vertical ads in phone frames,
  * each ending on the product's own buy button.
  */
-export function BarberAdReel() {
-  const slots = barberAds.flatMap((ad) => {
+export function StarterAdReel() {
+  const slots = starterAds.flatMap((ad) => {
     const service = getService(ad.slug);
     return service ? [{ ad, service }] : [];
   });
@@ -19,7 +19,7 @@ export function BarberAdReel() {
   return (
     <ul className="grid gap-10 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8">
       {slots.map(({ ad, service }, index) => {
-        const poster = `${barberAdsPath}/${ad.slug}.webp`;
+        const poster = `${starterAdsPath}/${ad.slug}.webp`;
 
         return (
           <li
@@ -49,7 +49,7 @@ export function BarberAdReel() {
                   {ad.video && (
                     <video
                       className="absolute inset-0 h-full w-full object-cover motion-reduce:hidden"
-                      src={`${barberAdsPath}/${ad.slug}.mp4`}
+                      src={`${starterAdsPath}/${ad.slug}.mp4`}
                       poster={poster}
                       autoPlay
                       muted
