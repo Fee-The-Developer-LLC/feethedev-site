@@ -20,16 +20,16 @@ Every ad, post and DM for an offer lands on that offer's `/services/<slug>` page
 
 ## CTA map (source of truth goes into the catalog)
 
-| Slug | Hook = page H1 | Button label | Platform button | Checkout |
-| --- | --- | --- | --- | --- |
-| own-your-bookings | Your clients should book you, not an app. | Own my bookings · $199 | Shop Now | $199 in full |
-| own-your-bookings-plus | An empty chair is money you already counted. | Stop no-shows · $525 | Shop Now | $525 in full |
-| shop-bundle | One site for the shop. A page for every chair. | Put my shop online · $840 | Shop Now | $840, chair +$105 |
-| business-site-essentials | Your business grew. Your website didn't. | Start with $525 down | Learn More | 30% deposit or $1,750 |
-| website-launch | First impressions happen before the first visit. | Start with $1,155 down | Learn More | 30% deposit or $3,850 |
-| digital-presence-bundle | You do great work. The problem is being found. | Start with $1,418 down | Learn More | 30% deposit or $4,725 |
-| custom-software-and-automation | Some work should not need a person every time. | Start with $735 down | Learn More | 30% deposit or $2,450 |
-| full-business-system | At some point the business needs a system, not more tools. | Start with $2,100 down | Learn More | 30% deposit or $7,000 |
+| Slug                           | Hook = page H1                                             | Button label              | Platform button | Checkout              |
+| ------------------------------ | ---------------------------------------------------------- | ------------------------- | --------------- | --------------------- |
+| own-your-bookings              | Your clients should book you, not an app.                  | Own my bookings · $199    | Shop Now        | $199 in full          |
+| own-your-bookings-plus         | An empty chair is money you already counted.               | Stop no-shows · $525      | Shop Now        | $525 in full          |
+| shop-bundle                    | One site for the shop. A page for every chair.             | Put my shop online · $840 | Shop Now        | $840, chair +$105     |
+| business-site-essentials       | Your business grew. Your website didn't.                   | Start with $525 down      | Learn More      | 30% deposit or $1,750 |
+| website-launch                 | First impressions happen before the first visit.           | Start with $1,155 down    | Learn More      | 30% deposit or $3,850 |
+| digital-presence-bundle        | You do great work. The problem is being found.             | Start with $1,418 down    | Learn More      | 30% deposit or $4,725 |
+| custom-software-and-automation | Some work should not need a person every time.             | Start with $735 down      | Learn More      | 30% deposit or $2,450 |
+| full-business-system           | At some point the business needs a system, not more tools. | Start with $2,100 down    | Learn More      | 30% deposit or $7,000 |
 
 Hooks are already in `campaign.hook`. Prices and deposits come from the catalog; never type them.
 
