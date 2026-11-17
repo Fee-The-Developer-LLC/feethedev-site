@@ -1,10 +1,10 @@
 import { Show } from '@clerk/nextjs';
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { BarberAdReel } from '@/components/BarberAdReel';
 import { BookingModal } from '@/components/BookingModal';
 import { ProductShelf } from '@/components/ProductShelf';
 import { ServiceDirectory } from '@/components/ServiceDirectory';
+import { StarterAdReel } from '@/components/StarterAdReel';
 import { VideoBackdrop } from '@/components/VideoBackdrop';
 import { AuthTrigger } from '@/components/auth/AuthDialog';
 import {
@@ -92,26 +92,28 @@ export default function ServicesPage() {
         </Section>
 
         <Section
-          aria-labelledby="barbers-heading"
+          aria-labelledby="own-your-com-heading"
           className="relative overflow-hidden border-t border-white/10 bg-background/85 backdrop-blur-sm"
         >
           <div className="mx-auto max-w-2xl text-center">
             <p className="text-xs font-bold uppercase tracking-[0.22em] text-greenglow">
-              For barbers and shops
+              For small businesses and sole proprietors
             </p>
             <h2
-              id="barbers-heading"
+              id="own-your-com-heading"
               className="mt-4 text-balance text-4xl font-extrabold text-white sm:text-5xl"
             >
-              Your chair. Your link. Your clients.
+              Your business. Your link. Your customers.
             </h2>
             <p className="mt-5 text-lg leading-8 text-slate-300">
-              Your own .com with a booking page where clients book and pay you
-              directly. No app between you and your list.
+              Your own .com with a booking page where customers book and pay you
+              directly. No app between you and your list. Built for any small
+              business or solo operator: service providers, contractors,
+              consultants, coaches, creators and local shops.
             </p>
           </div>
           <div className="mt-16">
-            <BarberAdReel />
+            <StarterAdReel />
           </div>
         </Section>
 

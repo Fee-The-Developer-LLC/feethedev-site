@@ -72,11 +72,11 @@ const stories: ProductStory[] = [
     proof: 'Your .com · Your booking page · Stripe checkout',
     prompts: {
       start:
-        'Vertical photo of an empty barber chair in a dark barbershop at night under one pool of light. In the foreground a smartphone lies face-up on a polished black counter, its screen a soft blank white glow reflecting in the chrome. Thin electric-blue light rails run along the mirrors.',
+        'Vertical photo of an empty front counter in a small business at night under one pool of light. In the foreground a smartphone lies face-up on a polished black counter, its screen a soft blank white glow reflecting in the chrome. Thin electric-blue light rails run along the shelves behind it.',
       end: 'Vertical 3D product render: a glossy black smartphone floating upright in black space, its screen a soft blank glow, with a small glass calendar tile and a black payment card with a green check mark orbiting close to it.',
       layer:
         'Glossy 3D render of a smartphone with a glowing blank booking screen and a small glass calendar tile popping out of it, floating in black space, square frame, subject centered with even margins.',
-      clip: 'Slow push-in on the phone on the counter. The phone lifts off the counter and rises toward camera while the barbershop dissolves into black space. A glass calendar tile and a black payment card with a green check mark slide out from behind the screen and settle into a slow orbit around it, ending exactly on the end frame.',
+      clip: 'Slow push-in on the phone on the counter. The phone lifts off the counter and rises toward camera while the room dissolves into black space. A glass calendar tile and a black payment card with a green check mark slide out from behind the screen and settle into a slow orbit around it, ending exactly on the end frame.',
     },
     layerFallback: {
       src: '/library/graphics/payment-card-with-check-mark-31acfea4.webp',
@@ -85,12 +85,12 @@ const stories: ProductStory[] = [
     beats: [
       {
         at: [0, 2],
-        visual: 'Empty chair, phone glowing on the counter',
+        visual: 'Empty counter, phone glowing',
         overlay: 'Your clients should book you, not an app.',
       },
       {
         at: [2, 6],
-        visual: 'Phone rises, shop dissolves, calendar and card slide out',
+        visual: 'Phone rises, room dissolves, calendar and card slide out',
         overlay: 'Your .com · Your booking page · Stripe checkout',
       },
       {
@@ -104,15 +104,15 @@ const stories: ProductStory[] = [
   {
     slug: 'own-your-bookings-plus',
     slot: '02',
-    hook: 'An empty chair is money you already counted.',
-    proof: 'Deposits paid at checkout, before they sit down',
+    hook: 'An empty slot is money you already counted.',
+    proof: 'Deposits paid at checkout, before they show up',
     prompts: {
       start:
-        'Vertical photo of an empty salon styling chair at night under a single pool of light, a round wall clock soft in the background, a smartphone face-up on the black stone station glowing softly.',
+        'Vertical photo of an empty client chair beside a clean work desk at night under a single pool of light, a round wall clock soft in the background, a smartphone face-up on the black stone desk glowing softly.',
       end: 'Vertical 3D product render: a floating glass calendar grid with several cells glowing green, and in front of it a black payment card with a green check mark, turned slightly toward camera, in black space.',
       layer:
         'Glossy 3D render of a floating glass calendar grid with a few cells glowing green, in black space, square frame, subject centered with even margins.',
-      clip: 'Slow orbit around the phone on the station. Its glow rises off the screen into a floating glass calendar grid; the squares fill green one by one. A black payment card turns into frame in front and its green check pulses once as the salon fades to black space, ending exactly on the end frame.',
+      clip: 'Slow orbit around the phone on the desk. Its glow rises off the screen into a floating glass calendar grid; the squares fill green one by one. A black payment card turns into frame in front and its green check pulses once as the room fades to black space, ending exactly on the end frame.',
     },
     layerFallback: {
       src: '/library/graphics/payment-card-with-check-mark-31acfea4.webp',
@@ -121,13 +121,13 @@ const stories: ProductStory[] = [
     beats: [
       {
         at: [0, 2],
-        visual: 'Empty styling chair, clock, phone glowing',
-        overlay: 'An empty chair is money you already counted.',
+        visual: 'Empty client chair, clock, phone glowing',
+        overlay: 'An empty slot is money you already counted.',
       },
       {
         at: [2, 6],
         visual: 'Calendar grid blooms and fills green',
-        overlay: 'Deposits paid at checkout, before they sit down',
+        overlay: 'Deposits paid at checkout, before they show up',
       },
       {
         at: [6, 8],
@@ -140,14 +140,14 @@ const stories: ProductStory[] = [
   {
     slug: 'shop-bundle',
     slot: '03',
-    hook: 'One site for the shop. A page for every chair.',
-    proof: 'A booking page for every barber',
+    hook: 'One site for the business. A page for everyone on the team.',
+    proof: 'A booking page for every team member',
     prompts: {
       start:
-        'Vertical photo looking down a long row of empty barber chairs in a barbershop at night, reflected in the mirrors, thin electric-blue light rails running along the mirror edges.',
-      end: 'Vertical 3D product render: a chrome map pin hovering above a glowing miniature barbershop storefront, with four small glass cards fanned in an arc around it, each holding a thin green button of light.',
+        'Vertical photo looking down a row of empty workstations in a small business at night, each with its own chair and desk lamp, thin electric-blue light rails running along the wall.',
+      end: 'Vertical 3D product render: a chrome map pin hovering above a glowing miniature storefront, with four small glass cards fanned in an arc around it, each holding a thin green button of light.',
       layer: null,
-      clip: 'Slow dolly down the row of chairs. The room pulls away and shrinks into a glowing miniature storefront in black space; a chrome map pin drops above it and four glass cards fan out in an arc around it, one per chair, ending exactly on the end frame.',
+      clip: 'Slow dolly down the row of workstations. The room pulls away and shrinks into a glowing miniature storefront in black space; a chrome map pin drops above it and four glass cards fan out in an arc around it, one per team member, ending exactly on the end frame.',
     },
     layerFallback: {
       src: '/library/graphics/chrome-map-pin-above-storefront-ef4ca26c.webp',
@@ -156,17 +156,17 @@ const stories: ProductStory[] = [
     beats: [
       {
         at: [0, 2],
-        visual: 'Row of empty chairs in the mirrors',
-        overlay: 'One site for the shop. A page for every chair.',
+        visual: 'Row of empty workstations',
+        overlay: 'One site for the business. A page for everyone on the team.',
       },
       {
         at: [2, 6],
-        visual: 'Shop shrinks to a miniature, pin drops',
-        overlay: 'A booking page for every barber',
+        visual: 'Room shrinks to a miniature, pin drops',
+        overlay: 'A booking page for every team member',
       },
       {
         at: [6, 8],
-        visual: 'Four glass cards fanned around the shop',
+        visual: 'Four glass cards fanned around the storefront',
         overlay: null,
       },
     ],

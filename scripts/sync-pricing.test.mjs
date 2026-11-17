@@ -56,7 +56,8 @@ const FIXTURE_PRODUCT_IDS = {
 const loadCatalog = () => {
   const catalog = JSON.parse(fs.readFileSync(catalogFile, 'utf8'));
   for (const item of catalog.items) {
-    item.stripeProductId = FIXTURE_PRODUCT_IDS[item.slug] ?? item.stripeProductId;
+    item.stripeProductId =
+      FIXTURE_PRODUCT_IDS[item.slug] ?? item.stripeProductId;
   }
   return catalog;
 };
@@ -549,10 +550,10 @@ test('campaign briefs use catalog prices, discounts and payment options', () => 
   assert.match(own, /- Price: \$199\n/);
   assert.match(own, /Veteran: 30% off/);
   assert.match(own, /YOBUL: not available/);
-  assert.doesNotMatch(own, /Extra Chair/);
+  assert.doesNotMatch(own, /Extra Member/);
   assert.match(
     campaignBrief(catalog, 'shop-bundle'),
-    /Shop Bundle Extra Chair: \$105/,
+    /Team Bundle Extra Member: \$105/,
   );
   const launch = campaignBrief(catalog, 'website-launch');
   assert.match(launch, /Price: Starting at \$3,850/);

@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   alternates: { canonical: new URL('/switch', siteConfig.siteUrl) },
 };
 
-/** Team sizes the comparison offers (1 = solo, 2+ = Shop Bundle). */
+/** Team sizes the comparison offers (1 = solo, 2+ = Team Bundle). */
 const MAX_CALENDARS = 8;
 
 export default function SwitchPage() {
@@ -74,7 +74,7 @@ export default function SwitchPage() {
               </a>
             </span>
           ))}
-          . Shop prices are &ldquo;from&rdquo; prices: a written scope confirms
+          . Team prices are &ldquo;from&rdquo; prices: a written scope confirms
           the final price.
         </p>
       </Section>
@@ -151,9 +151,9 @@ export default function SwitchPage() {
               Ready to own your bookings?
             </h2>
             <p className="text-sm leading-6 text-slate-300">
-              Solo pros start with {solo.name}. Shops with several chairs start
-              with the Shop Bundle. Not sure? Tell us about your setup and we
-              will point you to the right one.
+              Sole proprietors start with {solo.name}. Businesses with a team
+              start with the Team Bundle. Not sure? Tell us about your setup and
+              we will point you to the right one.
             </p>
             <div className="flex flex-wrap gap-3">
               <Link
@@ -166,7 +166,7 @@ export default function SwitchPage() {
                 href="/services/shop-bundle"
                 className="rounded-full border border-white/20 px-5 py-3 text-sm font-bold text-white transition hover:border-greenglow"
               >
-                See the Shop Bundle
+                See the Team Bundle
               </Link>
               <Link
                 href="/start?service=own-your-bookings"

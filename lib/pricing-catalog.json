@@ -41,7 +41,7 @@
     {
       "id": "starter",
       "name": "Starter Sites",
-      "audience": "Solo pros and creators: barbers, stylists, lash techs, braiders, musicians",
+      "audience": "Small businesses and sole proprietors of every kind: service providers, contractors, consultants, coaches, creators and local shops",
       "summary": "Your own .com with a custom booking page and Stripe checkout, at fixed prices. Built on proven FTD systems."
     },
     {
@@ -99,7 +99,7 @@
       ],
       "scopeNote": "Built on the FTD booking and checkout system. Two pages, client-supplied text and photos, one Stripe account. Starter Hosting ($10/month) is required from launch. Stripe processing fees, extra pages and custom design are separate.",
       "campaign": {
-        "audience": "Barbers, stylists, lash techs, braiders and musicians whose link is a booking-app or link-in-bio URL",
+        "audience": "Small businesses and sole proprietors whose link is a booking-app, marketplace or link-in-bio URL",
         "pain": "Booking apps own the link, take fees and keep the client list",
         "hook": "Your clients should book you, not an app.",
         "landingPath": "/services/own-your-bookings",
@@ -123,7 +123,7 @@
       "featured": true,
       "paymentsIncluded": true,
       "sortOrder": 2,
-      "description": "Everything in Own Your Bookings with more pages and deposits at checkout, for pros ready to cut no-shows.",
+      "description": "Everything in Own Your Bookings with more pages and deposits at checkout, for businesses ready to cut no-shows.",
       "includes": [
         "Your .com, registered in your name",
         "Up to four pages, such as gallery and about",
@@ -133,9 +133,9 @@
       ],
       "scopeNote": "Built on the FTD booking and checkout system. Up to four pages, one booking calendar, one Stripe account. Starter Hosting ($10/month) is required from launch. Stripe processing fees are separate. Custom design is a Business Website.",
       "campaign": {
-        "audience": "Solo pros losing money to no-shows and DM payments",
-        "pain": "Empty chairs and chasing payments by message",
-        "hook": "An empty chair is money you already counted.",
+        "audience": "Small businesses and solo pros losing money to no-shows and DM payments",
+        "pain": "Empty appointment slots and chasing payments by message",
+        "hook": "An empty slot is money you already counted.",
         "landingPath": "/services/own-your-bookings-plus",
         "channels": ["instagram", "facebook", "tiktok", "dm"],
         "demo": "Own Your Bookings Plus",
@@ -147,7 +147,7 @@
     },
     {
       "slug": "shop-bundle",
-      "name": "Shop Bundle",
+      "name": "Team Bundle",
       "line": "starter",
       "status": "active",
       "stripeProductId": null,
@@ -157,23 +157,23 @@
       "featured": true,
       "paymentsIncluded": false,
       "sortOrder": 3,
-      "description": "One shop site on the shop's .com, plus a page for each barber or stylist.",
+      "description": "One business site on your .com, plus a booking page for each person on your team.",
       "includes": [
-        "Shop site on the shop's .com, registered in the shop's name",
-        "Up to four barber or stylist pages",
-        "Each chair gets its own booking page",
-        "Stripe checkout for the shop",
-        "Additional chairs $105 each"
+        "Business site on your .com, registered in the business's name",
+        "Up to four team member pages",
+        "Each team member gets their own booking page",
+        "Stripe checkout for the business",
+        "Additional team members $105 each"
       ],
-      "scopeNote": "Starting scope covers four chairs and one Stripe account for the shop. Starter Hosting ($10/month) is required from launch. Separate Stripe accounts per chair are quoted. Each additional chair is the Shop Bundle Extra Chair item.",
+      "scopeNote": "Starting scope covers four team members and one Stripe account for the business. Starter Hosting ($10/month) is required from launch. Separate Stripe accounts per team member are quoted. Each additional team member is the Team Bundle Extra Member item.",
       "campaign": {
-        "audience": "Barbershop and salon owners with booth renters",
-        "pain": "Every chair books through a different link",
-        "hook": "One site for the shop. A page for every chair.",
+        "audience": "Small businesses with staff, partners or independent contractors",
+        "pain": "Everyone on the team books through a different link",
+        "hook": "One site for the business. A page for everyone on the team.",
         "landingPath": "/services/shop-bundle",
         "channels": ["instagram", "facebook", "dm", "in-person"],
-        "demo": "Shop Bundle",
-        "cta": "Put my shop online",
+        "demo": "Team Bundle",
+        "cta": "Put my team online",
         "platformButton": "Shop Now"
       },
       "yobulEligible": false,
@@ -200,7 +200,7 @@
         "Replies within 24 hours to forms, changes and questions",
         "Leave any time: we transfer your domain and send your site code"
       ],
-      "scopeNote": "Required for Own Your Bookings, Own Your Bookings Plus and Shop Bundle, from launch. FTD holds the domain controls while hosting is active. The subscription link is sent with your go-live approval. If you leave, hosting ends and the site comes off FTD servers.",
+      "scopeNote": "Required for Own Your Bookings, Own Your Bookings Plus and Team Bundle, from launch. FTD holds the domain controls while hosting is active. The subscription link is sent with your go-live approval. If you leave, hosting ends and the site comes off FTD servers.",
       "yobulEligible": false
     },
     {
@@ -253,9 +253,9 @@
       "featured": false,
       "paymentsIncluded": false,
       "sortOrder": 6,
-      "description": "Google Business Profile basics for a solo pro, linked to their .com.",
+      "description": "Google Business Profile basics for a small business or sole proprietor, linked to their .com.",
       "includes": [],
-      "scopeNote": "Profile claim and basic details for one solo pro. Google controls verification; multi-location and service-area alignment are the business add-ons.",
+      "scopeNote": "Profile claim and basic details for one business location. Google controls verification; multi-location and service-area alignment are the business add-ons.",
       "yobulEligible": false
     },
     {
@@ -294,7 +294,7 @@
     },
     {
       "slug": "shop-bundle-extra-chair",
-      "name": "Shop Bundle Extra Chair",
+      "name": "Team Bundle Extra Member",
       "line": "starter",
       "status": "active",
       "stripeProductId": null,
@@ -304,9 +304,9 @@
       "featured": false,
       "paymentsIncluded": false,
       "sortOrder": 9,
-      "description": "One more barber or stylist page on a Shop Bundle site.",
+      "description": "One more team member page on a Team Bundle site.",
       "includes": [],
-      "scopeNote": "One chair page with its own Book Now button.",
+      "scopeNote": "One team member page with its own Book Now button.",
       "appliesTo": ["shop-bundle"],
       "yobulEligible": false
     },

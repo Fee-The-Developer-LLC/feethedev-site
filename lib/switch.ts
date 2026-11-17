@@ -44,7 +44,7 @@ export type OwnYourPlan = {
   /** Catalog item the plan is sold as. */
   slug: string;
   name: string;
-  /** One-time build price in dollars (a "from" price for the Shop Bundle). */
+  /** One-time build price in dollars (a "from" price for the Team Bundle). */
   once: number;
   startingAt: boolean;
   /** Starter Hosting, per month, in dollars. */
@@ -59,7 +59,7 @@ function requireItem(slug: string) {
   return item;
 }
 
-/** The Own Your .com plan that fits a team: solo, or a shop with chairs. */
+/** The Own Your .com plan that fits a team: solo, or a business with a team. */
 export function ownYourPlan(calendars: number): OwnYourPlan {
   const n = Math.max(1, Math.floor(calendars));
   const hosting = dollars(requireItem('starter-hosting').amountCents);
@@ -73,15 +73,16 @@ export function ownYourPlan(calendars: number): OwnYourPlan {
       monthly: hosting,
     };
   }
-  const shop = requireItem('shop-bundle');
-  const chair = requireItem('shop-bundle-extra-chair');
-  const includedChairs = 4;
-  const extraChairs = Math.max(0, n - includedChairs);
+  // Catalog slugs keep their original names so live checkout links never break.
+  const team = requireItem('shop-bundle');
+  const member = requireItem('shop-bundle-extra-chair');
+  const includedMembers = 4;
+  const extraMembers = Math.max(0, n - includedMembers);
   return {
-    slug: shop.slug,
-    name: shop.name,
-    once: dollars(shop.amountCents + extraChairs * chair.amountCents),
-    startingAt: shop.priceMode === 'starting_at',
+    slug: team.slug,
+    name: team.name,
+    once: dollars(team.amountCents + extraMembers * member.amountCents),
+    startingAt: team.priceMode === 'starting_at',
     monthly: hosting,
   };
 }
