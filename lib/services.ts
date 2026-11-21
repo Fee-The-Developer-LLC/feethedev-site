@@ -53,6 +53,7 @@ const allServices = pricingLines.flatMap((line) =>
       hook: item.campaign?.hook ?? null,
       summary: item.description,
       includes: item.includes,
+      whoFor: item.whoFor ?? null,
       notes: item.scopeNote,
       hostedCheckoutUrl: serviceCheckoutLinks[item.slug],
       deposit,
