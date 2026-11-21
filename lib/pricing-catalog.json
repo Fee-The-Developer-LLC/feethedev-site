@@ -88,7 +88,37 @@
       "featured": true,
       "paymentsIncluded": true,
       "sortOrder": 1,
-      "description": "Your own .com with a home page, a services page, and a custom booking page where clients book and pay you directly through Stripe.",
+      "description": "Your own .com with a home page, a services page, and a custom booking page where clients book and pay you directly through Stripe. Built for sole proprietors, LLCs and independent pros.",
+      "whoFor": {
+        "heading": "Built for anyone who gets paid for their time",
+        "intro": "If clients book you, this gives you a .com and a booking page you own. Same package, whatever you do.",
+        "groups": [
+          {
+            "name": "Sole proprietors",
+            "use": "Take bookings and payments on your own link, not a marketplace's."
+          },
+          {
+            "name": "LLC owners",
+            "use": "Give the business a real .com and a clean way to book and get paid."
+          },
+          {
+            "name": "Musicians and producers",
+            "use": "Book studio time, lessons, sessions and gigs."
+          },
+          {
+            "name": "Realtors and agents",
+            "use": "Let buyers and sellers book consultations and tours."
+          },
+          {
+            "name": "Barbers and stylists",
+            "use": "Fill the calendar with appointments on your own page."
+          },
+          {
+            "name": "Coaches, trainers and other pros",
+            "use": "Sell sessions and consults without a middleman."
+          }
+        ]
+      },
       "includes": [
         "Your .com, registered in your name",
         "Two pages: home and services",
@@ -99,7 +129,7 @@
       ],
       "scopeNote": "Built on the FTD booking and checkout system. Two pages, client-supplied text and photos, one Stripe account. Starter Hosting ($10/month) is required from launch. Stripe processing fees, extra pages and custom design are separate.",
       "campaign": {
-        "audience": "Small businesses and sole proprietors whose link is a booking-app, marketplace or link-in-bio URL",
+        "audience": "Sole proprietors, LLCs, musicians, realtors, barbers, stylists and other solo pros whose link is a booking-app, marketplace or link-in-bio URL",
         "pain": "Booking apps own the link, take fees and keep the client list",
         "hook": "Your clients should book you, not an app.",
         "landingPath": "/services/own-your-bookings",
@@ -123,7 +153,37 @@
       "featured": true,
       "paymentsIncluded": true,
       "sortOrder": 2,
-      "description": "Everything in Own Your Bookings with more pages and deposits at checkout, for businesses ready to cut no-shows.",
+      "description": "Everything in Own Your Bookings with more pages and deposits at checkout, for sole proprietors, LLCs and pros who are ready to cut no-shows.",
+      "whoFor": {
+        "heading": "A deposit protects every kind of booking",
+        "intro": "Anyone who holds time for a client loses money when that client doesn't show. Deposits at checkout fix that, whatever you sell.",
+        "groups": [
+          {
+            "name": "Barbers and stylists",
+            "use": "Collect a deposit so an empty chair stops costing you."
+          },
+          {
+            "name": "Musicians and producers",
+            "use": "Lock in studio sessions, lessons and bookings before they start."
+          },
+          {
+            "name": "Realtors and agents",
+            "use": "Secure paid consultations and premium services up front."
+          },
+          {
+            "name": "Sole proprietors",
+            "use": "Stop chasing payments by DM and get paid at booking."
+          },
+          {
+            "name": "LLC owners and small teams",
+            "use": "Take deposits on jobs, retainers and appointments from one page."
+          },
+          {
+            "name": "Photographers, trainers and tutors",
+            "use": "Hold dates and sessions with a paid commitment."
+          }
+        ]
+      },
       "includes": [
         "Your .com, registered in your name",
         "Up to four pages, such as gallery and about",
@@ -133,7 +193,7 @@
       ],
       "scopeNote": "Built on the FTD booking and checkout system. Up to four pages, one booking calendar, one Stripe account. Starter Hosting ($10/month) is required from launch. Stripe processing fees are separate. Custom design is a Business Website.",
       "campaign": {
-        "audience": "Small businesses and solo pros losing money to no-shows and DM payments",
+        "audience": "Sole proprietors, LLCs, musicians, realtors, barbers, stylists and other pros losing money to no-shows and DM payments",
         "pain": "Empty appointment slots and chasing payments by message",
         "hook": "An empty slot is money you already counted.",
         "landingPath": "/services/own-your-bookings-plus",
@@ -157,7 +217,33 @@
       "featured": true,
       "paymentsIncluded": false,
       "sortOrder": 3,
-      "description": "One business site on your .com, plus a booking page for each person on your team.",
+      "description": "One business site on your .com, plus a booking page for each person on your team. For any business where more than one person takes bookings.",
+      "whoFor": {
+        "heading": "One site for the business. A page for each person.",
+        "intro": "Any business where more than one person books clients can give each of them a page under one .com.",
+        "groups": [
+          {
+            "name": "Barbershops and salons",
+            "use": "A page for every barber and stylist under the shop's name."
+          },
+          {
+            "name": "LLCs with staff or partners",
+            "use": "One business site, with a booking page for each person."
+          },
+          {
+            "name": "Music studios and labels",
+            "use": "Pages for each producer, engineer or artist."
+          },
+          {
+            "name": "Real estate teams",
+            "use": "A page for each agent under one team brand."
+          },
+          {
+            "name": "Collectives and independent contractors",
+            "use": "Shared .com, individual booking pages."
+          }
+        ]
+      },
       "includes": [
         "Business site on your .com, registered in the business's name",
         "Up to four team member pages",
@@ -167,7 +253,7 @@
       ],
       "scopeNote": "Starting scope covers four team members and one Stripe account for the business. Starter Hosting ($10/month) is required from launch. Separate Stripe accounts per team member are quoted. Each additional team member is the Team Bundle Extra Member item.",
       "campaign": {
-        "audience": "Small businesses with staff, partners or independent contractors",
+        "audience": "Shops, studios, real estate teams and LLCs with staff, partners or independent contractors",
         "pain": "Everyone on the team books through a different link",
         "hook": "One site for the business. A page for everyone on the team.",
         "landingPath": "/services/shop-bundle",

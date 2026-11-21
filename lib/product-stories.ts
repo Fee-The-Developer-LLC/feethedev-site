@@ -108,7 +108,7 @@ const stories: ProductStory[] = [
     proof: 'Deposits paid at checkout, before they show up',
     prompts: {
       start:
-        'Vertical photo of an empty client chair beside a clean work desk at night under a single pool of light, a round wall clock soft in the background, a smartphone face-up on the black stone desk glowing softly.',
+        'Vertical photo of an empty seat beside a clean work desk at night under a single pool of light, a round wall clock soft in the background, a smartphone face-up on the black stone desk glowing softly.',
       end: 'Vertical 3D product render: a floating glass calendar grid with several cells glowing green, and in front of it a black payment card with a green check mark, turned slightly toward camera, in black space.',
       layer:
         'Glossy 3D render of a floating glass calendar grid with a few cells glowing green, in black space, square frame, subject centered with even margins.',
@@ -121,7 +121,7 @@ const stories: ProductStory[] = [
     beats: [
       {
         at: [0, 2],
-        visual: 'Empty client chair, clock, phone glowing',
+        visual: 'Empty seat, clock, phone glowing',
         overlay: 'An empty slot is money you already counted.',
       },
       {
@@ -144,7 +144,7 @@ const stories: ProductStory[] = [
     proof: 'A booking page for every team member',
     prompts: {
       start:
-        'Vertical photo looking down a row of empty workstations in a small business at night, each with its own chair and desk lamp, thin electric-blue light rails running along the wall.',
+        'Vertical photo looking down a row of empty workstations in a small business at night, each with its own desk lamp, thin electric-blue light rails running along the wall.',
       end: 'Vertical 3D product render: a chrome map pin hovering above a glowing miniature storefront, with four small glass cards fanned in an arc around it, each holding a thin green button of light.',
       layer: null,
       clip: 'Slow dolly down the row of workstations. The room pulls away and shrinks into a glowing miniature storefront in black space; a chrome map pin drops above it and four glass cards fan out in an arc around it, one per team member, ending exactly on the end frame.',

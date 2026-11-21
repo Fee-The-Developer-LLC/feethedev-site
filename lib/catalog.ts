@@ -42,6 +42,12 @@ export type CatalogItem = {
   requires?: string;
   /** false = no buy button; the link is sent privately (Starter Hosting). */
   publicCheckout?: boolean;
+  /** "Who it's for" section on the offer page: many kinds of business, never one. */
+  whoFor?: {
+    heading: string;
+    intro: string;
+    groups: { name: string; use: string }[];
+  };
   /** Read by scripts/campaign-brief.mjs; featured items carry one. */
   campaign?: {
     audience: string;

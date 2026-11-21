@@ -92,6 +92,30 @@ export default async function OfferPage({ params }: Props) {
           </div>
         </Section>
 
+        {service.whoFor && (
+          <Section className="border-t border-white/10">
+            <h2 className="max-w-3xl text-3xl font-extrabold text-white">
+              {service.whoFor.heading}
+            </h2>
+            <p className="mt-4 max-w-2xl text-base leading-7 text-slate-300">
+              {service.whoFor.intro}
+            </p>
+            <ul className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {service.whoFor.groups.map((group) => (
+                <li
+                  key={group.name}
+                  className="rounded-2xl border border-white/10 bg-white/[0.04] p-5"
+                >
+                  <h3 className="text-lg font-bold text-white">{group.name}</h3>
+                  <p className="mt-2 text-base leading-7 text-slate-300">
+                    {group.use}
+                  </p>
+                </li>
+              ))}
+            </ul>
+          </Section>
+        )}
+
         {cut && (
           <Section className="overflow-hidden border-t border-white/10">
             <ProductBuyCut cut={cut} action={service.primary} />

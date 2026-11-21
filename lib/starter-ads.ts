@@ -32,19 +32,19 @@ export const starterAdsPath = '/media/starter-ads';
 export const starterAds: StarterAd[] = [
   {
     slug: 'own-your-bookings',
-    audience: 'Sole proprietors and solo pros',
+    audience: 'Sole proprietors, musicians, realtors, barbers and solo pros',
     video: false,
     aiGenerated: true,
   },
   {
     slug: 'own-your-bookings-plus',
-    audience: 'Businesses tired of no-shows',
+    audience: 'Anyone tired of no-shows',
     video: false,
     aiGenerated: true,
   },
   {
     slug: 'shop-bundle',
-    audience: 'Small businesses with a team',
+    audience: 'Shops, studios and LLCs with a team',
     video: false,
     aiGenerated: true,
   },
