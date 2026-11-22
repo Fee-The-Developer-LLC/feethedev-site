@@ -30,6 +30,27 @@ const nextConfig = {
         permanent: true,
       },
       { source: '/merch', destination: '/services', permanent: true },
+      // Shop Bundle was renamed Team Bundle (2026-11-22). Keep old links alive.
+      {
+        source: '/services/shop-bundle/:path*',
+        destination: '/services/team-bundle/:path*',
+        permanent: true,
+      },
+      {
+        source: '/services/shop-bundle-extra-chair/:path*',
+        destination: '/services/team-bundle-extra-member/:path*',
+        permanent: true,
+      },
+      {
+        source: '/checkout/shop-bundle',
+        destination: '/checkout/team-bundle',
+        permanent: true,
+      },
+      {
+        source: '/checkout/shop-bundle-extra-chair',
+        destination: '/checkout/team-bundle-extra-member',
+        permanent: true,
+      },
     ];
   },
   async headers() {

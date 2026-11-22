@@ -163,7 +163,7 @@ export default function SwitchPage() {
                 See {solo.name}
               </Link>
               <Link
-                href="/services/shop-bundle"
+                href="/services/team-bundle"
                 className="rounded-full border border-white/20 px-5 py-3 text-sm font-bold text-white transition hover:border-greenglow"
               >
                 See the Team Bundle

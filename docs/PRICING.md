@@ -23,7 +23,7 @@ Owner-developer model: the owner builds the work, reuses proven Fee The Develope
 | --------------------- | ----------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------- |
 | Starter Sites (fixed) | **Own Your Bookings**: .com in the client's name, home + services pages, custom booking page with Stripe checkout | $199                                                  |
 |                       | Own Your Bookings Plus: up to 4 pages, deposits at checkout                                                       | $525                                                  |
-|                       | Team Bundle (4 team members, booking page per member) · extra member                                              | from $840 · $105                                      |
+|                       | Team Bundle (one site, a page for each team member) · extra team member page                                              | from $840 · $105                                      |
 |                       | **Starter Hosting** (required, from launch): hosting, SSL, domain renewal, DNS and email forwarding               | $10/month                                             |
 |                       | Get Found on Google · Pro Inbox · Extra Page                                                                      | $99 · $69 · $49                                       |
 | Business Websites     | Business Site Essentials                                                                                          | from $1,750                                           |
@@ -44,7 +44,7 @@ Retired: Business Website Design & Development (duplicated Website Launch), Get 
 
 ## Starter Sites package rules (King Fee, 2026-11-08)
 
-Applies to Own Your Bookings, Own Your Bookings Plus and Shop Bundle. Business websites keep their care plans.
+Applies to Own Your Bookings, Own Your Bookings Plus and Team Bundle. Business websites keep their care plans.
 
 1. **You own your .com.** The domain is registered in the client's name.
 2. **We host it for $10 a month, from launch.** Covers hosting, SSL, domain renewal and the domain settings (DNS) that keep booking, checkout and email working. FTD holds the domain controls while hosting is active, in exchange for the service.

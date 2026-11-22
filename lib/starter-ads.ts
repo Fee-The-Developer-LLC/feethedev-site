@@ -43,7 +43,7 @@ export const starterAds: StarterAd[] = [
     aiGenerated: true,
   },
   {
-    slug: 'shop-bundle',
+    slug: 'team-bundle',
     audience: 'Shops, studios and LLCs with a team',
     video: false,
     aiGenerated: true,
