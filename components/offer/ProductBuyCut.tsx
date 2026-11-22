@@ -7,8 +7,8 @@ import type { BuyCut } from '@/lib/product-stories';
  *
  * Only renders once the clip is committed (`cut.media` is set). Storyboard
  * beats are production notes for Flow and stay in `lib/product-stories.ts`;
- * they are never shown to visitors. Visitors who prefer reduced motion get
- * the poster frame and can still press play.
+ * they are never shown to visitors. The clip plays once, muted, when the
+ * page opens and rests on its final frame: no controls, no loop.
  */
 export function ProductBuyCut({
   cut,
@@ -29,10 +29,10 @@ export function ProductBuyCut({
       poster={poster}
       autoPlay
       muted
-      loop
       playsInline
-      controls
-      preload="metadata"
+      disablePictureInPicture
+      disableRemotePlayback
+      preload="auto"
       aria-label={`${cut.hook} ${cut.proof}`}
     />
   );
