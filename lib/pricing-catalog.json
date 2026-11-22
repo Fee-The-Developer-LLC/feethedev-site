@@ -206,7 +206,7 @@
       "requires": "starter-hosting"
     },
     {
-      "slug": "shop-bundle",
+      "slug": "team-bundle",
       "name": "Team Bundle",
       "line": "starter",
       "status": "active",
@@ -256,7 +256,7 @@
         "audience": "Shops, studios, real estate teams and LLCs with staff, partners or independent contractors",
         "pain": "Everyone on the team books through a different link",
         "hook": "One site for the business. A page for everyone on the team.",
-        "landingPath": "/services/shop-bundle",
+        "landingPath": "/services/team-bundle",
         "channels": ["instagram", "facebook", "dm", "in-person"],
         "demo": "Team Bundle",
         "cta": "Put my team online",
@@ -379,7 +379,7 @@
       "yobulEligible": false
     },
     {
-      "slug": "shop-bundle-extra-chair",
+      "slug": "team-bundle-extra-member",
       "name": "Team Bundle Extra Member",
       "line": "starter",
       "status": "active",
@@ -393,7 +393,7 @@
       "description": "One more team member page on a Team Bundle site.",
       "includes": [],
       "scopeNote": "One team member page with its own Book Now button.",
-      "appliesTo": ["shop-bundle"],
+      "appliesTo": ["team-bundle"],
       "yobulEligible": false
     },
     {

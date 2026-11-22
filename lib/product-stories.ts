@@ -141,7 +141,7 @@ const stories: ProductStory[] = [
     media: false,
   },
   {
-    slug: 'shop-bundle',
+    slug: 'team-bundle',
     slot: '03',
     hook: 'One site for the business. A page for everyone on the team.',
     proof: 'A booking page for every team member',

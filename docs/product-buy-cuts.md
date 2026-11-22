@@ -11,7 +11,7 @@ from `lib/pricing-catalog.json`.
 | ---- | ----------------------- | ----------------------------------------- | ----------------- |
 | 01   | own-your-bookings       | FTD-K01 OYB start, E01 OYB end, L01 layer | FTD-Q01 OYB cut   |
 | 02   | own-your-bookings-plus  | K02, E02, L02                             | FTD-Q02           |
-| 03   | shop-bundle             | K03, E03 (layer: library map pin)         | FTD-Q03           |
+| 03   | team-bundle             | K03, E03 (layer: library map pin)         | FTD-Q03           |
 | 04   | website-launch          | K04, E04 (layer: library browser window)  | FTD-Q04           |
 | 05   | digital-presence-bundle | K05, E05 (layer: library map pin)         | FTD-Q05           |
 | 06   | full-business-system    | K06, E06 (layer: library neural gears)    | FTD-Q06           |

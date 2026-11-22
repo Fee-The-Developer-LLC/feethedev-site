@@ -74,8 +74,8 @@ export function ownYourPlan(calendars: number): OwnYourPlan {
     };
   }
   // Catalog slugs keep their original names so live checkout links never break.
-  const team = requireItem('shop-bundle');
-  const member = requireItem('shop-bundle-extra-chair');
+  const team = requireItem('team-bundle');
+  const member = requireItem('team-bundle-extra-member');
   const includedMembers = 4;
   const extraMembers = Math.max(0, n - includedMembers);
   return {

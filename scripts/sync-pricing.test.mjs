@@ -465,7 +465,7 @@ test('starter hosting is billed monthly at $10 and keep-live is retired', async 
   for (const slug of [
     'own-your-bookings',
     'own-your-bookings-plus',
-    'shop-bundle',
+    'team-bundle',
   ]) {
     const item = catalog.items.find((i) => i.slug === slug);
     assert.equal(item.requires, 'starter-hosting', `${slug} requires hosting`);
@@ -552,7 +552,7 @@ test('campaign briefs use catalog prices, discounts and payment options', () => 
   assert.match(own, /YOBUL: not available/);
   assert.doesNotMatch(own, /Extra Member/);
   assert.match(
-    campaignBrief(catalog, 'shop-bundle'),
+    campaignBrief(catalog, 'team-bundle'),
     /Team Bundle Extra Member: \$105/,
   );
   const launch = campaignBrief(catalog, 'website-launch');
