@@ -11,10 +11,10 @@
  *   K = start frame (still, 9:16, free)   E = end frame (still, 9:16, free)
  *   L = 3D layer (still, 1:1, free)       Q = 8 s clip (credits)
  *
- * Media lands in `public/media/products/<slug>/` as `start.webp`, `end.webp`
- * (the poster), `layer.webp` and `cut.mp4`. Set `media` once those files are
- * committed; until then the page shows the 3D layer only, never an empty
- * player.
+ * Media lands in `public/media/products/<slug>/` as `end.webp` (the poster)
+ * and `cut.mp4`. Set `media` once those files are committed; until then the
+ * product page shows no video section at all. The beats below are production
+ * notes only and are never rendered to visitors.
  *
  * Generated footage shows no people, so no likeness, consent or casting
  * question applies. Every published clip carries the AI-generated label.
@@ -49,8 +49,11 @@ export type ProductStory = {
   /** Library asset (public/library) used as the 3D layer until L lands. */
   layerFallback: { src: string; alt: string };
   beats: StoryBeat[];
-  /** Set to true once the four media files are committed. */
-  media: boolean;
+  /**
+   * false until `cut.mp4` and `end.webp` (the poster) are committed; then the
+   * clip's frame shape. The product page hides the section while false.
+   */
+  media: false | { aspect: 'portrait' | 'landscape' };
 };
 
 /** Pasted at the end of every still prompt (FTD style lock, short form). */
@@ -99,7 +102,7 @@ const stories: ProductStory[] = [
         overlay: null,
       },
     ],
-    media: false,
+    media: { aspect: 'landscape' },
   },
   {
     slug: 'own-your-bookings-plus',
@@ -205,7 +208,7 @@ const stories: ProductStory[] = [
         overlay: null,
       },
     ],
-    media: false,
+    media: { aspect: 'landscape' },
   },
   {
     slug: 'digital-presence-bundle',
@@ -240,7 +243,7 @@ const stories: ProductStory[] = [
         overlay: null,
       },
     ],
-    media: false,
+    media: { aspect: 'portrait' },
   },
   {
     slug: 'full-business-system',
@@ -275,7 +278,7 @@ const stories: ProductStory[] = [
         overlay: null,
       },
     ],
-    media: false,
+    media: { aspect: 'portrait' },
   },
   {
     slug: 'ai-plugin-all-platforms',
@@ -311,7 +314,7 @@ const stories: ProductStory[] = [
         overlay: null,
       },
     ],
-    media: false,
+    media: { aspect: 'portrait' },
   },
 ];
 
@@ -321,6 +324,8 @@ export type BuyCut = ProductStory & {
   /** The only URL shown on the end card. */
   url: string;
   mediaPath: string;
+  /** 1200x630 social preview cut from the clip, once the clip exists. */
+  ogImage: { url: string; width: number; height: number; alt: string } | null;
 };
 
 /** Stories joined to the live catalog; a retired item drops out. */
@@ -333,6 +338,14 @@ export const buyCuts: BuyCut[] = stories.flatMap((story) => {
       cta: ctaLabel(item),
       url: `feethedeveloper.com/services/${story.slug}`,
       mediaPath: `/media/products/${story.slug}`,
+      ogImage: story.media
+        ? {
+            url: `/og/${story.slug}.jpg`,
+            width: 1200,
+            height: 630,
+            alt: story.hook,
+          }
+        : null,
     },
   ];
 });
