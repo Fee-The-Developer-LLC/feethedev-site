@@ -14,23 +14,43 @@
  * screenshots were captured from local production builds of
  * honebeeonline_os and aaron_draper-site, and their live domains still need
  * an HTTP 200 check before showroomVerifiedOn is moved forward.
+ *
+ * 2026-11-22 (issue #43): Marcus Jones (itsjones.com) added as a preview.
+ * The domain returns 200 but the site is still noindex and prelaunch:
+ * client launch sign-off, media rights (videographer credit), Turnstile and
+ * email routing, and Stripe lesson/session payments are pending. Keep it
+ * `status: 'preview'` with no screenshot until those are approved.
  */
 export type ShowroomSite = {
+  /** Stable id used in analytics events; never personal data. */
+  id: string;
   name: string;
   domain: string;
   worker: string;
   industry: string;
   summary: string;
-  image: string;
+  /**
+   * Approved capture in /public/work, or null while the client's screenshot
+   * and showcase approval are pending (the card shows a text panel instead).
+   */
+  image: string | null;
   highlights: string[];
+  /**
+   * live: launched and approved by the client.
+   * preview: domain responds but the client launch sign-off is pending, so
+   * the card says "Preview · In progress" and claims nothing not yet live.
+   */
+  status: 'live' | 'preview';
 };
 
 export const showroomVerifiedOn = '2026-11-04';
 
 export const showroomSites: ShowroomSite[] = [
   {
+    id: 'hutchrok',
     name: 'Hutchrok Solutions Group',
     domain: 'hutchrok.com',
+    status: 'live',
     worker: 'hutchrok-solutions-site',
     industry: 'Veteran business services',
     summary:
@@ -43,8 +63,10 @@ export const showroomSites: ShowroomSite[] = [
     ],
   },
   {
+    id: 'honey-bee-online',
     name: 'Honey Bee Online Solutions',
     domain: 'honeybeeonlinesolutions.com',
+    status: 'live',
     worker: 'honeybee-online-site',
     industry: 'Marketing and lead generation',
     summary:
@@ -53,8 +75,10 @@ export const showroomSites: ShowroomSite[] = [
     highlights: ['Lead plan intake', 'Client portal', 'Online booking'],
   },
   {
+    id: 'fee-the-producer',
     name: 'Fee The Producer',
     domain: 'feetheproducer.com',
+    status: 'live',
     worker: 'feetheproducer-site',
     industry: 'Music production',
     summary:
@@ -63,8 +87,10 @@ export const showroomSites: ShowroomSite[] = [
     highlights: ['Music catalog', 'Merch', 'Project inquiries'],
   },
   {
+    id: 'aaron-draper',
     name: 'Aaron "Drape" Draper',
     domain: 'adrape30.com',
+    status: 'live',
     worker: 'aaron-draper-site',
     industry: 'Musician and percussionist',
     summary:
@@ -73,8 +99,22 @@ export const showroomSites: ShowroomSite[] = [
     highlights: ['Credits wall', 'Video library', 'Booking requests'],
   },
   {
+    id: 'marcus-jones',
+    name: 'Marcus Jones',
+    domain: 'itsjones.com',
+    status: 'preview',
+    worker: 'marcus-jones-site',
+    industry: 'Drummer and educator',
+    summary:
+      'A home for a touring drummer, producer and drum instructor, with lessons, studio sessions and live-performance inquiries.',
+    image: null,
+    highlights: ['Lessons', 'Studio sessions', 'Performance inquiries'],
+  },
+  {
+    id: 'hairline-matters',
     name: 'Hairline Matters',
     domain: 'hairlinematters.com',
+    status: 'live',
     worker: 'hairline-matters-site',
     industry: 'Barbershop',
     summary:
@@ -83,8 +123,10 @@ export const showroomSites: ShowroomSite[] = [
     highlights: ['Online booking', 'Video hero', 'Shop and gallery'],
   },
   {
+    id: 'deploy-property',
     name: 'Deploy Property Solutions Group',
     domain: 'deploypropertysg.com',
+    status: 'live',
     worker: 'deploy-property-solutions-site',
     industry: 'Property and infrastructure',
     summary:
@@ -93,8 +135,10 @@ export const showroomSites: ShowroomSite[] = [
     highlights: ['Industry pages', 'Inquiry intake', 'Concept visuals'],
   },
   {
+    id: 'dukeel-transport',
     name: 'Dukeel Transportation',
     domain: 'dukeeltransport.com',
+    status: 'live',
     worker: 'dukeel-transport-site',
     industry: 'Freight and logistics',
     summary:
@@ -103,8 +147,10 @@ export const showroomSites: ShowroomSite[] = [
     highlights: ['Freight requests', 'Government contracting', 'Video hero'],
   },
   {
+    id: '54-bravo-auto',
     name: '54 Bravo Auto Repair',
     domain: '54bravoauto.com',
+    status: 'live',
     worker: '54bravo-auto-site',
     industry: 'Mobile auto repair',
     summary:
@@ -113,8 +159,10 @@ export const showroomSites: ShowroomSite[] = [
     highlights: ['Service requests', 'Fleet support', 'Industry pages'],
   },
   {
+    id: 'bean-stalk-auto',
     name: 'Bean Stalk Auto Group',
     domain: 'beanstalkauto.com',
+    status: 'live',
     worker: 'bean-stalk-auto-site',
     industry: 'Vehicle brokerage',
     summary:
