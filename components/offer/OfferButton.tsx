@@ -42,14 +42,20 @@ export function OfferButton({
   size = 'md',
   variant = 'primary',
   className,
+  track,
 }: OfferButtonStyle & {
   href: string;
   label: string;
+  /** Picked up by an enclosing <TrackEvents> (first-party, no PII). */
+  track?: { event: string; product?: string; source?: string };
 }) {
   return (
     <Link
       href={href}
       className={offerButtonClass({ size, variant, className })}
+      data-track={track?.event}
+      data-track-product={track?.product}
+      data-track-source={track?.source}
     >
       {variant === 'primary' && <OfferButtonDot />}
       {label}
