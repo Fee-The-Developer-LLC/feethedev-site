@@ -10,7 +10,7 @@ import { packageRules, starterFaq, veteranDiscount } from '@/lib/catalog';
 import { conciergeFor } from '@/lib/concierge';
 import { getBuyCut } from '@/lib/product-stories';
 import { getService, services } from '@/lib/services';
-import { siteConfig } from '@/lib/site-config';
+import { defaultOgImage, siteConfig } from '@/lib/site-config';
 
 export const dynamicParams = false;
 
@@ -23,10 +23,29 @@ type Props = { params: Promise<{ slug: string }> };
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const service = getService((await params).slug);
   if (!service) return {};
+  const url = new URL(service.href, siteConfig.siteUrl);
+  const title = `${service.name} | ${siteConfig.name}`;
+  const description = `${service.summary} ${service.price}.`;
+  const image = getBuyCut(service.slug)?.ogImage ?? defaultOgImage;
   return {
     title: service.name,
-    description: `${service.hook ?? service.summary} ${service.price}.`,
-    alternates: { canonical: new URL(service.href, siteConfig.siteUrl) },
+    description,
+    alternates: { canonical: url },
+    openGraph: {
+      type: 'website',
+      url,
+      title,
+      description: service.hook ?? description,
+      siteName: siteConfig.name,
+      locale: 'en_US',
+      images: [image],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description: service.hook ?? description,
+      images: [image.url],
+    },
   };
 }
 
@@ -116,7 +135,7 @@ export default async function OfferPage({ params }: Props) {
           </Section>
         )}
 
-        {cut && (
+        {cut?.media && (
           <Section className="overflow-hidden border-t border-white/10">
             <ProductBuyCut cut={cut} action={service.primary} />
           </Section>

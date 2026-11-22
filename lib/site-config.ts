@@ -68,6 +68,14 @@ function getCommunityUrl(
   return null;
 }
 
+/** Default social preview: a 1200x630 JPG (platforms skip SVG previews). */
+export const defaultOgImage = {
+  url: '/og/ftd-default.jpg',
+  width: 1200,
+  height: 630,
+  alt: 'Fee The Developer: build, automate, create, scale',
+};
+
 export const siteConfig = {
   name: 'Fee The Developer',
   legalName: 'Fee The Developer LLC',

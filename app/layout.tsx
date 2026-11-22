@@ -7,7 +7,7 @@ import { AuthDialogProvider, AuthTrigger } from '@/components/auth/AuthDialog';
 import { HideOnOfferPages } from '@/components/HideOnOfferPages';
 import { SiteHeaderShell } from '@/components/SiteHeaderShell';
 import { clerkAppearance, clerkLocalization } from '@/lib/clerk-appearance';
-import { siteConfig } from '@/lib/site-config';
+import { defaultOgImage, siteConfig } from '@/lib/site-config';
 import '../styles/globals.css';
 
 const manrope = Manrope({
@@ -53,20 +53,13 @@ export const metadata: Metadata = {
     description: siteConfig.description,
     siteName: siteConfig.name,
     locale: 'en_US',
-    images: [
-      {
-        url: '/brand/ftd-logo.svg',
-        width: 1200,
-        height: 630,
-        alt: siteConfig.name,
-      },
-    ],
+    images: [defaultOgImage],
   },
   twitter: {
     card: 'summary_large_image',
     title: `${siteConfig.name} | Web Design + Full Business Presence`,
     description: siteConfig.description,
-    images: ['/brand/ftd-logo.svg'],
+    images: [defaultOgImage.url],
   },
   robots: {
     index: true,
