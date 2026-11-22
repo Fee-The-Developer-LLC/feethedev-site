@@ -53,11 +53,25 @@ const FIXTURE_PRODUCT_IDS = {
   'fee-developer-protection': 'prod_VMYXp4kwWjCU4c',
 };
 
+/**
+ * Team Bundle was renamed from Shop Bundle on 2026-11-22. Its live Stripe
+ * products are pinned in the catalog so a slug change cannot create duplicates
+ * (the sync otherwise matches products by metadata.catalog_slug). Verified
+ * against the live account on 2026-11-22.
+ */
+const PINNED_LIVE_PRODUCTS = {
+  'team-bundle': 'prod_Vbg7BL6WbQuj8n',
+  'team-bundle-extra-member': 'prod_Vbg7u8Ta2nbsF2',
+};
+
 const loadCatalog = () => {
   const catalog = JSON.parse(fs.readFileSync(catalogFile, 'utf8'));
   for (const item of catalog.items) {
-    item.stripeProductId =
-      FIXTURE_PRODUCT_IDS[item.slug] ?? item.stripeProductId;
+    // The fake account starts without the pinned products; they are asserted
+    // separately in the "team bundle is pinned" test.
+    item.stripeProductId = PINNED_LIVE_PRODUCTS[item.slug]
+      ? null
+      : (FIXTURE_PRODUCT_IDS[item.slug] ?? item.stripeProductId);
   }
   return catalog;
 };
@@ -658,5 +672,14 @@ test('AI Skills & Plugins carry the prices King Fee set', () => {
   ]) {
     assert.equal(byslug[plugin].requires, plan);
     assert.equal(byslug[plan].publicCheckout, false);
+  }
+});
+
+test('team bundle items are pinned to their live Stripe products', () => {
+  const catalog = JSON.parse(fs.readFileSync(catalogFile, 'utf8'));
+  for (const [slug, productId] of Object.entries(PINNED_LIVE_PRODUCTS)) {
+    const item = catalog.items.find((i) => i.slug === slug);
+    assert.ok(item, `${slug} is in the catalog`);
+    assert.equal(item.stripeProductId, productId);
   }
 });
