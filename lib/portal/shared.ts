@@ -55,6 +55,41 @@ export const PROJECT_STAGES: { id: PortalProjectStatus; label: string }[] = [
   { id: 'care', label: 'Ongoing care' },
 ];
 
+/**
+ * Plain-language description of each project stage, shown for the current
+ * stage only. This is process guidance, not project data: it makes no claim
+ * about dates, progress or deliverables.
+ */
+export const STAGE_GUIDE: Record<
+  PortalProjectStatus,
+  { fee: string; you: string }
+> = {
+  discovery: {
+    fee: 'We learn your business and confirm what the site needs to do.',
+    you: 'Answer our questions, and share logos, photos and wording when we ask.',
+  },
+  design: {
+    fee: 'We shape the layout, look and page structure for your approval.',
+    you: 'Review the direction and tell us what to change.',
+  },
+  build: {
+    fee: 'We build your pages, connect booking and payments, and test on phone and desktop.',
+    you: 'Send any missing files. Use Request a change for anything new.',
+  },
+  review: {
+    fee: 'We apply your feedback and run the launch checklist.',
+    you: 'Check each page and send every change you want in one pass.',
+  },
+  live: {
+    fee: 'We watch the launch and fix anything that slips through.',
+    you: 'Tell us right away if something looks wrong.',
+  },
+  care: {
+    fee: 'We handle the updates and fixes your care plan covers.',
+    you: 'Send changes through Request a change whenever you need them.',
+  },
+};
+
 export const REQUEST_STATUS_LABELS: Record<PortalRequestStatus, string> = {
   submitted: 'Received',
   in_review: 'In review',
