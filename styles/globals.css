@@ -524,6 +524,27 @@
   }
 }
 
+@keyframes portal-packet {
+  0% {
+    left: 0;
+    opacity: 0;
+  }
+  12% {
+    opacity: 1;
+  }
+  88% {
+    opacity: 1;
+  }
+  100% {
+    left: calc(100% - 10px);
+    opacity: 0;
+  }
+}
+
+.portal-packet {
+  animation: portal-packet 3.6s ease-in-out infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto !important;
@@ -538,6 +559,12 @@
 
   .motion-marquee {
     transform: none !important;
+  }
+
+  .portal-packet {
+    animation: none !important;
+    left: calc(100% - 10px);
+    opacity: 1;
   }
 
   .tilt-3d__inner {

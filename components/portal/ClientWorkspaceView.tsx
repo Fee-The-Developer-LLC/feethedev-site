@@ -10,6 +10,7 @@ import {
   PRIORITY_LABELS,
   PROJECT_STAGES,
   REQUEST_STATUS_LABELS,
+  STAGE_GUIDE,
   UPDATE_KIND_LABELS,
   UPLOAD_ACCEPT,
   formatBytes,
@@ -64,49 +65,91 @@ const requestTone: Record<PortalRequestStatus, string> = {
   declined: 'border-white/10 bg-black/30 text-slate-400',
 };
 
-function StageTrack({ project }: { project: PortalProjectRow }) {
-  const current = PROJECT_STAGES.findIndex((s) => s.id === project.status);
+function SignalRail({ project }: { project: PortalProjectRow }) {
+  const current = Math.max(
+    0,
+    PROJECT_STAGES.findIndex((s) => s.id === project.status),
+  );
+  const fill = (current / (PROJECT_STAGES.length - 1)) * 100;
   return (
-    <ol
-      className="mt-6 grid grid-cols-3 gap-2 sm:grid-cols-6"
-      aria-label="Project stage"
+    <div
+      className="mt-8 overflow-x-auto pb-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-greenglow/50"
+      role="region"
+      aria-label="Project stages"
+      tabIndex={0}
     >
-      {PROJECT_STAGES.map((stage, index) => {
-        const state =
-          index < current ? 'done' : index === current ? 'current' : 'next';
-        return (
-          <li
-            key={stage.id}
-            aria-current={state === 'current' ? 'step' : undefined}
+      <div className="relative min-w-[640px]">
+        <div
+          aria-hidden="true"
+          className="absolute left-[8.333%] right-[8.333%] top-[15px] h-0.5 rounded-full bg-white/10"
+        >
+          <div
+            className="absolute inset-y-0 left-0 rounded-full bg-greenglow/80"
+            style={{ width: `${fill}%` }}
           >
-            <span
-              aria-hidden="true"
-              className={cn(
-                'block h-1.5 rounded-full',
-                state === 'done' && 'bg-greenglow/80',
-                state === 'current' &&
-                  'bg-electric shadow-[0_0_14px_rgba(37,120,255,.8)]',
-                state === 'next' && 'bg-white/10',
-              )}
-            />
-            <span
-              className={cn(
-                'mt-2 block text-xs',
-                state === 'current'
-                  ? 'font-semibold text-white'
-                  : 'text-slate-400',
-              )}
-            >
-              {stage.label}
-              {state === 'current' && (
-                <span className="sr-only"> (current stage)</span>
-              )}
-              {state === 'done' && <span className="sr-only"> (complete)</span>}
-            </span>
-          </li>
-        );
-      })}
-    </ol>
+            {current > 0 && (
+              <span className="portal-packet absolute -top-1 left-0 h-2.5 w-2.5 rounded-full bg-silver shadow-[0_0_14px_4px_rgba(37,120,255,.9)]" />
+            )}
+          </div>
+        </div>
+        <ol className="relative grid grid-cols-6">
+          {PROJECT_STAGES.map((stage, index) => {
+            const state =
+              index < current ? 'done' : index === current ? 'current' : 'next';
+            return (
+              <li
+                key={stage.id}
+                aria-current={state === 'current' ? 'step' : undefined}
+                className="flex flex-col items-center gap-2 text-center"
+              >
+                <span
+                  aria-hidden="true"
+                  className={cn(
+                    'flex h-[30px] w-[30px] items-center justify-center rounded-full',
+                    state === 'done' && 'bg-greenglow text-black',
+                    state === 'current' &&
+                      'bg-electric ring-4 ring-electric/25',
+                    state === 'next' && 'border-2 border-white/25 bg-[#05070b]',
+                  )}
+                >
+                  {state === 'done' && (
+                    <svg
+                      viewBox="0 0 16 16"
+                      className="h-4 w-4 fill-none stroke-current"
+                      strokeWidth="2.2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <path d="M3.5 8.5l3 3 6-7" />
+                    </svg>
+                  )}
+                  {state === 'current' && (
+                    <span className="h-2.5 w-2.5 rounded-full bg-silver" />
+                  )}
+                </span>
+                <span
+                  className={cn(
+                    'text-sm',
+                    state === 'current'
+                      ? 'font-semibold text-white'
+                      : 'text-slate-300',
+                  )}
+                >
+                  {stage.label}
+                  <span className="sr-only">
+                    {state === 'current'
+                      ? ' (current stage)'
+                      : state === 'done'
+                        ? ' (complete)'
+                        : ' (up next)'}
+                  </span>
+                </span>
+              </li>
+            );
+          })}
+        </ol>
+      </div>
+    </div>
   );
 }
 
@@ -253,7 +296,7 @@ export function ClientWorkspaceView({
               <section
                 key={project.id}
                 aria-labelledby={`project-${project.id}`}
-                className="relative overflow-hidden rounded-3xl border border-electric/25 bg-gradient-to-br from-electric/[0.12] via-white/[0.04] to-transparent p-6 sm:p-8"
+                className="relative overflow-hidden rounded-3xl border border-electric/25 bg-panel p-6 sm:p-8"
               >
                 <div className="flex flex-wrap items-start justify-between gap-4">
                   <div className="min-w-0">
@@ -274,7 +317,25 @@ export function ClientWorkspaceView({
                     {project.summary}
                   </p>
                 )}
-                <StageTrack project={project} />
+                <SignalRail project={project} />
+                <div className="mt-6 grid gap-6 border-t border-white/10 pt-6 sm:grid-cols-2">
+                  <div>
+                    <h3 className="text-sm font-semibold text-greenglow">
+                      What Fee is doing now
+                    </h3>
+                    <p className="mt-2 max-w-md text-sm leading-6 text-slate-300">
+                      {STAGE_GUIDE[project.status].fee}
+                    </p>
+                  </div>
+                  <div>
+                    <h3 className="text-sm font-semibold text-cyan">
+                      What we need from you
+                    </h3>
+                    <p className="mt-2 max-w-md text-sm leading-6 text-slate-300">
+                      {STAGE_GUIDE[project.status].you}
+                    </p>
+                  </div>
+                </div>
                 <div className="mt-6 grid gap-3 sm:grid-cols-2">
                   <div className="rounded-2xl border border-white/10 bg-black/25 p-4">
                     <p className="text-xs text-slate-400">Next milestone</p>
