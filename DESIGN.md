@@ -1,23 +1,30 @@
 ---
-version: 1.0
-name: 'Fee The Developer Signal System'
-description: 'A dark, high-trust studio and client portal built around connected signals, clear status, and disciplined neon accents.'
+version: 2.0
+name: 'Fee The Developer Signal System (Aether)'
+description: 'A deep-space studio and client portal: glass panels, plasma-cyan signals, clear status, and published facts only.'
 colors:
-  background: '#05070B'
-  panel: '#0B1018'
+  void: '#05070E'
+  card: '#0A0D18'
   silver: '#F3F6FA'
-  muted: '#91A0B7'
-  electric: '#2578FF'
-  green: '#14E8B4'
-  orange: '#FF6B35'
+  muted: '#94A3B8'
+  steel: '#64748B'
+  plasma: '#00F0FF'
+  electric: '#3B82F6'
+  emerald: '#10B981'
+  coral: '#FF6B4A'
 typography:
+  display:
+    fontFamily: 'Plus Jakarta Sans, sans-serif'
   sans:
-    fontFamily: 'Manrope, ui-sans-serif, system-ui, sans-serif'
+    fontFamily: 'Inter, ui-sans-serif, system-ui, sans-serif'
+  mono:
+    fontFamily: 'Geist, ui-monospace, monospace'
 rounded:
   DEFAULT: '1rem'
-  sm: '0.75rem'
+  sm: '0.5rem'
   md: '1.25rem'
-  lg: '1.5rem'
+  lg: '2rem'
+  full: '9999px'
 spacing:
   section-gap: '4rem'
   page-max: '80rem'
@@ -50,11 +57,11 @@ The interface behaves like a calm systems console: connected signals, legible st
 
 ## Colors
 
-Background and panel colors establish depth. Electric blue is the primary interactive accent, green communicates active/ready states, and orange is reserved for emphasis. Silver and muted blue-gray provide text hierarchy. Focus rings use green or electric blue and never rely on color alone.
+Adopted 2026-11-28 from the Stitch "Aether Cybernetic" handoff (dynamic 3D service pages). The canvas is void (`#05070E`) with off-center cyan, blue and coral mesh glows; panels are card navy (`#0A0D18`) glass. Plasma cyan (`#00F0FF`) is the primary signal: active states, key chips, focus rings, primary-pill bloom. Electric blue (`#3B82F6`) is structural. Coral (`#FF6B4A`) marks emphasis and the veteran-discount price. Emerald (`#10B981`) means live/ready (pulse dots). White titles, slate (`#94A3B8`) body, steel (`#64748B`) metadata. Legacy Tailwind names (`greenglow`, `redglow`, `cyan`, `electric`, `background`, `panel`) now resolve to these values so older pages follow the palette; new work uses `void`, `card`, `plasma`, `emerald`, `coral`, `steel`.
 
 ## Typography
 
-Manrope is the shared display, body, and utility family. Headings use restrained uppercase only for short labels or brand statements. Body copy remains sentence case with a readable 65–75 character measure. Numeric prices use tabular alignment where comparison matters.
+Plus Jakarta Sans (`font-display`, applied to h1–h3) carries headings with tight negative tracking. Inter (`font-sans`) carries body copy. Geist (`font-mono`, `.label-mono`) carries uppercase metadata labels, chips and pill buttons. Punchlines may use `.ftd-gradient-text` (coral → blue → cyan) or `.ftd-cyan-text`. Numeric prices use tabular alignment.
 
 ## Layout
 
@@ -62,7 +69,7 @@ Public pages use the shared 80rem shell and generous section rhythm. The dashboa
 
 ## Elevation & Depth
 
-Hierarchy comes from tonal panels, one-pixel translucent borders, limited blur, and soft shadows. Interactive cards may lift slightly; operational dashboard cards do not scale so scanning remains stable. Public media cards may add a pointer-driven perspective tilt (`components/Tilt3D.tsx`, at most about 6°) with a soft following glare; it is limited to fine-pointer devices, never applies to dashboard surfaces, and is removed under reduced motion.
+Glass primitives live in `styles/globals.css`: `.aether-card` (Level 1 glass, 16px blur, hairline rim, cyan top-edge light; `--coral` / `--emerald` variants), `.aether-card--interactive` (Level 2 cyan rim and aura on hover), `.pill-primary` (white pill, void text, plasma bloom), `.pill-glass` (outline pill), `.status-chip`, `.pulse-dot`, and `.orbit-node` (numbered step node tinted by the `--node` RGB variable). Hierarchy also comes from tonal panels, one-pixel translucent borders, limited blur, and soft shadows. Interactive cards may lift slightly; operational dashboard cards do not scale so scanning remains stable. Public media cards may add a pointer-driven perspective tilt (`components/Tilt3D.tsx`, at most about 6°) with a soft following glare; it is limited to fine-pointer devices, never applies to dashboard surfaces, and is removed under reduced motion.
 
 ## Shapes
 
@@ -80,7 +87,7 @@ Primary actions use solid or luminous treatments; secondary actions use quiet ou
 
 ### Navigation and data display
 
-Public navigation is kept short: Services, Pricing, Work, a free-consultation button, and Start a project. Each service has its own page at `/services/<slug>` with a Stripe checkout call to action. Credentials, program pages, and the Client portal are linked from the footer. The `/stack` page (How we build) lists the platforms FTD uses and the five-step workflow; the homepage carries a short text-only "Built with" strip that links to it. Vendor names appear as plain text, never logos, until each owner grants written permission, and they never imply endorsement or partnership. Keep vendor names out of metadata keywords; the source of truth and brand rules live in `lib/stack.ts`. Product navigation marks the current destination. Lists favor semantic markup and explicit statuses over decorative charts.
+Public navigation is kept short: a glass pill nav with Services, Pricing, Work and How we build (current page marked through `components/NavLink.tsx`), plus sign-in and a primary pill. The footer lists every service line, company links and contact. The home page shows only catalog-derived facts (published pricing, lowest starter price, veteran discount, service count). The services page leads with category chips (with live counts), three featured builds, the full catalog with veteran prices computed from `lib/pricing-catalog.json`, and a three-step engagement rail. Design mockup metrics (uptime, pipeline value, delivery days, case-study numbers) are not used because no source backs them. Each service has its own page at `/services/<slug>` with a Stripe checkout call to action. Credentials, program pages, and the Client portal are linked from the footer. The `/stack` page (How we build) lists the platforms FTD uses and the five-step workflow; the homepage carries a short text-only "Built with" strip that links to it. Vendor names appear as plain text, never logos, until each owner grants written permission, and they never imply endorsement or partnership. Keep vendor names out of metadata keywords; the source of truth and brand rules live in `lib/stack.ts`. Product navigation marks the current destination. Lists favor semantic markup and explicit statuses over decorative charts.
 
 ### Forms and overlays
 
@@ -92,7 +99,7 @@ Icons are simple inline SVG strokes at 20–24px. Text labels remain present for
 
 ### Motion
 
-Motion suggests signal flow and state change. The public homepage uses one continuous signal-current composition: a deliberate hero entrance, a scroll-progress rail, scrubbed statement text, and scale/fade media transitions. GSAP owns this page-level choreography; routine component transitions remain 180–700ms with custom ease-out curves. The homepage hero adds a decorative 3D signal field (`components/three/`): a brand-colored node network with packets travelling along its links, slow pointer parallax, and a scroll-linked drift. It is plain three.js loaded after hydration, stays quiet behind the headline via a contrast mask, pauses off-screen, and is not rendered for reduced-motion visitors or browsers without WebGL. The home page also carries the brand globe clip as an oversized, see-through background layer (`components/GlobeBackdrop.tsx`): fixed to the viewport, screen-blended, radially masked, dimmed behind a scrim, and turning once every 240 s; reduced-motion visitors get the still frame. The home page middle section is a barber ad reel (`components/BarberAdReel.tsx`, data in `lib/barber-ads.ts`): vertical ads in phone frames, each ending on its catalog buy button, with an "Ad in production" label until footage lands and an AI-generated label whenever a generated person is on screen. Home page products are a tabbed shelf, one tab per catalog line, each product a card with price, a buy button and a details link (`components/ProductShelf.tsx`). Ambient audio is optional, starts only after a visitor activates the labeled control, and never autoplays. Routine dashboard interaction remains quiet. Reduced-motion users receive static states.
+Motion suggests signal flow and state change. The public homepage uses one continuous signal-current composition: a deliberate hero entrance, a scroll-progress rail, scrubbed statement text, and scale/fade media transitions. GSAP owns this page-level choreography; routine component transitions remain 180–700ms with custom ease-out curves. The homepage hero adds a decorative 3D signal field (`components/three/`): a brand-colored node network with packets travelling along its links, slow pointer parallax, and a scroll-linked drift. It is plain three.js loaded after hydration, stays quiet behind the headline via a contrast mask, pauses off-screen, and is not rendered for reduced-motion visitors or browsers without WebGL. The home hero frames the brand globe clip inside a glass console (`components/GlobeConsole.tsx`) with brand-only corner labels (never live system data) and the Build · Automate · Create · Scale chips; reduced-motion visitors get the still frame. The home page middle section is a barber ad reel (`components/BarberAdReel.tsx`, data in `lib/barber-ads.ts`): vertical ads in phone frames, each ending on its catalog buy button, with an "Ad in production" label until footage lands and an AI-generated label whenever a generated person is on screen. Home page products are a tabbed shelf, one tab per catalog line, each product a card with price, a buy button and a details link (`components/ProductShelf.tsx`). Ambient audio is optional, starts only after a visitor activates the labeled control, and never autoplays. Routine dashboard interaction remains quiet. Reduced-motion users receive static states.
 
 ### Content and data visualization
 

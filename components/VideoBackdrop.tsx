@@ -39,8 +39,8 @@ export function VideoBackdrop({ videoId, posterId }: VideoBackdropProps) {
         preload="auto"
         tabIndex={-1}
       />
-      <div className="absolute inset-0 bg-background/70" />
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(5,7,11,0)_0%,rgba(5,7,11,0.6)_100%)]" />
+      <div className="absolute inset-0 bg-void/80" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(5,7,14,0)_0%,rgba(5,7,14,0.7)_100%)]" />
     </div>
   );
 }

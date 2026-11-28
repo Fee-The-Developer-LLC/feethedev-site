@@ -1,19 +1,35 @@
 import { ClerkProvider, Show, UserButton } from '@clerk/nextjs';
 import type { Metadata, Viewport } from 'next';
-import { Manrope } from 'next/font/google';
+import { Geist, Inter, Plus_Jakarta_Sans } from 'next/font/google';
 import Image from 'next/image';
 import Link from 'next/link';
 import { AuthDialogProvider, AuthTrigger } from '@/components/auth/AuthDialog';
 import { HideOnOfferPages } from '@/components/HideOnOfferPages';
+import { NavLink } from '@/components/NavLink';
 import { SiteHeaderShell } from '@/components/SiteHeaderShell';
 import { clerkAppearance, clerkLocalization } from '@/lib/clerk-appearance';
+import { serviceCategories } from '@/lib/services';
 import { defaultOgImage, siteConfig } from '@/lib/site-config';
 import '../styles/globals.css';
 
-const manrope = Manrope({
+const inter = Inter({
   subsets: ['latin'],
   variable: '--font-sans',
-  weight: ['400', '500', '600', '700', '800'],
+  display: 'swap',
+});
+
+const jakarta = Plus_Jakarta_Sans({
+  subsets: ['latin'],
+  variable: '--font-display',
+  weight: ['600', '700', '800'],
+  display: 'swap',
+});
+
+const geist = Geist({
+  subsets: ['latin'],
+  variable: '--font-mono',
+  weight: ['500', '600'],
+  display: 'swap',
 });
 
 export const metadata: Metadata = {
@@ -77,7 +93,7 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
-  themeColor: '#0A0A0A',
+  themeColor: '#05070E',
 };
 
 const structuredData = {
@@ -102,6 +118,13 @@ const structuredData = {
   ],
 };
 
+const primaryNav = [
+  { href: '/services', label: 'Services' },
+  { href: '/pricing', label: 'Pricing' },
+  { href: '/work', label: 'Work' },
+  { href: '/stack', label: 'How we build' },
+];
+
 const hasClerkKeys = Boolean(
   process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY && process.env.CLERK_SECRET_KEY,
 );
@@ -113,7 +136,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${manrope.variable} font-sans`}>
+      <body
+        className={`${inter.variable} ${jakarta.variable} ${geist.variable} font-sans`}
+      >
         {hasClerkKeys ? (
           <ClerkProvider
             appearance={clerkAppearance}
@@ -161,17 +186,18 @@ function SiteContent({ children }: Readonly<{ children: React.ReactNode }>) {
             </Link>
             <nav
               aria-label="Main navigation"
-              className="hidden items-center gap-7 text-sm font-semibold text-slate-300 md:flex"
+              className="hidden items-center gap-1 rounded-full border border-white/[0.08] bg-card/60 p-1 backdrop-blur-xl md:flex"
             >
-              <Link href="/services" className="hover:text-white">
-                Services
-              </Link>
-              <Link href="/pricing" className="hover:text-white">
-                Pricing
-              </Link>
-              <Link href="/work" className="hover:text-white">
-                Work
-              </Link>
+              {primaryNav.map((item) => (
+                <NavLink
+                  key={item.href}
+                  href={item.href}
+                  className="rounded-full px-4 py-2 font-mono text-[0.8rem] font-semibold tracking-[0.02em] text-slate-300 transition hover:text-white"
+                  activeClassName="bg-plasma/10 text-plasma shadow-[inset_0_0_0_1px_rgba(0,240,255,0.35)]"
+                >
+                  {item.label}
+                </NavLink>
+              ))}
             </nav>
             <div className="flex items-center gap-3">
               {hasClerkKeys ? (
@@ -179,25 +205,22 @@ function SiteContent({ children }: Readonly<{ children: React.ReactNode }>) {
                   <Show when="signed-out">
                     <AuthTrigger
                       mode="sign-in"
-                      className="hidden min-h-11 items-center text-sm font-semibold text-slate-300 hover:text-white sm:inline-flex"
+                      className="hidden min-h-11 items-center font-mono text-[0.8rem] font-semibold text-slate-300 hover:text-white sm:inline-flex"
                     >
                       Sign in
                     </AuthTrigger>
                     <AuthTrigger
                       mode="sign-up"
-                      className="inline-flex min-h-11 items-center gap-2 rounded-full bg-silver px-4 text-xs font-extrabold uppercase tracking-[0.12em] text-background shadow-electric transition hover:bg-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-greenglow"
+                      className="pill-primary min-h-10 px-4 text-xs"
                     >
-                      <span
-                        aria-hidden="true"
-                        className="h-2 w-2 rounded-full bg-[#0FAF86]"
-                      />
+                      <span aria-hidden="true" className="pulse-dot" />
                       Sign up free
                     </AuthTrigger>
                   </Show>
                   <Show when="signed-in">
                     <Link
                       href="/dashboard"
-                      className="text-sm font-semibold text-slate-300 hover:text-white"
+                      className="font-mono text-[0.8rem] font-semibold text-slate-300 hover:text-white"
                     >
                       Dashboard
                     </Link>
@@ -207,8 +230,9 @@ function SiteContent({ children }: Readonly<{ children: React.ReactNode }>) {
               ) : (
                 <Link
                   href="/services"
-                  className="inline-flex min-h-10 items-center rounded-full bg-silver px-4 text-xs font-extrabold uppercase tracking-[0.12em] text-background"
+                  className="pill-primary min-h-10 px-4 text-xs"
                 >
+                  <span aria-hidden="true" className="pulse-dot" />
                   See services
                 </Link>
               )}
@@ -216,22 +240,23 @@ function SiteContent({ children }: Readonly<{ children: React.ReactNode }>) {
           </div>
           <nav
             aria-label="Main navigation, mobile"
-            className="shell flex gap-6 pb-3 text-sm font-semibold text-slate-300 md:hidden"
+            className="shell flex gap-5 overflow-x-auto pb-3 font-mono text-[0.8rem] font-semibold text-slate-300 md:hidden"
           >
-            <Link href="/services" className="hover:text-white">
-              Services
-            </Link>
-            <Link href="/pricing" className="hover:text-white">
-              Pricing
-            </Link>
-            <Link href="/work" className="hover:text-white">
-              Work
-            </Link>
+            {primaryNav.map((item) => (
+              <NavLink
+                key={item.href}
+                href={item.href}
+                className="shrink-0 hover:text-white"
+                activeClassName="text-plasma"
+              >
+                {item.label}
+              </NavLink>
+            ))}
             {hasClerkKeys && (
               <Show when="signed-out">
                 <AuthTrigger
                   mode="sign-in"
-                  className="-my-3 ml-auto inline-flex min-h-11 items-center text-cyan hover:text-white sm:hidden"
+                  className="-my-3 ml-auto inline-flex min-h-11 shrink-0 items-center text-plasma hover:text-white sm:hidden"
                 >
                   Sign in
                 </AuthTrigger>
@@ -245,43 +270,76 @@ function SiteContent({ children }: Readonly<{ children: React.ReactNode }>) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
       />
       {children}
-      <footer className="border-t border-white/10 bg-[#04060a] py-10">
-        <div className="shell grid gap-8 text-sm text-slate-400 sm:grid-cols-2 lg:grid-cols-3">
-          <div className="space-y-3">
-            <p className="font-bold uppercase tracking-[0.14em] text-white">
+      <footer className="relative border-t border-white/[0.08] bg-void/90 pt-16">
+        <div className="shell grid gap-10 pb-12 text-sm text-muted sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1.2fr]">
+          <div className="space-y-4">
+            <p className="font-display text-lg font-bold text-white">
               Fee The Developer
             </p>
-            <p>Build. Automate. Create. Scale.</p>
+            <p className="ftd-cyan-text font-display text-base font-semibold">
+              Build. Automate. Create. Scale.
+            </p>
+            <p className="max-w-xs leading-6">
+              Veteran-owned web design, software, and automation studio based in
+              Texas. Every price is published.
+            </p>
+            <p className="status-chip">
+              <span aria-hidden="true" className="pulse-dot" />
+              Veteran-owned · Texas
+            </p>
           </div>
-          <nav
-            aria-label="Footer navigation"
-            className="flex flex-wrap content-start gap-x-5 gap-y-3"
-          >
-            <Link href="/" className="hover:text-white">
-              Home
-            </Link>
-            <Link href="/start" className="hover:text-white">
-              Start a project
-            </Link>
-            <Link href="/services" className="hover:text-white">
-              Services
-            </Link>
-            <Link href="/work" className="hover:text-white">
-              Work
-            </Link>
-            <Link href="/pricing" className="hover:text-white">
-              Pricing
-            </Link>
-            <Link href="/stack" className="hover:text-white">
-              How we build
-            </Link>
-            {hasClerkKeys && (
-              <Link href="/dashboard" className="hover:text-white">
-                Client portal
-              </Link>
-            )}
+          <nav aria-label="Footer services" className="space-y-3">
+            <p className="label-mono text-steel">Services</p>
+            <ul className="space-y-2.5">
+              {serviceCategories.map((category) => (
+                <li key={category.id}>
+                  <Link
+                    href={`/services#${category.id}`}
+                    className="hover:text-white"
+                  >
+                    {category.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </nav>
-          <div className="space-y-2 lg:text-right">
+          <nav aria-label="Footer navigation" className="space-y-3">
+            <p className="label-mono text-steel">Company</p>
+            <ul className="space-y-2.5">
+              <li>
+                <Link href="/start" className="hover:text-white">
+                  Start a project
+                </Link>
+              </li>
+              <li>
+                <Link href="/work" className="hover:text-white">
+                  Work
+                </Link>
+              </li>
+              <li>
+                <Link href="/pricing" className="hover:text-white">
+                  Pricing
+                </Link>
+              </li>
+              <li>
+                <Link href="/stack" className="hover:text-white">
+                  How we build
+                </Link>
+              </li>
+              {hasClerkKeys && (
+                <li>
+                  <Link
+                    href="/dashboard"
+                    className="text-plasma hover:text-white"
+                  >
+                    Client portal
+                  </Link>
+                </li>
+              )}
+            </ul>
+          </nav>
+          <div className="space-y-3">
+            <p className="label-mono text-steel">Contact</p>
             <a
               href={`mailto:${siteConfig.email}`}
               className="block hover:text-white"
@@ -294,7 +352,12 @@ function SiteContent({ children }: Readonly<{ children: React.ReactNode }>) {
             >
               {siteConfig.phoneDisplay}
             </a>
-            <p>© {new Date().getFullYear()} Fee The Developer</p>
+          </div>
+        </div>
+        <div className="border-t border-white/[0.06]">
+          <div className="shell flex flex-col gap-2 py-6 font-mono text-xs text-steel sm:flex-row sm:items-center sm:justify-between">
+            <p>© {new Date().getFullYear()} Fee The Developer LLC</p>
+            <p>feethedeveloper.com</p>
           </div>
         </div>
       </footer>

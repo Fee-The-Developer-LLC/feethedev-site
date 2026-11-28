@@ -12,8 +12,28 @@ import {
   getCatalogItem,
   pricingLines,
   serviceCheckoutLinks,
+  veteranDiscount,
+  type CatalogItem,
   type PricingLineId,
 } from '@/lib/catalog';
+
+const usdCents = new Intl.NumberFormat('en-US', {
+  style: 'currency',
+  currency: 'USD',
+  minimumFractionDigits: 0,
+  maximumFractionDigits: 2,
+});
+
+/** Price after the published veteran discount, to the cent: `$139.30`. */
+function veteranPriceFor(item: CatalogItem): string {
+  const cents = Math.round(
+    (item.amountCents * (100 - veteranDiscount.percentOff)) / 100,
+  );
+  const amount = usdCents.format(cents / 100);
+  const suffix =
+    item.interval === 'month' ? '/mo' : item.interval === 'year' ? '/yr' : '';
+  return `${amount}${suffix}`;
+}
 
 export const serviceCategories = pricingLines
   .filter((line) => line.items.length > 0)
@@ -49,6 +69,7 @@ const allServices = pricingLines.flatMap((line) =>
       lineName: line.name,
       name: item.name,
       price: item.price,
+      veteranPrice: veteranPriceFor(item),
       flat: item.priceMode === 'flat',
       hook: item.campaign?.hook ?? null,
       summary: item.description,
