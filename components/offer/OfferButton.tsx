@@ -14,25 +14,18 @@ export function offerButtonClass({
   className,
 }: OfferButtonStyle = {}) {
   return cn(
-    'inline-flex shrink-0 items-center justify-center gap-2.5 rounded-full font-extrabold uppercase transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-greenglow',
-    size === 'sm'
-      ? 'min-h-10 px-4 text-[0.7rem] tracking-[0.12em]'
-      : 'min-h-12 px-6 text-sm tracking-[0.14em]',
-    variant === 'primary'
-      ? 'bg-silver text-background shadow-electric hover:bg-white'
-      : 'border border-white/20 text-silver hover:bg-white/[0.08]',
+    variant === 'primary' ? 'pill-primary' : 'pill-glass',
+    size === 'sm' ? 'min-h-10 px-4 text-xs' : 'min-h-12 px-6 text-sm',
     className,
   );
 }
 
 export function OfferButtonDot() {
-  return (
-    <span aria-hidden="true" className="h-2 w-2 rounded-full bg-[#0FAF86]" />
-  );
+  return <span aria-hidden="true" className="pulse-dot" />;
 }
 
 /**
- * The storyboard button: silver pill, black text, green ready dot. The same
+ * The primary glow pill: white pill, void text, emerald ready dot. The same
  * words appear in the ad, the page header, the hero, the phone bar and the
  * closing section.
  */
