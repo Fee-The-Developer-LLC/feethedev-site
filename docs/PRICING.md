@@ -23,7 +23,7 @@ Owner-developer model: the owner builds the work, reuses proven Fee The Develope
 | --------------------- | ----------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------- |
 | Starter Sites (fixed) | **Own Your Bookings**: .com in the client's name, home + services pages, custom booking page with Stripe checkout | $199                                                  |
 |                       | Own Your Bookings Plus: up to 4 pages, deposits at checkout                                                       | $525                                                  |
-|                       | Team Bundle (one site, a page for each team member) · extra team member page                                              | from $840 · $105                                      |
+|                       | Team Bundle (one site, a page for each team member) · extra team member page                                      | from $840 · $105                                      |
 |                       | **Starter Hosting** (required, from launch): hosting, SSL, domain renewal, DNS and email forwarding               | $10/month                                             |
 |                       | Get Found on Google · Pro Inbox · Extra Page                                                                      | $99 · $69 · $49                                       |
 | Business Websites     | Business Site Essentials                                                                                          | from $1,750                                           |
